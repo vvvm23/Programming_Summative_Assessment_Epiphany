@@ -1,0 +1,19 @@
+{
+  "name": "programming_summative",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vvvm23/Programming_Summative_Assessment_Epiphany.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vvvm23/Programming_Summative_Assessment_Epiphany/issues"
+  },
+  "homepage": "https://github.com/vvvm23/Programming_Summative_Assessment_Epiphany#readme"
+}
