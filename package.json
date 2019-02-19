@@ -1,10 +1,10 @@
 {
   "name": "programming_summative",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,6 @@
   "bugs": {
     "url": "https://github.com/vvvm23/Programming_Summative_Assessment_Epiphany/issues"
   },
-  "homepage": "https://github.com/vvvm23/Programming_Summative_Assessment_Epiphany#readme"
+  "homepage": "https://github.com/vvvm23/Programming_Summative_Assessment_Epiphany#readme",
+  "description": ""
 }
