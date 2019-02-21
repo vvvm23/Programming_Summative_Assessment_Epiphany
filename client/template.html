@@ -4,70 +4,87 @@
         <title>Programming Summative</title>
 
         <!-- Load Semantic UI and jQuery -->
-        <link rel="stylesheet" type="text/css" href="semantic.css">
         <script
         src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="semantic.css">
         <script src="semantic.js"></script>
-
+        <script src="index.js"></script>
     </head>
 
     <body>
-        <!-- Title Bar -->
-        <div class="ui center aligned padded grid">
-            <div class="column grey inverted"><h1>TEMPLATE</h1></div>
-        </div>
-        <!-- Navbar -->
-
         <div class="ui grid">
-            <div class="row">
-            <div class="column inverted">
-                <div class="ui grey three item inverted menu">
-                    <a class="item">
-                      Nav 1
-                    </a>
-                    <a class="item active">
-                      Nav 2
-                    </a>
-                    <a class="item">
-                      Nav 3
-                    </a>
+            <div class="ui black row">
+            <div class="ui center aligned column">
+                <h1>TITLE BAR</h1>
+            </div>
+            </div>
+        </div>
+        <div class="ui grid" style="min-height: 100%">
+            <div class="ui four wide column" style="background: #2f2f2f">
+                <div class="ui row">
+                    <div class="ui inverted three item menu">
+                        <a class="active item">Statistics</a>
+                        <a class="item">Map</a>
+                        <a class="item">Wikipedia</a>
+                    </div>
+                </div>
+
+                <div class="ui divider"></div>
+
+                <div class="ui row">
+                    <form class="ui inverted form">
+                        <div class="field">
+                            <label>Attribute</label>
+                            <input type="text" name="attribute" placeholder="Placeholder">
+                        </div>
+                        <div class="field">
+                            <label>Attribute</label>
+                            <input type="text" name="attribute" placeholder="Placeholder">
+                        </div>
+                        
+                        <div class="ui animated fluid button" tabindex="0">
+                            <div class="visible content">Submit</div>
+                            <div class="hidden content"><i class="right arrow icon"></i></div>
+                        </div>
+                    </form>
                 </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="four wide column inverted ">
-                <form class="ui inverted form">
-                    <div class="inverted field">
-                        <label>Attribute 1</label>
-                        <input type="text" name="attribute_one" placeholder="...">
+
+            <div class="ui twelve wide column">
+                <!-- Intro Row -->
+                <div class="intro">
+                    <div class="ui row">
+                        <div class="ui styled fluid accordion">
+                            <div class="active title">
+                                <i class="dropdown icon"></i>
+                                How to Use
+                            </div>
+                            <div class="active content">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed felis nisl, cursus id elit nec, facilisis malesuada velit. Fusce ut gravida quam. Aliquam placerat turpis elit. Proin malesuada placerat finibus. Morbi hendrerit odio eget felis feugiat consectetur. Donec quis nisi vitae magna dapibus euismod quis vel augue. Aenean sollicitudin felis non nulla convallis, sed maximus elit rhoncus. Suspendisse quis turpis eget orci gravida gravida ut et nibh. Vestibulum leo tellus, feugiat id tortor in, porttitor tristique lectus. Praesent laoreet vulputate auctor. Nunc faucibus lorem nunc, at imperdiet ex suscipit non. Maecenas porttitor nibh elit, vitae suscipit sapien interdum at. Praesent sagittis congue risus sed vulputate. Integer velit magna, tincidunt quis ipsum at, hendrerit sodales sem.</p>
+                            </p>
+                            </div>
+                            <div class="title">
+                                <i class="dropdown icon"></i>
+                                Close
+                            </div>
+                            <div class="content">
+                                <p>Oof</p>
+                            </div>
+                        </div>
+                        <div class="ui divider"></div>
                     </div>
-                    <div class="inverted field">
-                        <label>Attribute 2</label>
-                        <input type="text" name="attribute_two" placeholder="...">
+                </div>
+
+                <!-- Main Container -->
+                <!-- Have multiple divs that fly in and out -->
+                <div class="ui emptymain">
+                    <div class="ui row">
+                        <div class="ui segment">Nothing to see here yet! Use the options in the side bar to the left to display information!</div>
                     </div>
-                    <div class="inverted field">
-                        <label>Attribute 3</label>
-                        <input type="text" name="attribute_three" placeholder="...">
-                    </div>
-                    <div class="inverted field">
-                        <label>Attribute 4</label>
-                        <input type="text" name="attribute_three" placeholder="...">
-                    </div>
-                    <div class="inverted field">
-                        <label>Attribute 5</label>
-                        <input type="text" name="attribute_four" placeholder="...">
-                    </div>
-                    <div class="inverted field">
-                        <label>Attribute 6</label>
-                        <input type="text" name="attribute_five" placeholder="...">
-                    </div>
-                </form>
-            </div>
+                </div>
             </div>
         </div>
-
-        
     </body>
 </html>
