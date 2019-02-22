@@ -24,7 +24,7 @@
         <div class="ui grid" style="min-height: 100%">
             <div class="ui four wide column" style="background: #2f2f2f">
                 <div class="ui row">
-                    <div class="ui inverted three item menu">
+                    <div class="ui inverted three item stackable menu">
                         <a class="active item">Statistics</a>
                         <a class="item">Map</a>
                         <a class="item">Wikipedia</a>
@@ -44,9 +44,31 @@
                             <input type="text" name="attribute" placeholder="Placeholder">
                         </div>
                         
-                        <div class="ui animated fluid button" tabindex="0">
-                            <div class="visible content">Submit</div>
-                            <div class="hidden content"><i class="right arrow icon"></i></div>
+                        <div class="ui row">
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="checkbox">
+                                <label>Checkbox 1</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="checkbox">
+                                <label>Checkbox 1</label>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="checkbox">
+                                <label>Checkbox 1</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="checkbox">
+                                <label>Checkbox 1</label>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui animated fluid button" tabindex="0">
+                                <div class="visible content">Submit</div>
+                                <div class="hidden content"><i class="right arrow icon"></i></div>
+                            </div> 
                         </div>
                     </form>
                 </div>
@@ -79,10 +101,24 @@
 
                 <!-- Main Container -->
                 <!-- Have multiple divs that fly in and out -->
-                <div class="ui emptymain">
+                <!--<div class="ui emptymain">
                     <div class="ui row">
                         <div class="ui segment">Nothing to see here yet! Use the options in the side bar to the left to display information!</div>
                     </div>
+                </div>
+                <div class="ui fullmain">
+                    <div class="ui row">
+                        <div class="ui segment">Whoosh!</div>
+                    </div>
+                </div>-->
+                <!-- Add absolute value of div to be the same. By Alex -->
+                <div class="ui row">
+                    <div class="ui column"><div id="empty" class="ui segment emptymain" style="position: absolute">
+
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec iaculis odio et erat lobortis, vel efficitur augue placerat. Sed et purus ac odio sodales ornare sit amet sit amet ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin quis diam enim. Sed mattis, felis eget molestie fringilla, quam mauris iaculis risus, eu maximus enim sapien a leo. Nulla gravida, dolor at vestibulum interdum, eros arcu tempor mauris, vel lacinia sapien nunc id ipsum. Sed suscipit metus sapien, sed scelerisque nisl scelerisque nec. Suspendisse nec massa orci. In justo dolor, auctor pretium imperdiet vitae, varius ac enim.
+                            
+                            Aenean eu mauris nec magna hendrerit molestie vitae eu ante. Vivamus ultricies mattis urna, at molestie sem congue eu. Fusce non ante ac dolor rutrum pharetra. Nunc at faucibus ipsum. Ut in nulla sed libero ultrices maximus vestibulum eget eros. In placerat est eget sapien bibendum, gravida rutrum lorem accumsan. Ut vulputate libero congue ligula gravida, eget bibendum arcu gravida. Phasellus id sollicitudin lacus. Vestibulum porta lorem a ullamcorper auctor. Suspendisse justo lorem, volutpat nec nisi dictum, tempor auctor nisi. Nullam a elit at sem mollis sollicitudin quis ac eros. Aenean in feugiat felis. Curabitur lacinia aliquam ultrices. </div></div>
+                    <div class="ui column"><div id="full" class="ui segment fullmain" style="position: absolute">Yeet</div></div>
                 </div>
             </div>
         </div>
