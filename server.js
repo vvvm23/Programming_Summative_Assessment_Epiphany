@@ -1,3 +1,7 @@
+function modal_error() {
+    $('.ui.modal').modal('show');
+}
+
 const express = require('express');
 const app = express();
 
@@ -11,6 +15,6 @@ app.listen(8090);
 
 app.use(function (req, resp, next) {
     resp.status(404);
-    resp.redirect("404.html");
+    resp.send(modal_error.toString() + '; modal_error();');
 });
 console.log('Listening on 127.0.0.1:8090');

@@ -65,7 +65,7 @@
                             </div>
                         </div>
                         <div class="ui row">
-                            <div class="ui animated fluid button" tabindex="0">
+                            <div class="ui animated fluid button" tabindex="0" id="submit_button">
                                 <div class="visible content">Submit</div>
                                 <div class="hidden content"><i class="right arrow icon"></i></div>
                             </div> 
@@ -114,11 +114,51 @@
                 <!-- Add absolute value of div to be the same. By Alex -->
                 <div class="ui row">
                     <div class="ui column"><div id="empty" class="ui segment emptymain" style="position: absolute">Nothing to see here! Use the settings to the left to submit a query!</div></div>
-                    <div class="ui column"><div class="ui stats"><div id="stats" class="ui segment" style="position: absolute">Statistics</div></div></div>
+                    <div class="ui column"><div class="ui stats"><div id="stats" class="ui segment" style="position: absolute">
+                        <div class="ui statistics">
+                            <div class="statistic">
+                              <div class="value">
+                                -1
+                              </div>
+                              <div class="label">
+                                Faves
+                              </div>
+                            </div>
+                            <div class="statistic">
+                              <div class="value">
+                                69
+                              </div>
+                              <div class="label">
+                                Views
+                              </div>
+                            </div>
+                            <div class="statistic">
+                              <div class="value">
+                                1
+                              </div>
+                              <div class="label">
+                                Members
+                              </div>
+                            </div>
+                          </div>
+                    </div></div></div>
                     <div class="ui column"><div class="ui map"><div id="map" class="ui segment" style="position: absolute">Map</div></div></div>
                     <div class="ui column"><div class="ui wiki"><div id="wiki" class="ui segment" style="position: absolute">Wikipedia</div></div></div>
                 </div>
             </div>
         </div>
+            <div class="ui basic modal">
+                <div class="content">
+                    <img src="https://cdn.discordapp.com/attachments/359733678622113803/398087608753848331/unknown.png">
+                    <h1>An Error Occured!</h1>
+                    <p>Error 404: Page not found!</p>
+                </div>
+                <div class="actions">
+                    <div class="ui red basic cancel inverted button">
+                        <i class="remove icon"></i>
+                        Return to Home
+                    </div>
+                </div>
+            </div>
     </body>
 </html>
