@@ -14,6 +14,6 @@ app.get('/', function (req, resp) {
 app.listen(8090);
 
 app.use(function (req, resp, next) {
-    resp.status(404);
+    resp.status(404).send();
 });
 console.log('Listening on 127.0.0.1:8090');

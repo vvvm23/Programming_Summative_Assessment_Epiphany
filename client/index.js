@@ -1,6 +1,10 @@
 var a = 0;
 var b = 0;
 
+function modal_error(message) {
+    document.getElementById("modal_text").innerHTML = message;
+    $(".ui.modal").modal('show');
+}
 
 $(document).ready(function() {
     $(".stats").transition({animation: 'fly left',
@@ -13,14 +17,26 @@ $(document).ready(function() {
 
 $(document).ready(function () {
     $(".accordion").accordion();
+    /*accordion_close.addEventListener('click', function () {
+        console.log('accordion clicked');
+        $(".accordion").transition({animation: 'fly left',
+                                    duration: 1000});
+        $(".accordion_divider").transition({animation: 'fly left',
+                                            duration: 1000});
+    });*/
+
     submit_button.addEventListener('click', async function(event) {
+        $('.ui.accordion .individual').each(function(i){
+            $(this).parent().accordion('open',i);
+        });
+
         let resp;
         resp = await fetch('http://127.0.0.1:8090/invalid_page.html');
         let status = resp.status
         if (status !== 404) {
 
         } else {
-            $('.ui.modal').modal('show');
+            modal_error("Error 404: Page not found!");
         }
     })
 
