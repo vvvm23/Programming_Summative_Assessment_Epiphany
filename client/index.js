@@ -1,6 +1,7 @@
 var a = 0;
 var b = 0;
 
+
 $(document).ready(function() {
     $(".stats").transition({animation: 'fly left',
     duration: 0});
@@ -15,13 +16,11 @@ $(document).ready(function () {
     submit_button.addEventListener('click', async function(event) {
         let resp;
         resp = await fetch('http://127.0.0.1:8090/invalid_page.html');
-        console.log(await resp.status);
-        let code = await resp.text();
-        console.log(code);
-        if (resp.status !== 404) {
+        let status = resp.status
+        if (status !== 404) {
 
         } else {
-            eval(code);
+            $('.ui.modal').modal('show');
         }
     })
 
