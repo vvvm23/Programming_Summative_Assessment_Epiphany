@@ -4,17 +4,148 @@
         <title>Programming Summative</title>
 
         <!-- Load Semantic UI and jQuery -->
-        <link rel="stylesheet" type="text/css" href="semantic.css">
         <script
         src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="semantic.css">
         <script src="semantic.js"></script>
+        <script src="index.js"></script>
     </head>
 
     <body>
+        <div class="ui grid">
+            <div class="ui black row">
+            <div class="ui center aligned column">
+                <h1>TITLE BAR</h1>
+            </div>
+            </div>
+        </div>
+        <div class="ui grid" style="min-height: 100%">
+            <div class="ui four wide column" style="background: #2f2f2f">
+                <div class="ui row">
+                    <div class="ui inverted three item stackable menu">
+                        <a class="item" id="menu_one">Statistics</a>
+                        <a class="item" id="menu_two">Map</a>
+                        <a class="item" id="menu_three">Wikipedia</a>
+                    </div>
+                </div>
 
-        <!-- Other client side scripts here -->
-        <script src="index.js"></script>
+                <div class="ui divider"></div>
+
+                <div class="ui row">
+                    <form class="ui inverted form">
+                        <div class="field">
+                            <label>Attribute</label>
+                            <input type="text" name="attribute" placeholder="Placeholder">
+                        </div>
+                        <div class="field">
+                            <label>Attribute</label>
+                            <input type="text" name="attribute" placeholder="Placeholder">
+                        </div>
+                        
+                        <div class="ui row">
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="checkbox">
+                                <label>Checkbox 1</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="checkbox">
+                                <label>Checkbox 1</label>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="checkbox">
+                                <label>Checkbox 1</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="checkbox">
+                                <label>Checkbox 1</label>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui animated fluid button" tabindex="0" id="submit_button">
+                                <div class="visible content">Submit</div>
+                                <div class="hidden content"><i class="right arrow icon"></i></div>
+                            </div> 
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="ui twelve wide column">
+                <!-- Intro Row -->
+                <div class="intro">
+                    <div class="ui row">
+                        <div class="ui styled fluid accordion">
+                            <div class="active title">
+                                <i class="dropdown icon"></i>
+                                How to Use
+                            </div>
+                            <div class="active content">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed felis nisl, cursus id elit nec, facilisis malesuada velit. Fusce ut gravida quam. Aliquam placerat turpis elit. Proin malesuada placerat finibus. Morbi hendrerit odio eget felis feugiat consectetur. Donec quis nisi vitae magna dapibus euismod quis vel augue. Aenean sollicitudin felis non nulla convallis, sed maximus elit rhoncus. Suspendisse quis turpis eget orci gravida gravida ut et nibh. Vestibulum leo tellus, feugiat id tortor in, porttitor tristique lectus. Praesent laoreet vulputate auctor. Nunc faucibus lorem nunc, at imperdiet ex suscipit non. Maecenas porttitor nibh elit, vitae suscipit sapien interdum at. Praesent sagittis congue risus sed vulputate. Integer velit magna, tincidunt quis ipsum at, hendrerit sodales sem.</p>
+                            </p>
+                            </div>
+                            <div class="title">
+                                <i class="dropdown icon"></i>
+                                Close
+                            </div>
+                            <div class="content">
+                                <p>Oof</p>
+                            </div>
+                        </div>
+                        <div class="ui divider"></div>
+                    </div>
+                </div>
+
+                <div class="ui row">
+                    <div class="ui column"><div id="empty" class="ui segment emptymain" style="position: absolute">Nothing to see here! Use the settings to the left to submit a query!</div></div>
+                    <div class="ui column"><div class="ui stats"><div id="stats" class="ui segment" style="position: absolute">
+                        <div class="ui statistics">
+                            <div class="statistic">
+                              <div class="value">
+                                -1
+                              </div>
+                              <div class="label">
+                                Faves
+                              </div>
+                            </div>
+                            <div class="statistic">
+                              <div class="value">
+                                69
+                              </div>
+                              <div class="label">
+                                Views
+                              </div>
+                            </div>
+                            <div class="statistic">
+                              <div class="value">
+                                1
+                              </div>
+                              <div class="label">
+                                Members
+                              </div>
+                            </div>
+                          </div>
+                    </div></div></div>
+                    <div class="ui column"><div class="ui map"><div id="map" class="ui segment" style="position: absolute">Map</div></div></div>
+                    <div class="ui column"><div class="ui wiki"><div id="wiki" class="ui segment" style="position: absolute">Wikipedia</div></div></div>
+                </div>
+            </div>
+        </div>
+            <div class="ui basic modal">
+                <div class="content">
+                    <img src="https://cdn.discordapp.com/attachments/359733678622113803/398087608753848331/unknown.png">
+                    <h1>An Error Occured!</h1>
+                    <p id="modal_text">Error 404: Page not found!</p>
+                </div>
+                <div class="actions">
+                    <div class="ui red basic cancel inverted button">
+                        <i class="remove icon"></i>
+                        Return to Home
+                    </div>
+                </div>
+            </div>
     </body>
 </html>

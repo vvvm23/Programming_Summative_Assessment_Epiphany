@@ -11,6 +11,10 @@ app.get('/', function (req, resp) {
 
 });
 
+app.get('/query', function (req, resp) {
+
+});
+
 app.listen(8090);
 
 app.use(function (req, resp, next) {
