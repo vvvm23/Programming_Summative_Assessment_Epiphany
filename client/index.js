@@ -1,22 +1,24 @@
-var a = 0;
-var b = 0;
+//var a = 0;
+//var b = 0;
 
 function modal_error(message) {
     document.getElementById("modal_text").innerHTML = message;
     $(".ui.modal").modal('show');
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
+    let a = 0; //maybe rename these
+    let b = 0;
+
+    $(".accordion").accordion();
+
     $(".stats").transition({animation: 'fly left',
     duration: 0});
     $(".map").transition({animation: 'fly left',
     duration: 0});
     $(".wiki").transition({animation: 'fly left',
     duration: 0});
-});
 
-$(document).ready(function () {
-    $(".accordion").accordion();
     /*accordion_close.addEventListener('click', function () {
         console.log('accordion clicked');
         $(".accordion").transition({animation: 'fly left',
