@@ -19,6 +19,13 @@ $(document).ready(function () {
     $(".wiki").transition({animation: 'fly left',
     duration: 0});
 
+    //let map_width = document.getElementById('map_column').offsetWidth;
+    //let map_height = document.getElementById('map_column').offsetHeight;
+
+    let map_width = document.getElementById('map').offsetWidth;
+    let map_height = document.getElementById('map').offsetHeight;    
+    console.log(map_width + ":" + map_height)
+    document.getElementById('map_image').src = "https://image.maps.api.here.com/mia/1.6/mapview?app_id=RUw2eiQLvRoOmpWww3e7&app_code=Jd2W3CtG6MJl0OL-LBoLAg&lat=0.0&lon=0.0&z=2&w="+map_width+"&h="+map_height;
     /*accordion_close.addEventListener('click', function () {
         console.log('accordion clicked');
         $(".accordion").transition({animation: 'fly left',
