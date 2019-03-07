@@ -1,6 +1,7 @@
 //var a = 0;
 //var b = 0;
 
+
 function modal_error(message) {
     document.getElementById("modal_text").innerHTML = message;
     $(".ui.modal").modal('show');
@@ -9,6 +10,9 @@ function modal_error(message) {
 $(document).ready(function () {
     let a = 0; //maybe rename these
     let b = 0;
+
+    let map_width = 0;
+    let map_height = 0;
 
     $(".accordion").accordion();
 
@@ -19,11 +23,8 @@ $(document).ready(function () {
     $(".wiki").transition({animation: 'fly left',
     duration: 0});
 
-    //let map_width = document.getElementById('map_column').offsetWidth;
-    //let map_height = document.getElementById('map_column').offsetHeight;
-
-    let map_width = Math.floor(document.getElementById('map_column').offsetWidth * 0.95);
-    let map_height = Math.floor(document.getElementById('map_column').offsetHeight);    
+    map_width = Math.floor(document.getElementById('map_column').offsetWidth * 0.95);
+    map_height = Math.floor(document.getElementById('map_column').offsetHeight);    
     console.log(map_width + ":" + map_height)
     document.getElementById('map_image').src = "https://image.maps.api.here.com/mia/1.6/mapview?app_id=RUw2eiQLvRoOmpWww3e7&app_code=Jd2W3CtG6MJl0OL-LBoLAg&lat=0.0&lon=0.0&z=3&w="+map_width+"&h="+map_height;
     /*accordion_close.addEventListener('click', function () {
