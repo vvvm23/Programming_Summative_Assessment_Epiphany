@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 
 // Load json dataset into memory //
+let json_name = require('./json/country-by-name.json');
 let json_abbreviation = require('./json/country-by-abbreviation.json');
 let json_average_height = require('./json/country-by-avg-male-height.json');
 let json_calling_code = require('./json/country-by-calling-code.json');
@@ -25,6 +26,17 @@ let json_population = require('./json/country-by-population.json');
 let json_region = require('./json/country-by-region-in-world.json');
 let json_area = require('./json/country-by-surface-area.json');
 let json_temperature = require('./json/country-by-yearly-average-temperature.json');
+
+let json_combined = [];
+
+function find_country(name) {
+    // Map to closet country name
+    // Then find index in json_name and return
+}
+
+function get_country_statistics(index) {
+    return json_combined[index];
+}
 
 app.use(express.static('client'));
 
