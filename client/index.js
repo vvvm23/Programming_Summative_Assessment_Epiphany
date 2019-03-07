@@ -36,19 +36,23 @@ $(document).ready(function () {
     });*/
 
     submit_button.addEventListener('click', async function(event) {
-        $('.ui.accordion .individual').each(function(i){
-            $(this).parent().accordion('open',i);
-        });
-        document.getElementById('map_image').src = "https://image.maps.api.here.com/mia/1.6/mapview?app_id=RUw2eiQLvRoOmpWww3e7&app_code=Jd2W3CtG6MJl0OL-LBoLAg&lat=15.5007&lon=32.5599&z=5&w="+map_width+"&h="+map_height;
 
-        let resp;
-        resp = await fetch('http://127.0.0.1:8090/invalid_page.html');
-        let status = resp.status
-        if (status !== 404) {
+        let lat = document.getElementById('attribute_one').value;
+        let lon = document.getElementById('attribute_two').value;
+        let zoom = document.getElementById('attribute_three').value;
 
-        } else {
-            modal_error("Error 404: Page not found!");
-        }
+        fetch('http://127.0.0.1:8090/map?lat='+lat+'&lon='+lon+'&z='+zoom+'&x=1500&y=700')
+        .then(function(resp) {
+            if (resp.status === 404) {
+                modal_error("Error 404: Page not found!");
+                throw new Error("404 Error");
+            } else {
+                return resp;
+            }
+        })
+        .then(resp=>resp.clone().json())
+        .then(x=>document.getElementById('map_image').src = x['map_url'])
+        .catch(err=>console.log(err));
     })
 
     document.getElementById('menu_one').onclick = function() {
