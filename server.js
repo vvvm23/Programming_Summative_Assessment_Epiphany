@@ -19,7 +19,7 @@ function get_country_statistics(index, toggles) {
 
     /*  Returns - Make toggleable
         Name: common, official, native X
-        Domain
+        Domain X
         Independance
         Currency X
         Calling Code
@@ -32,7 +32,7 @@ function get_country_statistics(index, toggles) {
         People's Name X
         Landlocked X
         Borders X
-        Surface Area
+        Surface Area X
         Flag Emoji
     */
     // Return based on query url parameters
