@@ -21,17 +21,17 @@ function get_country_statistics(index, toggles) {
         Name: common, official, native X
         Domain
         Independance
-        Currency
+        Currency X
         Calling Code
-        Capital
-        Region
-        Subregion
-        Languages
+        Capital X
+        Region X
+        Subregion X
+        Languages X
         Translations
-        LatLng
-        People's Name
-        Landlocked
-        Borders
+        LatLng X
+        People's Name X
+        Landlocked X
+        Borders X
         Surface Area
         Flag Emoji
     */
