@@ -41,7 +41,7 @@ $(document).ready(function () {
         let lon = document.getElementById('attribute_two').value;
         let zoom = document.getElementById('attribute_three').value;
 
-        fetch('http://127.0.0.1:8090/map?lat='+lat+'&lon='+lon+'&z='+zoom+'&x=1500&y=700')
+        fetch('http://127.0.0.1:8090/map?lat='+lat+'&t=1&lon='+lon+'&z='+zoom+'&x=1500&y=700')
         .then(function(resp) {
             if (resp.status === 404) {
                 modal_error("Error 404: Page not found!");
