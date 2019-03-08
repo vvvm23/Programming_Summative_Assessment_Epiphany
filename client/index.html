@@ -34,7 +34,90 @@
                 <div class="ui divider"></div>
 
                 <div class="ui row">
-                    <form class="ui inverted form">
+                    <form class="ui inverted form" id="country_form">
+                        <div class="field">
+                            <label>Name<p style="float: right">None Selected</p></label>
+                            <input name="country_name" placeholder="Country">
+                        </div>
+                        <div class="ui row">                       
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="check_">
+                                <label>Check</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="check_">
+                                <label>Check</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="check_">
+                                <label>Check</label>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="check_">
+                                <label>Check</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="check_">
+                                <label>Check</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="check_">
+                                <label>Check</label>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="check_">
+                                <label>Check</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="check_">
+                                <label>Check</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="check_">
+                                <label>Check</label>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="check_">
+                                <label>Check</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="check_">
+                                <label>Check</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="check_">
+                                <label>Check</label>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="check_">
+                                <label>Check</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="check_">
+                                <label>Check</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="check_">
+                                <label>Check</label>
+                            </div>
+                        </div> 
+                        <div class="ui row">
+                            <div class="ui animated fluid button" tabindex="0" id="map_submit">
+                                <div class="visible content">Submit</div>
+                                <div class="hidden content"><i class="right arrow icon"></i></div>
+                            </div> 
+                        </div>
+                    </form>
+                    <div class="ui divider"></div>
+                    <form class="ui inverted form" id="map_form">
                         <div class="field">
                             <label>LATITUDE</label>
                             <input type="number" name="attribute" placeholder="Placeholder" id="attribute_one">
@@ -47,26 +130,12 @@
                             <label>ZOOM</label>
                             <input type="number" name="attribute" placeholder="Placeholder" id="attribute_three">
                         </div>
-                        
-                        <div class="ui row">
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="checkbox">
-                                <label>Checkbox 1</label>
-                            </div>
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="checkbox">
-                                <label>Checkbox 1</label>
-                            </div>
-                        </div>
-                        <div class="ui row">
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="checkbox">
-                                <label>Checkbox 1</label>
-                            </div>
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="checkbox">
-                                <label>Checkbox 1</label>
-                            </div>
+                        <div class="field">
+                            <label>Map Type</label>
+                            <select name="map_type">
+                                <option value="default">Default</option>
+                                <option value="satellite">Satellite</option>
+                            </select>
                         </div>
                         <div class="ui row">
                             <div class="ui animated fluid button" tabindex="0" id="submit_button">
@@ -121,7 +190,7 @@
                         </div></div></div>
                         <div id="map_column" class="ui sixteen wide column" style="position: absolute; min-height: 70%"><div class="ui map">
                             <div id="map" class="ui fluid segment" style="position: absolute">
-                                <img id="map_image" src="">
+                                <img id = "map_image" src = "">
                             </div>
                         </div></div>
                     <div class="ui sixteen wide column" style="position: absolute"><div class="ui wiki"><div id="wiki" class="ui segment" style="position: absolute">Wikipedia</div></div></div>

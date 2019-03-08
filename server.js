@@ -18,7 +18,7 @@ function get_country_statistics(index, toggles) {
     // ..or process on client side
 
     /*  Returns - Make toggleable
-        Name: common, official, native
+        Name: common, official, native X
         Domain
         Independance
         Currency

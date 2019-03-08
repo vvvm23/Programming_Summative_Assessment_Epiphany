@@ -23,9 +23,10 @@ $(document).ready(function () {
     $(".wiki").transition({animation: 'fly left',
     duration: 0});
 
-    map_width = Math.floor(document.getElementById('map_column').offsetWidth * 0.95);
-    map_height = Math.floor(document.getElementById('map_column').offsetHeight);    
+    map_width = Math.floor(document.getElementById('map_column').offsetWidth * 0.9);
+    map_height = Math.floor(document.getElementById('map_column').offsetHeight * 0.9);    
     console.log(map_width + ":" + map_height)
+
     document.getElementById('map_image').src = "https://image.maps.api.here.com/mia/1.6/mapview?app_id=RUw2eiQLvRoOmpWww3e7&app_code=Jd2W3CtG6MJl0OL-LBoLAg&lat=0.0&lon=0.0&z=3&w="+map_width+"&h="+map_height;
     /*accordion_close.addEventListener('click', function () {
         console.log('accordion clicked');
@@ -41,7 +42,7 @@ $(document).ready(function () {
         let lon = document.getElementById('attribute_two').value;
         let zoom = document.getElementById('attribute_three').value;
 
-        fetch('http://127.0.0.1:8090/map?lat='+lat+'&t=1&lon='+lon+'&z='+zoom+'&x=1500&y=700')
+        fetch('http://127.0.0.1:8090/map?lat='+lat+'&t=1&lon='+lon+'&z='+zoom+'&x='+map_width+'&y='+map_height)
         .then(function(resp) {
             if (resp.status === 404) {
                 modal_error("Error 404: Page not found!");
