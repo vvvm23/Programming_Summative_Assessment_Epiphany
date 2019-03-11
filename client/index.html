@@ -118,24 +118,30 @@
                     </form>
                     <div class="ui divider"></div>
                     <form class="ui inverted form" id="map_form">
-                        <div class="field" style="width: 49%; float: left">
-                            <label>Latitude</label>
-                            <input type="number" name="attribute" placeholder="Placeholder" id="attribute_one">
+                        <div class="inline fields">
+                            <div class="five wide inline field">
+                                <label>Latitude</label>
+                                <input type="number" name="attribute" placeholder="Placeholder" id="attribute_one">
+                            </div>
+                            <div class="three wide inline field"></div>
+                            <div class="five wide inline field">
+                                <label>Longitude</label>
+                                <input type="number" name="attribute" placeholder="Placeholder" id="attribute_two">
+                            </div>
                         </div>
-                        <div class="field" style="width: 49%; float: right">
-                            <label>Longitude</label>
-                            <input type="number" name="attribute" placeholder="Placeholder" id="attribute_two">
-                        </div>
-                        <div class="field">
-                            <label>Zoom</label>
-                            <input type="number" name="attribute" placeholder="Placeholder" id="attribute_three">
-                        </div>
-                        <div class="field">
-                            <label>Map Type</label>
-                            <select name="map_type">
-                                <option value="default">Default</option>
-                                <option value="satellite">Satellite</option>
-                            </select>
+                        <div class="inline fields">
+                            <div class="five wide inline field">
+                                <label>Zoom</label>
+                                <input type="number" name="attribute" placeholder="Placeholder" id="attribute_three">
+                            </div>
+                            <div class="three wide inline field"></div>
+                            <div class="eleven wide inline field">
+                                <label>Map Type</label>
+                                <select name="map_type">
+                                    <option value="default">Default</option>
+                                    <option value="satellite">Satellite</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="ui row">
                             <div class="ui animated fluid button" tabindex="0" id="submit_button">
