@@ -39,76 +39,111 @@
                             <label>Name<p style="float: right">None Selected</p></label>
                             <input name="country_name" placeholder="Country">
                         </div>
-                        <div class="ui row">                       
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="check_">
-                                <label>Region</label>
+                        <div class="inline fields">
+                            <div class="one wide inline field"></div>
+                            <div class="five wide inline field">
+                                <div class="ui toggle checkbox">
+                                    <input type="checkbox" name="check_region">
+                                    <label>Region</label>  
+                                </div>   
                             </div>
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="check_">
-                                <label>Subregion</label>
+                            <div class="five wide inline field">
+                                <div class="ui toggle checkbox">
+                                    <input type="checkbox" name="check_subregion">
+                                    <label>Subregion</label>
+                                </div>
                             </div>
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="check_">
-                                <label>Capital</label>
-                            </div>
-                        </div>
-                        <div class="ui row">
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="check_">
-                                <label>Currency</label>
-                            </div>
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="check_">
-                                <label>Languages</label>
-                            </div>
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="check_">
-                                <label>People's Name</label>
+                            <div class="five wide inline field">
+                                <div class="ui toggle checkbox">
+                                    <input type="checkbox" name="check_capital">
+                                    <label>Capital</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="ui row">
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="check_">
-                                <label>Independance</label>
+                        <div class="inline fields">
+                            <div class="one wide inline field"></div>
+                            <div class="five wide inline field">
+                                <div class="ui toggle checkbox">
+                                    <input type="checkbox" name="check_currency">
+                                    <label>Currency</label>
+                                </div>
                             </div>
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="check_">
-                                <label>Translations</label>
+                            <div class="five wide inline field">
+                                <div class="ui toggle checkbox">
+                                    <input type="checkbox" name="check_languages">
+                                    <label>Languages</label>
+                                </div>
                             </div>
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="check_">
-                                <label>Flag</label>
-                            </div>
-                        </div>
-                        <div class="ui row">
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="check_">
-                                <label>LatLng</label>
-                            </div>
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="check_">
-                                <label>Borders</label>
-                            </div>
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="check_">
-                                <label>Landlocked</label>
+                            <div class="five wide inline field">
+                                <div class="ui toggle checkbox">
+                                    <input type="checkbox" name="check_citzen">
+                                    <label>People's Name</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="ui row">
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="check_">
-                                <label>Domain</label>
+                        <div class="inline fields">
+                            <div class="one wide inline field"></div>
+                            <div class="five wide inline field">
+                                <div class="ui toggle checkbox">
+                                    <input type="checkbox" name="check_independance">
+                                    <label>Independance</label>
+                                </div>
                             </div>
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="check_">
-                                <label>Translations</label>
+                            <div class="five wide inline field">
+                                <div class="ui toggle checkbox">
+                                    <input type="checkbox" name="check_translations">
+                                    <label>Translations</label>
+                                </div>
                             </div>
-                            <div class="ui checkbox">
-                                <input type="checkbox" name="check_">
-                                <label>Calling Code</label>
+                            <div class="five wide inline field">
+                                <div class="ui toggle checkbox">
+                                    <input type="checkbox" name="check_flag">
+                                    <label>Flag</label>
+                                </div>
                             </div>
-                        </div> 
+                        </div>
+                        <div class="inline fields">
+                            <div class="one wide inline field"></div>
+                            <div class="five wide inline field">
+                                <div class="ui toggle checkbox">
+                                    <input type="checkbox" name="check_latlng">
+                                    <label>LatLng</label>
+                                </div>
+                            </div>
+                            <div class="five wide inline field">
+                                <div class="ui toggle checkbox">
+                                    <input type="checkbox" name="check_borders">
+                                    <label>Borders</label>
+                                </div>
+                            </div>
+                            <div class="five wide inline field">
+                                <div class="ui toggle checkbox">
+                                    <input type="checkbox" name="check_landlocked">
+                                    <label>Landlocked</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="inline fields">
+                            <div class="one wide inline field"></div>
+                            <div class="five wide inline field">
+                                <div class="ui toggle checkbox">
+                                    <input type="checkbox" name="check_area">
+                                    <label>Area</label>
+                                </div>
+                            </div>
+                            <div class="five wide inline field">
+                                <div class="ui toggle checkbox">
+                                    <input type="checkbox" name="check_callingcode">
+                                    <label>Calling Code</label>
+                                </div>
+                            </div>
+                            <div class="five wide inline field">
+                                <div class="ui toggle checkbox">
+                                    <input type="checkbox" name="check_domain">
+                                    <label>Domain</label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="ui row">
                             <div class="ui animated fluid button" tabindex="0" id="map_submit">
                                 <div class="visible content">Submit</div>
@@ -119,24 +154,30 @@
                     <div class="ui divider"></div>
                     <form class="ui inverted form" id="map_form">
                         <div class="inline fields">
-                            <div class="five wide inline field">
+                            <div class="two wide inline field">
                                 <label>Latitude</label>
+                            </div>
+                            <div class="six wide inline field">
                                 <input type="number" name="attribute" placeholder="Placeholder" id="attribute_one">
                             </div>
-                            <div class="three wide inline field"></div>
-                            <div class="five wide inline field">
+                            <div class="two wide inline field">
                                 <label>Longitude</label>
+                            </div>
+                            <div class="six wide inline field">
                                 <input type="number" name="attribute" placeholder="Placeholder" id="attribute_two">
                             </div>
                         </div>
                         <div class="inline fields">
-                            <div class="five wide inline field">
+                            <div class="two wide inline field">
                                 <label>Zoom</label>
+                            </div>
+                            <div class="six wide inline field">
                                 <input type="number" name="attribute" placeholder="Placeholder" id="attribute_three">
                             </div>
-                            <div class="three wide inline field"></div>
-                            <div class="eleven wide inline field">
+                            <div class="two wide inline field">
                                 <label>Map Type</label>
+                            </div>
+                            <div class="six wide inline field">
                                 <select name="map_type">
                                     <option value="default">Default</option>
                                     <option value="satellite">Satellite</option>

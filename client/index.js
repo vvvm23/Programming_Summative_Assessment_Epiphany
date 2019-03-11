@@ -7,6 +7,7 @@ function modal_error(message) {
     $(".ui.modal").modal('show');
 }
 
+
 $(document).ready(function () {
     let a = 0; //maybe rename these
     let b = 0;
@@ -23,18 +24,36 @@ $(document).ready(function () {
     $(".wiki").transition({animation: 'fly left',
     duration: 0});
 
-    map_width = Math.floor(document.getElementById('map_column').offsetWidth * 0.9);
-    map_height = Math.floor(document.getElementById('map_column').offsetHeight * 0.9);    
+    map_width = Math.floor(document.getElementById('map_column').offsetWidth * 0.97);
+    map_height = Math.floor(document.getElementById('map_column').offsetHeight * 0.97);    
     console.log(map_width + ":" + map_height)
 
+    window.onresize = async function() {
+        map_width = Math.floor(document.getElementById('map_column').offsetWidth * 0.97);
+        map_height = Math.floor(document.getElementById('map_column').offsetHeight * 0.97);    
+        console.log(map_width + ":" + map_height)
+
+        // This point on maybe
+        // Probably not best to have this here
+        let lat = document.getElementById('attribute_one').value;
+        let lon = document.getElementById('attribute_two').value;
+        let zoom = document.getElementById('attribute_three').value;
+
+        fetch('http://127.0.0.1:8090/map?lat='+lat+'&t=1&lon='+lon+'&z='+zoom+'&x='+map_width+'&y='+map_height)
+        .then(function(resp) {
+            if (resp.status === 404) {
+                modal_error("Error 404: Page not found!");
+                throw new Error("404 Error");
+            } else {
+                return resp;
+            }
+        })
+        .then(resp=>resp.clone().json())
+        .then(x=>document.getElementById('map_image').src = x['map_url'])
+        .catch(err=>console.log(err));
+    }  
+
     document.getElementById('map_image').src = "https://image.maps.api.here.com/mia/1.6/mapview?app_id=RUw2eiQLvRoOmpWww3e7&app_code=Jd2W3CtG6MJl0OL-LBoLAg&lat=0.0&lon=0.0&z=3&w="+map_width+"&h="+map_height;
-    /*accordion_close.addEventListener('click', function () {
-        console.log('accordion clicked');
-        $(".accordion").transition({animation: 'fly left',
-                                    duration: 1000});
-        $(".accordion_divider").transition({animation: 'fly left',
-                                            duration: 1000});
-    });*/
 
     submit_button.addEventListener('click', async function(event) {
 
