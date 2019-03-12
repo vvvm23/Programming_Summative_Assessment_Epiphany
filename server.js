@@ -4,7 +4,7 @@ const app = express();
 // Load json dataset into memory //
 
 let json_countries = require('./json/countries.json');
-
+console.log(json_countries[123])
 function find_country(name) {
     // Map to closest country name
     // Then find index in json_name and return
