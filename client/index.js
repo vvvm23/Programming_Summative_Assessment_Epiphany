@@ -104,7 +104,6 @@ $(document).ready(function () {
             domain : document.getElementById('check_domain').checked
         };
         let query_name = document.getElementById('country_name').value;
-        console.log(JSON.stringify(checkbox))
 
         fetch('http://'+IP+':'+PORT+'/query?name='+query_name, {
             method: 'POST',
@@ -121,7 +120,8 @@ $(document).ready(function () {
                 return resp;
             }
         })
-        .then(resp => console.log(resp))
+        .then(resp => resp.json())
+        .then(r_json => console.log(r_json))
         .catch(err => console.log(err));
     });
 

@@ -2,12 +2,11 @@ const express = require('express');
 const app = express();
 
 const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 // Load json dataset into memory //
 
 let json_countries = require('./json/countries.json');
-console.log(json_countries[123])
 function find_country(name) {
     // Map to closest country name
     // Then find index in json_name and return
@@ -40,7 +39,11 @@ function get_country_statistics(index, toggles) {
     */
     // Return based on query url parameters
 
-    return json_countries[index];
+    let full_country_data = json_countries[index];
+    let reduced_country_data = {};
+    // pick data here
+
+    return reduced_country_data;
 }
 
 function get_map(settings) {
@@ -65,9 +68,12 @@ app.get('/', function (req, resp) {
 });
 
 app.post('/query', function (req, resp) {
-    console.log('ding');
-    console.log(req.query.name);
-    console.log(req.body);
+    let index = find_country(req.query.name);
+    let resp_json;
+    if (index != -1) {
+        resp_json = get_country_statistics(index, req.body);
+    }
+    resp.send(resp_json);
 });
 
 app.get('/wiki', function (req, resp) {
