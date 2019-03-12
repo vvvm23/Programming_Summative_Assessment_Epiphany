@@ -9,6 +9,9 @@ function modal_error(message) {
 
 
 $(document).ready(function () {
+    const IP = '127.0.0.1';
+    const PORT = '8090'
+
     let a = 0; //maybe rename these
     let b = 0;
 
@@ -56,8 +59,6 @@ $(document).ready(function () {
         .catch(err=>console.log(err));
     }  
 
-    document.getElementById('map_image').src = "https://image.maps.api.here.com/mia/1.6/mapview?app_id=RUw2eiQLvRoOmpWww3e7&app_code=Jd2W3CtG6MJl0OL-LBoLAg&lat=0.0&lon=0.0&z=3&w="+map_width+"&h="+map_height;
-
     submit_map.addEventListener('click', async function(event) {
 
         let lat = document.getElementById('attribute_one').value;
@@ -68,7 +69,7 @@ $(document).ready(function () {
             t = 1;
         }
 
-        fetch('http://127.0.0.1:8090/map?lat='+lat+'&t='+t+'&lon='+lon+'&z='+zoom+'&x='+map_width+'&y='+map_height)
+        fetch('http://'+IP+':'+PORT+'/map?lat='+lat+'&t='+t+'&lon='+lon+'&z='+zoom+'&x='+map_width+'&y='+map_height)
         .then(function(resp) {
             if (resp.status === 404) {
                 modal_error("Error 404: Page not found!");
@@ -83,23 +84,45 @@ $(document).ready(function () {
     })
 
     submit_country.addEventListener('click', async function(event) {
-        let checkboxes = {
-            region: document.getElementById('check_region').value,
-            subregion: document.getElementById('check_subregion').value,
-            capital: document.getElementById('check_capital').value,
-            currency: document.getElementById('check_currency').value,
-            languages: document.getElementById('check_languages').value,
-            citizen: document.getElementById('check_citizen').value,
-            independance: document.getElementById('check_independance').value,
-            translations: document.getElementById('check_translations').value,
-            flag: document.getElementById('check_flag').value,
-            latlng: document.getElementById('check_latlng').value,
-            borders: document.getElementById('check_borders').value,
-            landlocked: document.getElementById('check_landlocked').value,
-            area: document.getElementById('check_area').value,
-            calling_code: document.getElementById('check_callingcode').value,
-            domain: document.getElementById('check_domain').value
-        }
+        // check if we are allowed to send over json rather than restricted to just url
+        let checkbox_encoded = '';
+        let checkbox = {
+            region : document.getElementById('check_region').checked,
+            subregion : document.getElementById('check_subregion').checked ,
+            capital : document.getElementById('check_capital').checked ,
+            currency : document.getElementById('check_currency').checked,
+            languages : document.getElementById('check_languages').checked,
+            citizen : document.getElementById('check_citizen').checked ,
+            independance : document.getElementById('check_independance').checked,
+            translations : document.getElementById('check_translations').checked,
+            flag : document.getElementById('check_flag').checked,
+            latlng : document.getElementById('check_latlng').checked,
+            borders : document.getElementById('check_borders').checked,
+            landlocked : document.getElementById('check_landlocked').checked ,
+            area : document.getElementById('check_area').checked ,
+            callingcode : document.getElementById('check_callingcode').checked ,
+            domain : document.getElementById('check_domain').checked
+        };
+        let query_name = document.getElementById('country_name').value;
+        console.log(JSON.stringify(checkbox))
+
+        fetch('http://'+IP+':'+PORT+'/query?name='+query_name, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(checkbox)
+        })
+        .then(function(resp) {
+            if (resp.status === 404) {
+                modal_error("Error 404: Page not found!");
+                throw new Error("404 Error");
+            } else {
+                return resp;
+            }
+        })
+        .then(resp => console.log(resp))
+        .catch(err => console.log(err));
     });
 
     document.getElementById('menu_one').onclick = function() {

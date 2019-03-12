@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 // Load json dataset into memory //
 
 let json_countries = require('./json/countries.json');
@@ -61,9 +64,10 @@ app.get('/', function (req, resp) {
     
 });
 
-app.get('/query', function (req, resp) {
-    // Query in memory JSON
-    let i = req.query.i;
+app.post('/query', function (req, resp) {
+    console.log('ding');
+    console.log(req.query.name);
+    console.log(req.body);
 });
 
 app.get('/wiki', function (req, resp) {
