@@ -1,12 +1,15 @@
-//var a = 0;
-//var b = 0;
-
-
 function modal_error(message) {
     document.getElementById("modal_text").innerHTML = message;
     $(".ui.modal").modal('show');
 }
 
+function resize_map() {
+    let map_width = window.width - document.getElementById('menu_col').width
+    let map_height = window.height - document.getElementById('intro_row').height - document.getElementById('title_row').height;
+    console.log(map_width + ' : ' + map_height);
+    document.getElementById('map_image').width = map_width;
+    document.getElementById('map_image').height = map_height;
+}
 
 $(document).ready(function () {
     const IP = '127.0.0.1';
@@ -30,34 +33,11 @@ $(document).ready(function () {
     $(".wiki").transition({animation: 'fly left',
     duration: 0});
 
-    map_width = Math.floor(document.getElementById('map_column').offsetWidth * 0.97);
+    /*map_width = Math.floor(document.getElementById('map_column').offsetWidth * 0.97);
     map_height = Math.floor(document.getElementById('map_column').offsetHeight * 0.97);    
-    console.log(map_width + ":" + map_height)
+    console.log(map_width + ":" + map_height)*/
 
-    window.onresize = async function() {
-        map_width = Math.floor(document.getElementById('map_column').offsetWidth * 0.97);
-        map_height = Math.floor(document.getElementById('map_column').offsetHeight * 0.97);    
-        console.log(map_width + ":" + map_height)
-
-        // This point on maybe
-        // Probably not best to have this here
-        let lat = document.getElementById('attribute_one').value;
-        let lon = document.getElementById('attribute_two').value;
-        let zoom = document.getElementById('attribute_three').value;
-
-        fetch('http://127.0.0.1:8090/map?lat='+lat+'&t=1&lon='+lon+'&z='+zoom+'&x='+map_width+'&y='+map_height)
-        .then(function(resp) {
-            if (resp.status === 404) {
-                modal_error("Error 404: Page not found!");
-                throw new Error("404 Error");
-            } else {
-                return resp;
-            }
-        })
-        .then(resp=>resp.clone().json())
-        .then(x=>document.getElementById('map_image').src = x['map_url'])
-        .catch(err=>console.log(err));
-    }  
+    window.onresize = resize_map();
 
     submit_map.addEventListener('click', async function(event) {
 
@@ -69,7 +49,7 @@ $(document).ready(function () {
             t = 1;
         }
 
-        fetch('http://'+IP+':'+PORT+'/map?lat='+lat+'&t='+t+'&lon='+lon+'&z='+zoom+'&x='+map_width+'&y='+map_height)
+        fetch('http://'+IP+':'+PORT+'/map?lat='+lat+'&t='+t+'&lon='+lon+'&z='+zoom+'&x='+MAP_RES_X+'&y='+MAP_RES_Y)
         .then(function(resp) {
             if (resp.status === 404) {
                 modal_error("Error 404: Page not found!");
@@ -80,6 +60,7 @@ $(document).ready(function () {
         })
         .then(resp=>resp.clone().json())
         .then(x=>document.getElementById('map_image').src = x['map_url'])
+        .then(resize_map())
         .catch(err=>console.log(err));
     })
 
