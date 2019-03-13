@@ -5,14 +5,14 @@ function modal_error(message) {
 
 function resize_map() {
     let map_width = window.innerWidth -  parseInt($('#menu_col').css('width'), 10)
-    let map_height = window.innerHeight - parseInt($('#intro_row').css('height'),10) - parseInt($('#title_row').css('height'),10);
-    console.log('Window width: ' + window.innerWidth);
+    let map_height = window.innerHeight - parseInt($('#intro_row').css('height'), 10) - parseInt($('#title_row').css('height'), 10);
+    document.getElementById('map_image').width = map_width;
+    document.getElementById('map_image').height = map_height;
+    /*console.log('Window width: ' + window.innerWidth);
     console.log('Window height: ' + window.innerHeight);
     console.log('Width subtract: ' + $('#menu_col').css('width'));
     console.log('Height subtract: ' + $('#intro_row').css('height') + ' : ' + $('#title_row').css('height'));
-    console.log(map_width + ' : ' + map_height);
-    document.getElementById('map_image').width = map_width;
-    document.getElementById('map_image').height = map_height;
+    console.log(map_width + ' : ' + map_height);*/
 }
 
 $(document).ready(function () {
@@ -41,7 +41,9 @@ $(document).ready(function () {
     map_height = Math.floor(document.getElementById('map_column').offsetHeight * 0.97);    
     console.log(map_width + ":" + map_height)*/
 
-    window.onresize = resize_map();
+    window.onresize = function() {
+        resize_map();
+    };
 
     submit_map.addEventListener('click', async function(event) {
 
@@ -78,7 +80,7 @@ $(document).ready(function () {
             currency : document.getElementById('check_currency').checked,
             languages : document.getElementById('check_languages').checked,
             citizen : document.getElementById('check_citizen').checked ,
-            independance : document.getElementById('check_independance').checked,
+            independence : document.getElementById('check_independence').checked,
             translations : document.getElementById('check_translations').checked,
             flag : document.getElementById('check_flag').checked,
             latlng : document.getElementById('check_latlng').checked,

@@ -22,7 +22,7 @@ function get_country_statistics(index, toggles) {
     /*  Returns - Make toggleable
         Name: common, official, native X
         Domain X
-        Independance
+        independence
         Currency X
         Calling Code
         Capital X
