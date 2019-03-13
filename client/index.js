@@ -4,8 +4,12 @@ function modal_error(message) {
 }
 
 function resize_map() {
-    let map_width = window.width - document.getElementById('menu_col').width
-    let map_height = window.height - document.getElementById('intro_row').height - document.getElementById('title_row').height;
+    let map_width = window.innerWidth -  parseInt($('#menu_col').css('width'), 10)
+    let map_height = window.innerHeight - parseInt($('#intro_row').css('height'),10) - parseInt($('#title_row').css('height'),10);
+    console.log('Window width: ' + window.innerWidth);
+    console.log('Window height: ' + window.innerHeight);
+    console.log('Width subtract: ' + $('#menu_col').css('width'));
+    console.log('Height subtract: ' + $('#intro_row').css('height') + ' : ' + $('#title_row').css('height'));
     console.log(map_width + ' : ' + map_height);
     document.getElementById('map_image').width = map_width;
     document.getElementById('map_image').height = map_height;
