@@ -18,6 +18,9 @@
   "homepage": "https://github.com/vvvm23/Programming_Summative_Assessment_Epiphany#readme",
   "description": "",
   "dependencies": {
-    "body-parser": "^1.18.3"
+    "auth0-js": "^9.10.1",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "fuzzyset.js": "0.0.8"
   }
 }

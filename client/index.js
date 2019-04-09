@@ -72,8 +72,7 @@ $(document).ready(function () {
 
     submit_country.addEventListener('click', async function(event) {
         // check if we are allowed to send over json rather than restricted to just url
-        let checkbox_encoded = '';
-        let checkbox = {
+        /*let checkbox = {
             region : document.getElementById('check_region').checked,
             subregion : document.getElementById('check_subregion').checked ,
             capital : document.getElementById('check_capital').checked ,
@@ -89,16 +88,27 @@ $(document).ready(function () {
             area : document.getElementById('check_area').checked ,
             callingcode : document.getElementById('check_callingcode').checked ,
             domain : document.getElementById('check_domain').checked
-        };
+        };*/
         let query_name = document.getElementById('country_name').value;
 
-        fetch('http://'+IP+':'+PORT+'/query?name='+query_name, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(checkbox)
-        })
+        let checkbox_binary_string = '';  
+        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_region').checked ? '1':'0');
+        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_subregion').checked ? '1':'0');
+        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_capital').checked ? '1':'0');
+        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_currency').checked ? '1':'0');
+        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_languages').checked ? '1':'0');
+        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_citizen').checked ? '1':'0');
+        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_independence').checked ? '1':'0');
+        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_translations').checked ? '1':'0');
+        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_flag').checked ? '1':'0');
+        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_latlng').checked ? '1':'0');
+        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_borders').checked ? '1':'0');
+        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_landlocked').checked ? '1':'0');
+        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_area').checked ? '1':'0');
+        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_callingcode').checked ? '1':'0');
+        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_domain').checked ? '1':'0');  
+
+        fetch('http://'+IP+':'+PORT+'/query?name='+query_name+'&check='+checkbox_binary_string)
         .then(function(resp) {
             if (resp.status === 404) {
                 modal_error("Error 404: Page not found!");
@@ -107,8 +117,8 @@ $(document).ready(function () {
                 return resp;
             }
         })
-        .then(resp => resp.json())
-        .then(r_json => console.log(r_json))
+        .then(resp=> resp.json())
+        .then(data => console.log(data))
         .catch(err => console.log(err));
     });
 
