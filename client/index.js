@@ -15,6 +15,18 @@ function resize_map() {
     console.log(map_width + ' : ' + map_height);*/
 }
 
+function hide_stat(stat_id) {
+    let element = document.getElementById(stat_id);
+    element.style.position = 'absolute';
+    element.style.left = '-9999px';
+}
+
+function show_stat(stat_id) {
+    let element = document.getElementById(stat_id);
+    element.style.position = 'relative';
+    element.style.left = '0px';
+}
+
 $(document).ready(function () {
     const IP = '127.0.0.1';
     const PORT = '8090'
@@ -30,6 +42,7 @@ $(document).ready(function () {
 
     $(".accordion").accordion();
 
+    // maybe replace with # rather than class .
     $(".stats").transition({animation: 'fly left',
     duration: 0});
     $(".map").transition({animation: 'fly left',
@@ -91,7 +104,8 @@ $(document).ready(function () {
         };*/
         let query_name = document.getElementById('country_name').value;
 
-        let checkbox_binary_string = '';  
+        let checkbox_binary_string = '';
+        // can maybe simplify by looping through a list of the ids  
         checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_region').checked ? '1':'0');
         checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_subregion').checked ? '1':'0');
         checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_capital').checked ? '1':'0');
@@ -108,18 +122,46 @@ $(document).ready(function () {
         checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_callingcode').checked ? '1':'0');
         checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_domain').checked ? '1':'0');  
 
-        fetch('http://'+IP+':'+PORT+'/query?name='+query_name+'&check='+checkbox_binary_string)
-        .then(function(resp) {
-            if (resp.status === 404) {
-                modal_error("Error 404: Page not found!");
-                throw new Error("404 Error");
-            } else {
-                return resp;
-            }
-        })
-        .then(resp=> resp.json())
-        .then(data => console.log(data))
-        .catch(err => console.log(err));
+        hide_stat('stats_name');
+        $('#stats_name').transition({animation: 'fly left'})
+        $('#stats_region').transition({animation: 'fly left'})
+        $('#stats_subregion').transition({animation: 'fly left'})
+        $('#stats_capital').transition({animation: 'fly left'})
+        $('#stats_currency').transition({animation: 'fly left'})
+        $('#stats_languages').transition({animation: 'fly left'})
+        $('#stats_denonym').transition({animation: 'fly left'})
+        $('#stats_independance').transition({animation: 'fly left'})
+        $('#stats_translations').transition({animation: 'fly left'})
+        $('#stats_flag').transition({animation: 'fly left'})
+        $('#stats_latlng').transition({animation: 'fly left'})
+        $('#stats_borders').transition({animation: 'fly left'})
+        $('#stats_landlocked').transition({animation: 'fly left'})
+        $('#stats_area').transition({animation: 'fly left'})
+        $('#stats_callingcode').transition({animation: 'fly left'})
+        $('#stats_domain').transition({animation: 'fly left'})        
+
+
+        try {
+            fetch('http://'+IP+':'+PORT+'/query?name='+query_name+'&check='+checkbox_binary_string)
+            .then(function(resp) {
+                if (resp.status === 404) {
+                    modal_error("Error 404: Page not found!");
+                    throw new Error("404 Error");
+                } else {
+                    return resp;
+                }
+            })
+            .then(resp=> resp.json())
+            .then(data => console.log(data))
+            .catch(function(err) {
+                console.log(err);
+                modal_error(err);
+            });
+        } catch (err) {
+            console.log(err);
+            modal_error(err);
+        }
+        show_stat('stats_name');
     });
 
     document.getElementById('menu_one').onclick = function() {

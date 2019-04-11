@@ -1,0 +1,4 @@
+.hide_stat {
+    position: absolute !important;
+    left: -9999px !important;
+}
