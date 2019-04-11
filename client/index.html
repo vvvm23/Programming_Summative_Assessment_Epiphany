@@ -78,8 +78,8 @@
                                 </div>
                                 <div class="five wide inline field">
                                     <div class="ui toggle checkbox">
-                                        <input type="checkbox" id="check_citizen">
-                                        <label>People's Name</label>
+                                        <input type="checkbox" id="check_demonym">
+                                        <label>Demonym</label>
                                     </div>
                                 </div>
                             </div>
@@ -87,8 +87,8 @@
                                 <div class="one wide inline field"></div>
                                 <div class="five wide inline field">
                                     <div class="ui toggle checkbox">
-                                        <input type="checkbox" id="check_independence">
-                                        <label>independence</label>
+                                        <input type="checkbox" id="check_independance">
+                                        <label>Independance</label>
                                     </div>
                                 </div>
                                 <div class="five wide inline field">
@@ -226,10 +226,10 @@
                                     <div class="ui column sixteen wide" id="stats_name">
                                         <div class="ui item segment">
                                             <div class="content">
-                                                <h1 class="ui header" style="text-align: center">Country Name</h1>
+                                                <h1 class="ui header" style="text-align: center" id="stats_name_inner_common">Country Name</h1>
                                                 <div class="ui description">
-                                                    <p style='text-align: center'>Alternate 1</p>
-                                                    <p style='text-align: center'>Alternate 2</p>
+                                                    <p style='text-align: center' id="stats_name_inner_alternate_one">Alternate</p>
+                                                    <p style='text-align: center' id="stats_name_inner_alternate_two">Alternate</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -242,7 +242,7 @@
                                                 <div class="ui content">
                                                     <a class="ui header">Region</a>
                                                     <div class="ui description">
-                                                        <p>Test</p>
+                                                        <p id="stats_region_inner">Test</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -254,7 +254,7 @@
                                                 <div class="ui content">
                                                     <a class="ui header">Subregion</a>
                                                     <div class="ui description">
-                                                        <p>Test</p>
+                                                        <p id="stats_subregion_inner">Test</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -266,7 +266,7 @@
                                                 <div class="ui content">
                                                     <a class="ui header">Capital</a>
                                                     <div class="ui description">
-                                                        <p>Test</p>
+                                                        <p id="stats_capital_inner">Test</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -278,7 +278,7 @@
                                                 <div class="ui content">
                                                     <a class="ui header">Currency</a>
                                                     <div class="ui description">
-                                                        <p>Test</p>
+                                                        <p id="stats_currency_inner">Test</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -290,19 +290,19 @@
                                                 <div class="ui content">
                                                     <a class="ui header">Languages</a>
                                                     <div class="ui description">
-                                                        <p>Test</p>
+                                                        <p id="stats_languages_inner">Test</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div> 
                                     </div>
-                                    <div class="ui column five wide" id="stats_denonym">
+                                    <div class="ui column five wide" id="stats_demonym">
                                         <div class="ui item segment">   
                                             <div class="ui item">
                                                 <div class="ui content">
-                                                    <a class="ui header">Denonym</a>
+                                                    <a class="ui header">Demonym</a>
                                                     <div class="ui description">
-                                                        <p>Test</p>
+                                                        <p id="stats_demonym_inner">Test</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -314,7 +314,7 @@
                                                 <div class="ui content">
                                                     <a class="ui header">Independant?</a>
                                                     <div class="ui description">
-                                                        <p>Test</p>
+                                                        <p id="stats_independance_inner">Test</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -326,7 +326,7 @@
                                                 <div class="ui content">
                                                     <a class="ui header">Translations</a>
                                                     <div class="ui description">
-                                                        <p>Test</p>
+                                                        <p id="stats_translations_inner">Test</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -338,7 +338,7 @@
                                                 <div class="ui content">
                                                     <a class="ui header">Flag</a>
                                                     <div class="ui description">
-                                                        <p>Test</p>
+                                                        <p id="stats_flag_inner">Test</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -350,7 +350,7 @@
                                                 <div class="ui content">
                                                     <a class="ui header">Latitude-Longitude</a>
                                                     <div class="ui description">
-                                                        <p>Test</p>
+                                                        <p id="stats_latlng_inner">Test</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -362,7 +362,7 @@
                                                 <div class="ui content">
                                                     <a class="ui header">Borders</a>
                                                     <div class="ui description">
-                                                        <p>Test</p>
+                                                        <p id="stats_borders_inner">Test</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -374,7 +374,7 @@
                                                 <div class="ui content">
                                                     <a class="ui header">Landlocked?</a>
                                                     <div class="ui description">
-                                                        <p>Test</p>
+                                                        <p id="stats_landlocked_inner">Test</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -386,7 +386,7 @@
                                                 <div class="ui content">
                                                     <a class="ui header">Country Area</a>
                                                     <div class="ui description">
-                                                        <p>Test</p>
+                                                        <p id="stats_area_inner">Test</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -398,7 +398,7 @@
                                                 <div class="ui content">
                                                     <a class="ui header">Calling Code</a>
                                                     <div class="ui description">
-                                                        <p>Test</p>
+                                                        <p id="stats_callingcode_inner">Test</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -410,7 +410,7 @@
                                                 <div class="ui content">
                                                     <a class="ui header">Domain Ending</a>
                                                     <div class="ui description">
-                                                        <p>Test</p>
+                                                        <p id="stats_domain_inner">Test</p>
                                                     </div>
                                                 </div>
                                             </div>

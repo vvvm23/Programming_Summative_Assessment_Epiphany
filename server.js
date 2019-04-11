@@ -69,8 +69,6 @@ function generate_country_fuzzy(country_list) {
 let country_names = generate_country_list();
 let country_index = generate_country_index();
 let fuzz = generate_country_fuzzy(country_names);
-console.log(country_names);
-console.log(country_index);
 
 function find_country(name) {
     // Map to closest country name
@@ -96,7 +94,13 @@ function get_country_statistics(index, toggles) {
     // pick data here
 
     reduced_country_data['name'] = full_country_data['name'];
-    reduced_country_data['native_name'] = full_country_data['name']['native']
+
+    let native = full_country_data['name']['native']
+    for (let key in native) {
+        reduced_country_data['native_name'] = {'common': full_country_data['name']['native'][key]['common'],
+                                                'official': full_country_data['name']['native'][key]['official']}
+    }
+
     for (let key in toggles) {
         if (toggles[key]) { reduced_country_data[key] = full_country_data[key];}
     }

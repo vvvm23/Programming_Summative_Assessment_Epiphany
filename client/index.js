@@ -111,8 +111,8 @@ $(document).ready(function () {
         checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_capital').checked ? '1':'0');
         checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_currency').checked ? '1':'0');
         checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_languages').checked ? '1':'0');
-        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_citizen').checked ? '1':'0');
-        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_independence').checked ? '1':'0');
+        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_demonym').checked ? '1':'0');
+        checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_independance').checked ? '1':'0');
         checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_translations').checked ? '1':'0');
         checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_flag').checked ? '1':'0');
         checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_latlng').checked ? '1':'0');
@@ -122,24 +122,24 @@ $(document).ready(function () {
         checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_callingcode').checked ? '1':'0');
         checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_domain').checked ? '1':'0');  
 
-        hide_stat('stats_name');
-        $('#stats_name').transition({animation: 'fly left'})
-        $('#stats_region').transition({animation: 'fly left'})
-        $('#stats_subregion').transition({animation: 'fly left'})
-        $('#stats_capital').transition({animation: 'fly left'})
-        $('#stats_currency').transition({animation: 'fly left'})
-        $('#stats_languages').transition({animation: 'fly left'})
-        $('#stats_denonym').transition({animation: 'fly left'})
-        $('#stats_independance').transition({animation: 'fly left'})
-        $('#stats_translations').transition({animation: 'fly left'})
-        $('#stats_flag').transition({animation: 'fly left'})
-        $('#stats_latlng').transition({animation: 'fly left'})
-        $('#stats_borders').transition({animation: 'fly left'})
-        $('#stats_landlocked').transition({animation: 'fly left'})
-        $('#stats_area').transition({animation: 'fly left'})
-        $('#stats_callingcode').transition({animation: 'fly left'})
-        $('#stats_domain').transition({animation: 'fly left'})        
 
+        // Transition off, get results from server, hide and show nessecary, transition back on
+        $('#stats_name').transition({animation: 'fly left'})
+        $('#stats_region').transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_region').checked){hide_stat('stats_region');} else {show_stat('stats_region')}}})
+        $('#stats_subregion').transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_subregion').checked){hide_stat('stats_subregion');} else {show_stat('stats_subregion')}}})
+        $('#stats_capital').transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_capital').checked){hide_stat('stats_capital');} else {show_stat('stats_capital')}}})
+        $('#stats_currency').transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_currency').checked){hide_stat('stats_currency');} else {show_stat('stats_currency')}}})
+        $('#stats_languages').transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_languages').checked){hide_stat('stats_languages');} else {show_stat('stats_languages')}}})
+        $('#stats_demonym').transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_demonym').checked){hide_stat('stats_demonym');} else {show_stat('stats_demonym')}}})
+        $('#stats_independance').transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_independance').checked){hide_stat('stats_independance');} else {show_stat('stats_independance')}}})
+        $('#stats_translations').transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_translations').checked){hide_stat('stats_translations');} else {show_stat('stats_translations')}}})
+        $('#stats_flag').transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_flag').checked){hide_stat('stats_flag');} else {show_stat('stats_flag')}}})
+        $('#stats_latlng').transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_latlng').checked){hide_stat('stats_latlng');} else {show_stat('stats_latlng')}}})
+        $('#stats_borders').transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_borders').checked){hide_stat('stats_borders');} else {show_stat('stats_borders')}}})
+        $('#stats_landlocked').transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_landlocked').checked){hide_stat('stats_landlocked');} else {show_stat('stats_landlocked')}}})
+        $('#stats_area').transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_area').checked){hide_stat('stats_area');} else {show_stat('stats_area')}}})
+        $('#stats_callingcode').transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_callingcode').checked){hide_stat('stats_callingcode');} else {show_stat('stats_callingcode')}}})
+        $('#stats_domain').transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_domain').checked){hide_stat('stats_domain');} else {show_stat('stats_domain')}}})        
 
         try {
             fetch('http://'+IP+':'+PORT+'/query?name='+query_name+'&check='+checkbox_binary_string)
@@ -152,7 +152,53 @@ $(document).ready(function () {
                 }
             })
             .then(resp=> resp.json())
-            .then(data => console.log(data))
+            .then(function(data) {
+                document.getElementById('stats_name_inner_common').innerHTML = data['name']['common'];
+                document.getElementById('stats_name_inner_alternate_one').innerHTML = data['name']['official'];
+                
+                let native = data['native_name'];
+                let native_html = '';
+                for (let key in native) {
+                    console.log(native[key])
+                    native_html = native_html.concat(native[key] + ' • ');
+                }
+                console.log(native_html);
+                document.getElementById('stats_name_inner_alternate_two').innerHTML = native_html.substring(0, native_html.length - 3)
+
+                if (document.getElementById('check_region')) { document.getElementById('stats_region_inner').innerHTML = data['region']; }       
+                if (document.getElementById('check_subregion')) {document.getElementById('stats_subregion_inner').innerHTML = data['subregion'];}
+                if (document.getElementById('check_capital')) {document.getElementById('stats_capital_inner').innerHTML = data['capital'];}
+                if (document.getElementById('check_currency')) {document.getElementById('stats_currency_inner').innerHTML = data['currency'];}
+                //if (document.getElementById('check_languages')) {}
+                if (document.getElementById('check_demonym')) {document.getElementById('stats_demonym_inner').innerHTML = data['demonym'];}
+                if (document.getElementById('check_independance')) {document.getElementById('stats_independance_inner').innerHTML = data['independent'];}
+                //if (document.getElementById('check_translations')) {}
+                if (document.getElementById('check_flag')) {document.getElementById('stats_flag_inner').innerHTML = data['flag'];}
+                if (document.getElementById('check_latlng')) {document.getElementById('stats_latlng_inner').innerHTML = data['latlng'][0] + ', ' + data['latlng'][1];}
+                //if (document.getElementById('check_borders')) {}
+                if (document.getElementById('check_landlocked')) {document.getElementById('stats_landlocked_inner').innerHTML = data['landlocked'];}
+                if (document.getElementById('check_area')) {document.getElementById('stats_area_inner').innerHTML = data['area'];} // find unit
+                if (document.getElementById('check_callingcode')) {document.getElementById('stats_callingcode_inner').innerHTML = '+' + data['callingCode'];}
+                if (document.getElementById('check_domain')) {document.getElementById('stats_domain_inner').innerHTML = data['tld'][0];}
+            })
+            .then(function() {
+                $('#stats_name').transition({animation: 'fly left'});
+                $('#stats_region').transition({animation: 'fly left'});
+                $('#stats_subregion').transition({animation: 'fly left'});
+                $('#stats_capital').transition({animation: 'fly left'});
+                $('#stats_currency').transition({animation: 'fly left'});
+                $('#stats_languages').transition({animation: 'fly left'});
+                $('#stats_demonym').transition({animation: 'fly left'});
+                $('#stats_independance').transition({animation: 'fly left'});
+                $('#stats_translations').transition({animation: 'fly left'});
+                $('#stats_flag').transition({animation: 'fly left'});
+                $('#stats_latlng').transition({animation: 'fly left'});
+                $('#stats_borders').transition({animation: 'fly left'});
+                $('#stats_landlocked').transition({animation: 'fly left'});
+                $('#stats_area').transition({animation: 'fly left'});
+                $('#stats_callingcode').transition({animation: 'fly left'});
+                $('#stats_domain').transition({animation: 'fly left'});
+            })
             .catch(function(err) {
                 console.log(err);
                 modal_error(err);
@@ -161,7 +207,6 @@ $(document).ready(function () {
             console.log(err);
             modal_error(err);
         }
-        show_stat('stats_name');
     });
 
     document.getElementById('menu_one').onclick = function() {
