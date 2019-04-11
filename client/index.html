@@ -38,7 +38,7 @@
                     <div class="ui row">
                         <form class="ui inverted form" id="country_form">
                             <div class="field">
-                                <label>Name<p style="float: right">None Selected</p></label>
+                                <label>Name<p style="float: right" id="selected_country">Selected Country: None</p></label>
                                 <input id="country_name" placeholder="Country">
                             </div>
                             <div class="inline fields">
@@ -425,7 +425,10 @@
                                 <img id = "map_image" src = "">
                             </div>
                         </div></div>
-                    <div class="ui sixteen wide column" style="position: absolute"><div class="ui wiki"><div id="wiki" class="ui segment" style="position: absolute">Wikipedia</div></div></div>
+                    <div class="ui sixteen wide column" style="position: absolute"><div class="ui wiki"><div id="wiki" class="ui segment" style="position: absolute">
+                        <div class="ui header">Wikipedia</div>
+                        <p id="wiki_inner">Wikipedia</p>
+                    </div></div></div>
                     </div>
                 </div>
             </div>

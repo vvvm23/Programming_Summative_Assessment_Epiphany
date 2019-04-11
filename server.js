@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 
 const bodyParser = require('body-parser');
+const fetch = require('node-fetch');
 const FuzzySet = require('fuzzyset.js');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -127,7 +128,6 @@ app.use(express.static('client'));
 
 app.get('/', function (req, resp) { 
     // Homepage, should automatically get index.html
-    
 });
 
 app.get('/query', function (req, resp) {
@@ -153,12 +153,25 @@ app.get('/query', function (req, resp) {
     let index = find_country(query_name);
     let statistics = get_country_statistics(index, check);
     
-
     resp.send(statistics);
 });
 
 app.get('/wiki', function (req, resp) {
     // Query wikipedia API
+    // Take Official Name of country as input
+    let name = req.query.name;
+    fetch('https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=' + name)
+    .then(resp => resp.json())
+    .then(function(wiki_json) {
+        let page_json = wiki_json['query']['pages'];
+        let output = {};
+        for (let key in page_json) {
+            output = page_json[key]['extract']
+        }
+
+        resp.send({'wiki': output});
+    })
+    .catch()
 })
 
 app.get('/map', function (req, resp) {

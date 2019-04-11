@@ -153,6 +153,7 @@ $(document).ready(function () {
             })
             .then(resp=> resp.json())
             .then(function(data) {
+                console.log(data);
                 document.getElementById('stats_name_inner_common').innerHTML = data['name']['common'];
                 document.getElementById('stats_name_inner_alternate_one').innerHTML = data['name']['official'];
                 
@@ -165,21 +166,28 @@ $(document).ready(function () {
                 console.log(native_html);
                 document.getElementById('stats_name_inner_alternate_two').innerHTML = native_html.substring(0, native_html.length - 3)
 
-                if (document.getElementById('check_region')) { document.getElementById('stats_region_inner').innerHTML = data['region']; }       
-                if (document.getElementById('check_subregion')) {document.getElementById('stats_subregion_inner').innerHTML = data['subregion'];}
-                if (document.getElementById('check_capital')) {document.getElementById('stats_capital_inner').innerHTML = data['capital'];}
-                if (document.getElementById('check_currency')) {document.getElementById('stats_currency_inner').innerHTML = data['currency'];}
-                //if (document.getElementById('check_languages')) {}
-                if (document.getElementById('check_demonym')) {document.getElementById('stats_demonym_inner').innerHTML = data['demonym'];}
-                if (document.getElementById('check_independance')) {document.getElementById('stats_independance_inner').innerHTML = data['independent'];}
-                //if (document.getElementById('check_translations')) {}
-                if (document.getElementById('check_flag')) {document.getElementById('stats_flag_inner').innerHTML = data['flag'];}
-                if (document.getElementById('check_latlng')) {document.getElementById('stats_latlng_inner').innerHTML = data['latlng'][0] + ', ' + data['latlng'][1];}
-                //if (document.getElementById('check_borders')) {}
-                if (document.getElementById('check_landlocked')) {document.getElementById('stats_landlocked_inner').innerHTML = data['landlocked'];}
-                if (document.getElementById('check_area')) {document.getElementById('stats_area_inner').innerHTML = data['area'];} // find unit
-                if (document.getElementById('check_callingcode')) {document.getElementById('stats_callingcode_inner').innerHTML = '+' + data['callingCode'];}
-                if (document.getElementById('check_domain')) {document.getElementById('stats_domain_inner').innerHTML = data['tld'][0];}
+                if (document.getElementById('check_region').checked) { document.getElementById('stats_region_inner').innerHTML = data['region']; }       
+                if (document.getElementById('check_subregion').checked) {document.getElementById('stats_subregion_inner').innerHTML = data['subregion'];}
+                if (document.getElementById('check_capital').checked) {document.getElementById('stats_capital_inner').innerHTML = data['capital'];}
+                if (document.getElementById('check_currency').checked) {document.getElementById('stats_currency_inner').innerHTML = data['currency'];}
+                //if (document.getElementById('check_languages').checked) {}
+                if (document.getElementById('check_demonym').checked) {document.getElementById('stats_demonym_inner').innerHTML = data['demonym'];}
+                if (document.getElementById('check_independance').checked) {document.getElementById('stats_independance_inner').innerHTML = data['independent'];}
+                //if (document.getElementById('check_translations').checked) {}
+                if (document.getElementById('check_flag').checked) {document.getElementById('stats_flag_inner').innerHTML = data['flag'];}
+                if (document.getElementById('check_latlng').checked) {document.getElementById('stats_latlng_inner').innerHTML = data['latlng'][0] + ', ' + data['latlng'][1];}
+                //if (document.getElementById('check_borders').checked) {}
+                if (document.getElementById('check_landlocked').checked) {document.getElementById('stats_landlocked_inner').innerHTML = data['landlocked'];}
+                if (document.getElementById('check_area').checked) {document.getElementById('stats_area_inner').innerHTML = data['area'];} // find unit
+                if (document.getElementById('check_callingcode').checked) {document.getElementById('stats_callingcode_inner').innerHTML = '+' + data['callingCode'];}
+                if (document.getElementById('check_domain').checked) {document.getElementById('stats_domain_inner').innerHTML = data['tld'][0];}
+                
+                document.getElementById('selected_country').innerHTML = 'Selected Country: ' + data['name']['common'];
+
+                // May want to put wiki in it's own section
+                fetch('http://'+IP+':'+PORT+'/wiki?name='+data['name']['common'])
+                .then(resp => resp.json())
+                .then(resp=> document.getElementById('wiki_inner').innerHTML = resp['wiki']);
             })
             .then(function() {
                 $('#stats_name').transition({animation: 'fly left'});
