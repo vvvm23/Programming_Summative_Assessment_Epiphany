@@ -7,28 +7,7 @@ const FuzzySet = require('fuzzyset.js');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 // Load json dataset into memory //
-
 let json_countries = require('./json/countries.json');
-
-/*function generate_country_dict() {
-    let output_dict = {}
-    for (let i = 0; i < json_countries.length; i++) {
-        let name = json_countries[i]['name']['official'];
-        let native = json_countries[i]['name']['native']
-        let names = [json_countries[i]['name']['official'], 
-                    json_countries[i]['name']['common']];
-
-        for (let key in native) {
-            names.push(native[key]['official']);
-            names.push(native[key]['common']);
-        }
-        output_dict[name] = names;
-    }
-    return output_dict;
-}
-
-let country_names = generate_country_dict();
-console.log(country_names);*/
 
 function generate_country_list() {
     let output_dict = {};
@@ -69,8 +48,6 @@ function generate_country_fuzzy(country_list) {
 
 let country_names = generate_country_list();
 let country_index = generate_country_index();
-
-console.log(country_names);
 
 let fuzz = generate_country_fuzzy(country_names);
 

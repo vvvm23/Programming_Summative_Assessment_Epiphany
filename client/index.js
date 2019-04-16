@@ -50,10 +50,6 @@ $(document).ready(function () {
     $(".wiki").transition({animation: 'fly left',
     duration: 0});
 
-    /*map_width = Math.floor(document.getElementById('map_column').offsetWidth * 0.97);
-    map_height = Math.floor(document.getElementById('map_column').offsetHeight * 0.97);    
-    console.log(map_width + ":" + map_height)*/
-
     window.onresize = function() {
         resize_map();
     };
@@ -121,6 +117,9 @@ $(document).ready(function () {
         $('#stats_area').transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_area').checked){hide_stat('stats_area');} else {show_stat('stats_area')}}})
         $('#stats_callingcode').transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_callingcode').checked){hide_stat('stats_callingcode');} else {show_stat('stats_callingcode')}}})
         $('#stats_domain').transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_domain').checked){hide_stat('stats_domain');} else {show_stat('stats_domain')} transition_done();}})        
+        if (a==2 || a==3) {
+            transition_done();
+        }
         function transition_done() {
             try {
                 fetch('http://'+IP+':'+PORT+'/query?name='+query_name+'&check='+checkbox_binary_string)
@@ -190,7 +189,8 @@ $(document).ready(function () {
                     // May want to put wiki in it's own section
                     fetch('http://'+IP+':'+PORT+'/wiki?name='+data['name']['common'])
                     .then(resp => resp.json())
-                    .then(resp=> document.getElementById('wiki_inner').innerHTML = resp['wiki']);
+                    .then(resp=> document.getElementById('wiki_inner').innerHTML = resp['wiki'])
+                    .then(document.getElementById('wiki_name').innerHTML = data['name']['common']);
 
                     fetch('http://'+IP+':'+PORT+'/map?lat='+data['latlng'][0]+'&t=0&lon='+data['latlng'][1]+'&z=6&x='+MAP_RES_X+'&y='+MAP_RES_Y)
                     .then(resp=>resp.clone().json())
