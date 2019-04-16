@@ -1,3 +1,6 @@
+const IP = '127.0.0.1';
+const PORT = 8090;
+
 const express = require('express');
 const app = express();
 
@@ -163,7 +166,6 @@ app.get('/map', function (req, resp) {
     let z = req.query.z;
     let t = req.query.t;
 
-    //resp.send({map_url: "https://image.maps.api.here.com/mia/1.6/mapview?app_id=RUw2eiQLvRoOmpWww3e7&app_code=Jd2W3CtG6MJl0OL-LBoLAg"+"&t="+t+"&lat="+lat+"&lon="+lon+"&z="+z+"&w="+dim_x+"&h="+dim_y});
     resp.send({map_url: get_map({
         'lat' : req.query.lat,
         'lon' : req.query.lon,
@@ -175,12 +177,12 @@ app.get('/map', function (req, resp) {
 })
 
 app.get('/admin', function (req, resp) {
-    resp.redirect('127.0.0.1:8090/admin.html')
+    resp.redirect(IP+':'+PORT+'/admin.html')
 })
 
-app.listen(8090);
+app.listen(PORT);
 
 app.use(function (req, resp, next) {
     resp.status(404).send();
 });
-console.log('Listening on 127.0.0.1:8090');
+console.log('Listening on ' + IP + ':' + PORT);
