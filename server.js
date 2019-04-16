@@ -76,12 +76,8 @@ app.get('/callback', passport.authenticate('auth0',
 
 app.get('/admin', ensureLoggedIn, (req, res) => {
     console.log('Admin Authenticated');
-    res.sendFile(__dirname + '/admin.html'); // do we want to be fetching admin.html directly? Static resource vulnerability! 
+    res.sendFile(__dirname + '/admin.html');
 })
-
-/*app.get('/admin.html', ensureLoggedIn, (req, res) => {
-    console.log('Admin Authenticated');
-})*/
 
 // ----------------------------- COUNTRY ----------------------------- //
 
