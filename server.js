@@ -69,6 +69,9 @@ function generate_country_fuzzy(country_list) {
 
 let country_names = generate_country_list();
 let country_index = generate_country_index();
+
+console.log(country_names);
+
 let fuzz = generate_country_fuzzy(country_names);
 
 function find_country(name) {
@@ -95,7 +98,6 @@ function get_country_statistics(index, toggles) {
     // pick data here
 
     reduced_country_data['name'] = full_country_data['name'];
-
     let native = full_country_data['name']['native']
     for (let key in native) {
         reduced_country_data['native_name'] = {'common': full_country_data['name']['native'][key]['common'],
@@ -142,7 +144,7 @@ app.get('/query', function (req, resp) {
         independent : check_string.charAt(6) == '1' ? true:false,
         translations : check_string.charAt(7) == '1' ? true:false,
         flag : check_string.charAt(8) == '1' ? true:false,
-        latlng : check_string.charAt(9) == '1' ? true:false,
+        latlng : true,
         borders : check_string.charAt(10) == '1' ? true:false,
         landlocked : check_string.charAt(11) == '1' ? true:false,
         area : check_string.charAt(12) == '1' ? true:false,

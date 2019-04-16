@@ -1,3 +1,6 @@
+const MAP_RES_X = 1920
+const MAP_RES_Y = 1080
+
 function modal_error(message) {
     document.getElementById("modal_text").innerHTML = message;
     $(".ui.modal").modal('show');
@@ -36,9 +39,6 @@ $(document).ready(function () {
 
     let map_width = 0;
     let map_height = 0;
-
-    const MAP_RES_X = 1920
-    const MAP_RES_Y = 1080
 
     $(".accordion").accordion();
 
@@ -153,7 +153,6 @@ $(document).ready(function () {
             })
             .then(resp=> resp.json())
             .then(function(data) {
-                console.log(data);
                 document.getElementById('stats_name_inner_common').innerHTML = data['name']['common'];
                 document.getElementById('stats_name_inner_alternate_one').innerHTML = data['name']['official'];
                 
@@ -163,22 +162,45 @@ $(document).ready(function () {
                     console.log(native[key])
                     native_html = native_html.concat(native[key] + ' • ');
                 }
-                console.log(native_html);
                 document.getElementById('stats_name_inner_alternate_two').innerHTML = native_html.substring(0, native_html.length - 3)
 
                 if (document.getElementById('check_region').checked) { document.getElementById('stats_region_inner').innerHTML = data['region']; }       
                 if (document.getElementById('check_subregion').checked) {document.getElementById('stats_subregion_inner').innerHTML = data['subregion'];}
                 if (document.getElementById('check_capital').checked) {document.getElementById('stats_capital_inner').innerHTML = data['capital'];}
                 if (document.getElementById('check_currency').checked) {document.getElementById('stats_currency_inner').innerHTML = data['currency'];}
-                //if (document.getElementById('check_languages').checked) {}
+                if (document.getElementById('check_languages').checked) {
+                    let language_string = '';
+                    for (let key in data['languages']) {
+                        language_string = language_string.concat(data['languages'][key] + ', ');
+                    }
+                    document.getElementById('stats_languages_inner').innerHTML = language_string.substring(0, language_string.length - 2);
+                }
                 if (document.getElementById('check_demonym').checked) {document.getElementById('stats_demonym_inner').innerHTML = data['demonym'];}
-                if (document.getElementById('check_independance').checked) {document.getElementById('stats_independance_inner').innerHTML = data['independent'];}
-                //if (document.getElementById('check_translations').checked) {}
+                if (document.getElementById('check_independance').checked) {document.getElementById('stats_independance_inner').innerHTML = data['independent'] ? 'Yes':'No';}
+                // maybe have accordion here
+                if (document.getElementById('check_translations').checked) {
+                    let translation_string = '';
+                    for (let key in data['translations']) {
+                        translation_string = translation_string.concat(data['translations'][key]['common'] + ', ');
+                    }
+                    document.getElementById('stats_translations_inner').innerHTML = translation_string.substring(0, translation_string.length - 2);
+                }
                 if (document.getElementById('check_flag').checked) {document.getElementById('stats_flag_inner').innerHTML = data['flag'];}
                 if (document.getElementById('check_latlng').checked) {document.getElementById('stats_latlng_inner').innerHTML = data['latlng'][0] + ', ' + data['latlng'][1];}
-                //if (document.getElementById('check_borders').checked) {}
-                if (document.getElementById('check_landlocked').checked) {document.getElementById('stats_landlocked_inner').innerHTML = data['landlocked'];}
-                if (document.getElementById('check_area').checked) {document.getElementById('stats_area_inner').innerHTML = data['area'];} // find unit
+                if (document.getElementById('check_borders').checked) {
+                    let borders_string = '';
+                    for (let i = 0; i < data['borders'].length; i++) {
+                        borders_string = borders_string.concat(data['borders'][i] + ', ');
+                    }
+                    if (data['borders'].length == 0) {
+                        document.getElementById('stats_borders_inner').innerHTML = 'No countries bordering selected country.'
+                    }
+                    else {
+                        document.getElementById('stats_borders_inner').innerHTML = borders_string.substring(0, borders_string.length - 2);            
+                    }
+                }
+                if (document.getElementById('check_landlocked').checked) {document.getElementById('stats_landlocked_inner').innerHTML = data['landlocked'] ? 'Yes':'No';}
+                if (document.getElementById('check_area').checked) {document.getElementById('stats_area_inner').innerHTML = data['area'] + ' km<sup>2</sup>';} // find unit
                 if (document.getElementById('check_callingcode').checked) {document.getElementById('stats_callingcode_inner').innerHTML = '+' + data['callingCode'];}
                 if (document.getElementById('check_domain').checked) {document.getElementById('stats_domain_inner').innerHTML = data['tld'][0];}
                 
@@ -188,6 +210,11 @@ $(document).ready(function () {
                 fetch('http://'+IP+':'+PORT+'/wiki?name='+data['name']['common'])
                 .then(resp => resp.json())
                 .then(resp=> document.getElementById('wiki_inner').innerHTML = resp['wiki']);
+
+                fetch('http://'+IP+':'+PORT+'/map?lat='+data['latlng'][0]+'&t=0&lon='+data['latlng'][1]+'&z=6&x='+MAP_RES_X+'&y='+MAP_RES_Y)
+                .then(resp=>resp.clone().json())
+                .then(x=>document.getElementById('map_image').src = x['map_url'])
+                .then(resize_map());
             })
             .then(function() {
                 $('#stats_name').transition({animation: 'fly left'});

@@ -21,6 +21,7 @@
     "auth0-js": "^9.10.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "fuzzyset.js": "0.0.8"
+    "fuzzyset.js": "0.0.8",
+    "node-fetch": "^2.3.0"
   }
 }
