@@ -3,14 +3,82 @@ const PORT = 8090;
 
 const express = require('express');
 const app = express();
+const session = require('express-session');
+const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
+//dotenv.load();
+const passport = require('passport');
+const Auth0Strategy = require('passport-auth0');
+const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 
 const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 const FuzzySet = require('fuzzyset.js');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(cookieParser());
 // Load json dataset into memory //
 let json_countries = require('./json/countries.json');
+
+// -----------------------------AUTH 0----------------------------- //
+
+var strategy = new Auth0Strategy({
+    domain:       'dev-0ut5oehg.eu.auth0.com',
+    clientID:     'kMgp-MeVVa7tU6K4BefEuRmB_-ZnJbv6',
+    clientSecret: 'iI0HWic0iWNxqiu_AjlSVlWcSLA97hsQACBLtMLq_E1Gd9hkG7vi7dok0CT_XuP8',
+    callbackURL:  '/callback'
+   },
+   function(accessToken, refreshToken, extraParams, profile, done) {
+     return done(null, profile);
+   }
+ );
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+    done(null, user);
+}); 
+passport.use(strategy);
+
+app.use(session({
+  secret: 'shhhhhhhhh', // change this lmao
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+const env = {
+    AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
+    AUTH0_DOMAIN: process.env.AUTH0_DOMAIN
+}
+
+app.get('/login', passport.authenticate('auth0', {
+    clientID: env.AUTH0_CLIENT_ID,
+    domain: env.AUTH0_DOMAIN,
+    redirectUri: 'http://localhost:8090/callback',
+    responseType: 'code'
+    //scope: 'openid profile email'
+}), (req, res) => {
+    res.redirect('/admin');
+})
+
+app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
+})
+
+app.get('/callback', passport.authenticate('auth0',
+        {failureRedirect: '/'}), (req, res) => {
+        res.redirect(req.session.returnTo || '/');
+});
+
+app.get('/admin', ensureLoggedIn, (req, res) => {
+    res.redirect('/admin.html');
+})
+
+// ----------------------------- COUNTRY ----------------------------- //
 
 function generate_country_list() {
     let output_dict = {};
@@ -174,10 +242,6 @@ app.get('/map', function (req, resp) {
         'image_height' : req.query.y,
         'image_type' : req.query.t
     })});
-})
-
-app.get('/admin', function (req, resp) {
-    resp.redirect(IP+':'+PORT+'/admin.html')
 })
 
 app.listen(PORT);

@@ -20,8 +20,17 @@
   "dependencies": {
     "auth0-js": "^9.10.1",
     "body-parser": "^1.18.3",
+    "connect-ensure-login": "^0.1.1",
+    "cookie-parser": "^1.4.4",
+    "debug": "^4.1.1",
+    "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "express-session": "^1.16.1",
     "fuzzyset.js": "0.0.8",
-    "node-fetch": "^2.3.0"
+    "jade": "^1.11.0",
+    "morgan": "^1.9.1",
+    "node-fetch": "^2.3.0",
+    "passport": "^0.4.0",
+    "passport-auth0": "^1.1.0"
   }
 }
