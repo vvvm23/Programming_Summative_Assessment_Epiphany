@@ -59,12 +59,12 @@ app.get('/login', passport.authenticate('auth0', {
     domain: env.AUTH0_DOMAIN,
     redirectUri: 'http://localhost:8090/callback',
     responseType: 'code'
-    //scope: 'openid profile email'
 }), (req, res) => {
     res.redirect('/admin');
 })
 
 app.get('/logout', (req, res) => {
+    console.log('Logging out..')
     req.logout();
     res.redirect('/');
 })
@@ -75,8 +75,13 @@ app.get('/callback', passport.authenticate('auth0',
 });
 
 app.get('/admin', ensureLoggedIn, (req, res) => {
-    res.redirect('/admin.html');
+    console.log('Admin Authenticated');
+    res.redirect('/admin.html'); // do we want to be fetching admin.html directly? Static resource vulnerability! 
 })
+
+/*app.get('/admin.html', ensureLoggedIn, (req, res) => {
+    console.log('Admin Authenticated');
+})*/
 
 // ----------------------------- COUNTRY ----------------------------- //
 
