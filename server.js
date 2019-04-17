@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 // Load json dataset into memory //
 let json_countries = require('./json/countries.json');
-
+console.log(json_countries);
 // -----------------------------AUTH 0----------------------------- //
 
 var strategy = new Auth0Strategy({
@@ -70,8 +70,8 @@ app.get('/logout', (req, res) => {
 })
 
 app.get('/callback', passport.authenticate('auth0',
-        {failureRedirect: '/'}), (req, res) => {
-        res.redirect(req.session.returnTo || '/');
+    {failureRedirect: '/'}), (req, res) => {
+    res.redirect(req.session.returnTo || '/');
 });
 
 app.get('/admin', ensureLoggedIn, (req, res) => {
@@ -79,16 +79,68 @@ app.get('/admin', ensureLoggedIn, (req, res) => {
     res.sendFile(__dirname + '/admin.html');
 });
 
-app.get('/add', ensureLoggedIn, (req, res) => {
-    // Add Country endpoint
+// Secure endpoints json syntax for add/edit //
+/*
+    name_common: One common name
+    name_official: One official name
+    name_native: One native name
+
+    region: One region
+    subregion: One Subregion
+    capital: One capital -> array
+    currency: Array of currency
+    languages: Array of languages
+    demonym: One demonym
+    independent: true/false/undefined
+    translations: json object of language to translations
+    flag: unicode code for flag emoji
+    latlng: two long array
+    borders: array of borders
+    landlocked: true/false/undefined
+    area: One area, number only
+    callingcode: One callingcode, int only
+    domain: period followed by letters only
+*/
+
+app.post('/add', ensureLoggedIn, (req, res) => {
+    // Add Country secure endpoint
+    let json_body = req.body;
+    
 });
 
-app.get('/edit', ensureLoggedIn, (req, res) => {
-    // Edit Country endpoint
+app.post('/edit', ensureLoggedIn, (req, res) => {
+    // Edit Country secure endpoint
+    let json_body = req.body;
 });
 
-app.get('/delete', ensureLoggedIn, (req, res) => {
-    // Delete country endpoint
+app.get('/search/delete', ensureLoggedIn, (req, res) => {
+    // Search Country for delete secure endpoint
+    // Returns Common name (maybe index too?)
+    let query_name = req.query.name;
+    let i = find_country(query_name);
+    let actual_name = json_countries[i]['name']['common'];
+    res.send({index: i, name: actual_name});
+})
+
+app.get('/search/edit', ensureLoggedIn, (req, res) => {
+    // Search Country for edit secure endpoint
+    // Returns all current data about a country
+    
+    // is this nessecary? Could just use /query
+})
+
+app.post('/delete', ensureLoggedIn, (req, res) => {
+    // Delete country secure endpoint
+    // receives json in form, {index: x}
+    // delete at index
+    try {
+        let index = req.body.index;
+        json_countries.splice(index, 1);
+        res.sendStatus(200);
+    } catch (error) {
+        res.sendStatus(400);
+    }
+
 })
 
 // ----------------------------- COUNTRY ----------------------------- //
@@ -132,7 +184,7 @@ function generate_country_fuzzy(country_list) {
 
 let country_names = generate_country_list();
 let country_index = generate_country_index();
-
+console.log(country_index);
 let fuzz = generate_country_fuzzy(country_names);
 
 function find_country(name) {
@@ -143,7 +195,6 @@ function find_country(name) {
     
     // If nothing matches the array will be empty, be sure to add handlers for this
     let fuzz_result = fuzz.get(name);
-    console.log(fuzz_result);
     return country_index[country_names[fuzz_result[0][1]]];
 }
 
