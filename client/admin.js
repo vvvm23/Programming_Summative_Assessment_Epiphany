@@ -4,7 +4,9 @@ $(document).ready(function() {
 
     $('#add_independent_dropdown').dropdown();
     $('#add_landlocked_dropdown').dropdown();
-
+    $('#edit_independent_dropdown').dropdown();
+    $('#edit_landlocked_dropdown').dropdown();
+    
     a = 2;
     b = 2;
     document.getElementById('menu_one').onclick = function() {
