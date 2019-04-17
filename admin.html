@@ -48,6 +48,7 @@
                         <div class="ui sixteen wide column" style="position: absolute"><div id="stats" class="ui add">
                             <div class="ui grid">
                                 <div class="ui sixteen wide column segment">
+                                    <h2 class="ui header" style="text-align: center">Add Country</h2>
                                     <form class="ui form">
                                         <div class="three fields">
                                             <div class="five field">
@@ -157,7 +158,113 @@
                         </div></div>
                         <div class="ui sixteen wide column" style="position: absolute"><div id="stats" class="ui edit">
                             <div class="ui grid">
-                                Edit
+                                <div class="ui sixteen wide column segment">
+                                    <h2 class="ui header" style="text-align: center">Edit Country</h2>
+                                    <form class="ui form">
+                                        <div class="three fields">
+                                            <div class="five field">
+                                                <label>Common Name</label>
+                                                <input type="text" id="add_common">
+                                            </div>
+                                            <div class="field">
+                                                <label>Official Name</label>
+                                                <input type="text" id="add_official">
+                                            </div>
+                                            <div class="field">
+                                                <label>Native Name</label>
+                                                <input type="text" id="add_native">
+                                            </div>
+                                        </div>
+                                        <div class="three fields">
+                                            <div class="field">
+                                                <label>Region</label>
+                                                <input type="text" id="add_region">
+                                            </div>
+                                            <div class="field">
+                                                <label>Sub-Region</label>
+                                                <input type="text" id="add_subregion">
+                                            </div>
+                                            <div class="field">
+                                                <label>Capital</label>
+                                                <input type="text" id="add_capital">
+                                            </div>
+                                        </div>
+                                        <div class="three fields">
+                                            <div class="field">
+                                                <label>Currency</label>
+                                                <input type="text" id="add_currency">
+                                            </div>
+                                            <div class="field">
+                                                <label>Languages</label>
+                                                <input type="text" id="add_languages">
+                                            </div>
+                                            <div class="field">
+                                                <label>Demonym</label>
+                                                <input type="text" id="add_demonym">
+                                            </div>
+                                        </div>
+                                        <div class="three fields">
+                                            <div class="field">
+                                                <label>Independent?</label>
+                                                <div class="ui selection dropdown" id="add_independent_dropdown">
+                                                    <input type="hidden" id="add_independent">
+                                                    <i class="dropdown icon"></i>
+                                                    <div class="default text">Yes/No</div>
+                                                    <div class="menu">
+                                                        <div class="item" data-value="yes">Yes</div>
+                                                        <div class="item" data-value="no">No</div>
+                                                        <div class="item" data-value="unknown">Unknown</div>       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="field">
+                                                <label>Translations</label>
+                                                <input type="text" id="add_translations">
+                                            </div>
+                                            <div class="field">
+                                                <label>Flag</label>
+                                                <input type="text" id="add_flag">
+                                            </div>
+                                        </div>
+                                        <div class="three fields">
+                                            <div class="field">
+                                                <label>Latitude-Longitude</label>
+                                                <input type="text" id="add_latlng">
+                                            </div>
+                                            <div class="field">
+                                                <label>Borders</label>
+                                                <input type="text" id="add_borders">
+                                            </div>
+                                            <div class="field">
+                                                <label>Landlocked?</label>
+                                                <div class="ui selection dropdown" id="add_landlocked_dropdown">
+                                                    <input type="hidden" id="add_landlocked">
+                                                    <i class="dropdown icon"></i>
+                                                    <div class="default text">Yes/No</div>
+                                                    <div class="menu">
+                                                        <div class="item" data-value="yes">Yes</div>
+                                                        <div class="item" data-value="no">No</div>
+                                                        <div class="item" data-value="unknown">Unknown</div>       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="three fields">
+                                            <div class="field">
+                                                <label>Area</label>
+                                                <input type="number" id="add_area">
+                                            </div>
+                                            <div class="field">
+                                                <label>Calling Code</label>
+                                                <input type="number" id="add_callingcode">
+                                            </div>
+                                            <div class="field">
+                                                <label>Domain</label>
+                                                <input type="text" id="add_domain">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div></div>
                         <div class="ui sixteen wide column" style="position: absolute"><div id="stats" class="ui delete">
