@@ -77,6 +77,18 @@ app.get('/callback', passport.authenticate('auth0',
 app.get('/admin', ensureLoggedIn, (req, res) => {
     console.log('Admin Authenticated');
     res.sendFile(__dirname + '/admin.html');
+});
+
+app.get('/add', ensureLoggedIn, (req, res) => {
+    // Add Country endpoint
+});
+
+app.get('/edit', ensureLoggedIn, (req, res) => {
+    // Edit Country endpoint
+});
+
+app.get('/delete', ensureLoggedIn, (req, res) => {
+    // Delete country endpoint
 })
 
 // ----------------------------- COUNTRY ----------------------------- //
