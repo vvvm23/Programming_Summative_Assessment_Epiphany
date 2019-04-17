@@ -10,29 +10,57 @@
         crossorigin="anonymous"></script>
         <link rel="stylesheet" type="text/css" href="semantic.css">
         <script src="semantic.js"></script>
-        <script src="index.js"></script>
+        <script src="admin.js"></script>
     </head>
 
     <body>
         <div class="ui grid">
             <div class="ui black row">
             <div class="ui center aligned column">
-                <h1>TITLE BAR</h1>
+                <h1>Administrator Page</h1>
             </div>
             </div>
         </div>
         <div class="ui grid" style="min-height: 100%">
             <div class="ui four wide column" style="background: #2f2f2f">
-                
+                <div class="ui row">
+                    <div class="ui inverted three item stackable menu">
+                        <a class="item" id="menu_one">Add</a>
+                        <a class="item" id="menu_two">Edit</a>
+                        <a class="item" id="menu_three">Delete</a>
+                    </div>
+                </div>
+
+                <div class="ui divider"></div>
             </div>
 
             <div class="ui twelve wide column">
                 <div class="ui row">
+                    <div class="ui segment">
+                        <h3>How to use</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mollis, est ut mattis finibus, leo dolor sollicitudin enim, ac varius leo massa a lorem. Fusce a velit interdum orci imperdiet hendrerit in a velit. Suspendisse ante mauris, accumsan in vulputate non, interdum vel neque. Integer feugiat at nisl ac convallis. Quisque mattis vulputate lectus venenatis varius. Pellentesque vel mauris sit amet tellus ultricies varius et quis augue. Duis dapibus diam vestibulum risus imperdiet condimentum. Donec vitae elit consectetur mi vehicula vestibulum. Duis eget mauris orci. Aliquam finibus vel leo eu maximus. </p>
+                    </div>
                     <div class="ui divider"></div>
                 </div>
 
                 <div class="ui row">
-                    
+                    <div class="ui grid" style="min-height: 100%">
+                        <div class="ui sixteen wide column" style="position: absolute"><div id="stats" class="ui add">
+                            <div class="ui grid">
+                                Add
+                            </div>
+                        </div></div>
+                        <div class="ui sixteen wide column" style="position: absolute"><div id="stats" class="ui edit">
+                            <div class="ui grid">
+                                Edit
+                            </div>
+                        </div></div>
+                        <div class="ui sixteen wide column" style="position: absolute"><div id="stats" class="ui delete">
+                            <div class="ui grid">
+                                Delete
+                            </div>
+                        </div></div>
+                    </div>
                 </div>
             </div>
         </div>
