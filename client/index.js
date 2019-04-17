@@ -35,7 +35,7 @@ $(document).ready(function () {
     let map_width = 0;
     let map_height = 0;
 
-    $(".accordion").accordion();
+    $(".accordion").accordion(); // is this still needed?
 
     // maybe replace with # rather than class .
     $(".stats").transition({animation: 'fly left',
