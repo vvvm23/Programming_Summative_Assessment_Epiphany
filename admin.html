@@ -161,6 +161,14 @@
                                 <div class="ui sixteen wide column segment">
                                     <h2 class="ui header" style="text-align: center">Edit Country</h2>
                                     <form class="ui form">
+                                        <div class="field">
+                                            <label>Search Term</label>
+                                            <input type="text" id="edit_search">
+                                        </div>
+                                        <div class="ui button" id="edit_search_button">Search</div>
+                                    </form>
+                                    <div class="ui divider"></div>
+                                    <form class="ui form">
                                         <div class="three fields">
                                             <div class="five field">
                                                 <label>Common Name</label>
@@ -269,7 +277,21 @@
                         </div></div>
                         <div class="ui sixteen wide column" style="position: absolute"><div id="stats" class="ui delete">
                             <div class="ui grid">
-                                Delete
+                                <div class="ui sixteen wide column segment">
+                                    <h2 class="ui header" style="text-align: center">Delete Country</h2>
+                                    <form class="ui form">
+                                        <div class="field">
+                                            <label>Search Term</label>
+                                            <input type="text" id="delete_search">
+                                        </div>
+                                        <div class="ui button" id="delete_search_button">Search</div>
+                                    </form>
+                                    <div class="ui divider"></div>
+                                    <div class="ui red inverted segment">
+                                        <p>Selected Country: <i id="delete_selected">None</i></p>
+                                        <p><b>Are you sure you would like to delete this country?</b></p><div class="ui black button" id="delete_confirm">Confirm</div>
+                                    </div>
+                                </div>
                             </div>
                         </div></div>
                     </div>
