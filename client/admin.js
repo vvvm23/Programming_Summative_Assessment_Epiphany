@@ -2,6 +2,9 @@ $(document).ready(function() {
     $('.add').transition({animation: 'fly left', duration: 0});
     $('.delete').transition({animation: 'fly left', duration: 0});
 
+    $('#add_independent_dropdown').dropdown();
+    $('#add_landlocked_dropdown').dropdown();
+
     a = 2;
     b = 2;
     document.getElementById('menu_one').onclick = function() {
