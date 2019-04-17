@@ -36,7 +36,7 @@ $(document).ready(function () {
     let map_height = 0;
 
     $(".accordion").accordion(); // is this still needed?
-
+    $('.ui.checkbox').checkbox();
     // maybe replace with # rather than class .
     $(".stats").transition({animation: 'fly left',
     duration: 0});
