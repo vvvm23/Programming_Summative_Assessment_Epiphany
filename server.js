@@ -81,6 +81,8 @@ app.get('/admin', ensureLoggedIn, (req, res) => {
 
 // Secure endpoints json syntax for add/edit //
 /*
+    index: One index to change
+
     name_common: One common name
     name_official: One official name
     name_native: One native name
@@ -89,10 +91,10 @@ app.get('/admin', ensureLoggedIn, (req, res) => {
     subregion: One Subregion
     capital: One capital -> array
     currency: Array of currency
-    languages: Array of languages
+    languages: Array of strings -> json of languages
     demonym: One demonym
     independent: true/false/undefined
-    translations: json object of language to translations
+    translations: array of strings -> json
     flag: unicode code for flag emoji
     latlng: two long array
     borders: array of borders
@@ -111,6 +113,41 @@ app.post('/add', ensureLoggedIn, (req, res) => {
 app.post('/edit', ensureLoggedIn, (req, res) => {
     // Edit Country secure endpoint
     let json_body = req.body;
+    let index = json_body['index']
+
+    json_countries[index]['name']['common'] = json_body['name_common'];
+    json_countries[index]['name']['official'] = json_body['name_official'];
+    json_countries[index]['native'] = {'unknown': json_body['name_native']}; // is this right?
+
+    json_countries[index]['region'] = json_body['region'];
+    json_countries[index]['subregion'] = json_body['subregion'];
+    json_countries[index]['capital'] = [json_body['capital']];
+    json_countries[index]['currency'] = json_body['currency'];
+
+    json_countries[index]['languages'] = {};
+    for (let i = 0; i < json_body['languages'].length; i++) {
+        json_countries[index]['languages'][i] = json_body['languages'][i];
+    }
+
+    json_countries[index]['demonym'] = json_body['demonym'];
+    json_countries[index]['independent'] = json_body['independent'];
+
+    json_countries[index]['translations'] = {};
+    for (let i = 0; i < json_body['translations'].length; i++) {
+        json_countries[index]['translations'][i] = json_body['translations'][i];
+    }
+
+    json_countries[index]['flag'] = json_body['flag'];
+
+    json_countries[index]['latlng'] = [0, 0];
+    json_countries[index]['latlng'][0] = json_body['latlng'][0];
+    json_countries[index]['latlng'][1] = json_body['latlng'][1];
+
+    json_countries[index]['borders'] = json_body['borders'];
+    json_countries[index]['landlocked'] = json_body['landlocked'];
+    json_countries[index]['area'] = json_body['area'];
+    json_countries[index]['callingCode'] = [json_body['callingcode']];
+    json_countries[index]['tld'] = [json_body['domain']];
 });
 
 app.get('/search/delete', ensureLoggedIn, (req, res) => {
@@ -157,8 +194,11 @@ function generate_country_list() {
                     json_countries[i]['name']['common']];
 
         for (let key in native) {
-            names.push(native[key]['official']);
-            names.push(native[key]['common']);
+            /*names.push(native[key]['official']);
+            names.push(native[key]['common']);*/
+            for (let type in native[key]) {
+                names.push(native[key][type]);
+            }
         }
 
         for (let n in names) {
@@ -213,9 +253,13 @@ function get_country_statistics(index, toggles) {
 
     reduced_country_data['name'] = full_country_data['name'];
     let native = full_country_data['name']['native']
+    reduced_country_data['native_name'] = {};
     for (let key in native) {
-        reduced_country_data['native_name'] = {'common': full_country_data['name']['native'][key]['common'],
-                                                'official': full_country_data['name']['native'][key]['official']}
+        /*reduced_country_data['native_name'] = {'common': full_country_data['name']['native'][key]['common'],
+                                                'official': full_country_data['name']['native'][key]['official']}*/
+        for (let type in native[key]) {
+            reduced_country_data['native_name'][type] = full_country_data['name']['native'][key][type];
+        }
     }
 
     for (let key in toggles) {
