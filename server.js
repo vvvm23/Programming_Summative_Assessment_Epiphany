@@ -136,6 +136,9 @@ app.post('/delete', ensureLoggedIn, (req, res) => {
     try {
         let index = req.body.index;
         json_countries.splice(index, 1);
+        country_names = generate_country_list();
+        country_index = generate_country_index();
+        console.log(country_names);
         res.sendStatus(200);
     } catch (error) {
         res.sendStatus(400);
@@ -184,7 +187,6 @@ function generate_country_fuzzy(country_list) {
 
 let country_names = generate_country_list();
 let country_index = generate_country_index();
-console.log(country_index);
 let fuzz = generate_country_fuzzy(country_names);
 
 function find_country(name) {
