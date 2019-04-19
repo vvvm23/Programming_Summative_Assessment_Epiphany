@@ -20,6 +20,7 @@ $(document).ready(function() {
     b = 2;
 
     let delete_index = -1;
+    let edit_index = -1;
 
     delete_search_button.addEventListener('click', async function(event) {
         let query_name = document.getElementById('delete_search').value;

@@ -163,7 +163,31 @@ app.get('/search/edit', ensureLoggedIn, (req, res) => {
     // Search Country for edit secure endpoint
     // Returns all current data about a country
     
-    // is this nessecary? Could just use /query
+    let query_name = req.query.name;
+    let index = find_country(query_name);
+
+    let all = {
+        region : true,
+        subregion : true,
+        capital : true,
+        currency : true,
+        languages : true,
+        demonym : true,
+        independent : true,
+        translations : true,
+        flag : true,
+        latlng : true,
+        borders : true,
+        landlocked : true,
+        area : true,
+        callingCode : true,
+        tld : true
+    };
+
+    let statistics = get_country_statistics(index, all);
+    statistics['index'] = index;
+    res.send(statistics);
+
 })
 
 app.post('/delete', ensureLoggedIn, (req, res) => {
