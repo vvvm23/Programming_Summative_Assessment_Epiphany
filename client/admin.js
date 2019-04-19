@@ -56,6 +56,15 @@ $(document).ready(function() {
         })
     });
 
+    edit_search_button.addEventListener('click', async function(event) {
+        // Fetch from search/edit
+        // format response in input boxes
+    });
+
+    edit_confirm.addEventListener('click', async function() {
+        // Make POST with all statistics, delimit some by comma into arrays
+    })
+
     document.getElementById('menu_one').onclick = function() {
         b = 1;
         if (a != b) {
