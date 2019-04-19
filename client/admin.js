@@ -70,15 +70,15 @@ $(document).ready(function() {
                 let s_id = id_list[id];
                 switch(s_id) {
                     case 'name':
-                        document.getElementById('edit_common').value = data['name']['common'];
-                        document.getElementById('edit_official').value = data['name']['official'];
+                        document.getElementById('edit_name_common').value = data['name']['common'];
+                        document.getElementById('edit_name_official').value = data['name']['official'];
                         
                         let native = data['native_name'];
                         let native_html = '';
                         for (let key in native) {
                             native_html = native_html.concat(native[key] + ', ');
                         }
-                        document.getElementById('edit_native').value = native_html.substring(0, native_html.length - 2)
+                        document.getElementById('edit_name_native').value = native_html.substring(0, native_html.length - 2)
                         break;
                     case 'languages':
                         let language_string = '';
@@ -88,7 +88,9 @@ $(document).ready(function() {
                         document.getElementById('edit_languages').value = language_string.substring(0, language_string.length - 2);
                         break;
                     case 'independance':
-                        document.getElementById('edit_languages').value = data['independent'] ? true:false;
+                        //document.getElementById('edit_independent').index = data['independent'] ? true:false;
+                        data['independent'] ? $('#edit_independent_dropdown').dropdown('set selected', 'true'):
+                                              $('#edit_independent_dropdown').dropdown('set selected', 'false')
                         break;
                     case 'translations':
                         let translation_string = '';
@@ -108,7 +110,9 @@ $(document).ready(function() {
                         document.getElementById('edit_borders').value = borders_string.substring(0, borders_string.length - 2);
                         break;
                     case 'landlocked':
-                        document.getElementById('edit_landlocked').value = data['landlocked'] ? true:false;
+                        //document.getElementById('edit_landlocked').value = data['landlocked'] ? true:false;
+                        data['landlocked'] ? $('#edit_landlocked_dropdown').dropdown('set selected', 'true'):
+                                              $('#edit_landlocked_dropdown').dropdown('set selected', 'false')
                         break;
                     case 'callingcode':
                         document.getElementById('edit_callingcode').value = data['callingCode'];
@@ -126,6 +130,62 @@ $(document).ready(function() {
 
     edit_confirm.addEventListener('click', async function() {
         // Make POST with all statistics, delimit some by comma into arrays
+        let update = {}
+        let id_list = ['index', 'name_common', 'name_official', 'name_native', 'region', 'subregion',
+                       'capital', 'currency', 'languages', 'demonym', 'independent', 'translations',
+                       'flag', 'latlng', 'borders', 'landlocked', 'area', 'callingcode', 'domain']
+
+        for (let id = 0; id < id_list.length; id++) {
+            let s_id = id_list[id];
+            switch(s_id) {
+                case 'index':
+                    update['index'] = edit_index;
+                    break;
+                case 'currency':                
+                    update['currency'] = document.getElementById('edit_currency').value.replace(/\s/g, '').split(',');
+                    break;
+                case 'languages':
+                    update['languages'] = document.getElementById('edit_languages').value.replace(/\s/g, '').split(',');
+                    break;
+                case 'independent':
+                    update['independent'] = $('#edit_independent_dropdown').dropdown('get value');
+                    break;
+                case 'translations':
+                    update['translations'] = document.getElementById('edit_translations').value.replace(/\s/g, '').split(',');
+                    break;
+                case 'latlng':
+                    update['latlng'] = document.getElementById('edit_latlng').value.replace(/\s/g, '').split(',');
+                    break;
+                case 'borders':
+                    update['borders'] = document.getElementById('edit_borders').value.replace(/\s/g, '').split(',');
+                    break;
+                case 'landlocked':
+                    update['landlocked'] = $('#edit_landlocked_dropdown').dropdown('get value');
+                    break;
+                default:
+                    update[s_id] = document.getElementById('edit_'+s_id).value
+                    break;
+            }
+        }
+
+        console.log(update);
+
+        fetch('http://'+IP+':'+PORT+'/edit', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(update)
+        })
+        .then(function(res) {
+            if (res.ok) {
+                edit_index = -1;
+            } else {
+                modal_error(res);
+            }
+        })
+
     })
 
     document.getElementById('menu_one').onclick = function() {

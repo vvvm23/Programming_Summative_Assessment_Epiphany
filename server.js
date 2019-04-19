@@ -19,7 +19,6 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 // Load json dataset into memory //
 let json_countries = require('./json/countries.json');
-console.log(json_countries);
 // -----------------------------AUTH 0----------------------------- //
 
 var strategy = new Auth0Strategy({
@@ -117,7 +116,7 @@ app.post('/edit', ensureLoggedIn, (req, res) => {
 
     json_countries[index]['name']['common'] = json_body['name_common'];
     json_countries[index]['name']['official'] = json_body['name_official'];
-    json_countries[index]['native'] = {'unknown': json_body['name_native']}; // is this right?
+    json_countries[index]['name']['native'] = {'unknown': {'common': json_body['name_native']}}; // add support for multiple native
 
     json_countries[index]['region'] = json_body['region'];
     json_countries[index]['subregion'] = json_body['subregion'];
@@ -134,7 +133,7 @@ app.post('/edit', ensureLoggedIn, (req, res) => {
 
     json_countries[index]['translations'] = {};
     for (let i = 0; i < json_body['translations'].length; i++) {
-        json_countries[index]['translations'][i] = json_body['translations'][i];
+        json_countries[index]['translations'][i] = {'common': json_body['translations'][i]};
     }
 
     json_countries[index]['flag'] = json_body['flag'];
@@ -148,6 +147,12 @@ app.post('/edit', ensureLoggedIn, (req, res) => {
     json_countries[index]['area'] = json_body['area'];
     json_countries[index]['callingCode'] = [json_body['callingcode']];
     json_countries[index]['tld'] = [json_body['domain']];
+
+    console.log(json_countries[index])
+
+    country_names = generate_country_list();
+    country_index = generate_country_index();
+    fuzz = generate_country_fuzzy(country_names);
 });
 
 app.get('/search/delete', ensureLoggedIn, (req, res) => {
@@ -199,6 +204,7 @@ app.post('/delete', ensureLoggedIn, (req, res) => {
         json_countries.splice(index, 1);
         country_names = generate_country_list();
         country_index = generate_country_index();
+        fuzz = generate_country_fuzzy(country_names);
         console.log(country_names);
         res.sendStatus(200);
     } catch (error) {
