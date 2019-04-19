@@ -59,6 +59,69 @@ $(document).ready(function() {
     edit_search_button.addEventListener('click', async function(event) {
         // Fetch from search/edit
         // format response in input boxes
+        let query_name = document.getElementById('edit_search').value;
+        fetch('http://'+IP+':'+PORT+'/search/edit?name='+query_name)
+        .then(res => res.json())
+        .then(function(data) {
+            edit_index = data['index'];
+            let id_list = ['name', 'region', 'subregion', 'capital', 'currency', 'languages', 'demonym', 'independance', 'translations',
+                           'flag', 'latlng', 'borders', 'landlocked', 'area', 'callingcode', 'domain']
+            for (let id = 0; id < id_list.length; id++) {
+                let s_id = id_list[id];
+                switch(s_id) {
+                    case 'name':
+                        document.getElementById('edit_common').value = data['name']['common'];
+                        document.getElementById('edit_official').value = data['name']['official'];
+                        
+                        let native = data['native_name'];
+                        let native_html = '';
+                        for (let key in native) {
+                            native_html = native_html.concat(native[key] + ', ');
+                        }
+                        document.getElementById('edit_native').value = native_html.substring(0, native_html.length - 2)
+                        break;
+                    case 'languages':
+                        let language_string = '';
+                        for (let key in data['languages']) {
+                            language_string = language_string.concat(data['languages'][key] + ', ');
+                        } 
+                        document.getElementById('edit_languages').value = language_string.substring(0, language_string.length - 2);
+                        break;
+                    case 'independance':
+                        document.getElementById('edit_languages').value = data['independent'] ? true:false;
+                        break;
+                    case 'translations':
+                        let translation_string = '';
+                        for (let key in data['translations']) {
+                            translation_string = translation_string.concat(data['translations'][key]['common'] + ', ');
+                        }
+                        document.getElementById('edit_translations').value = translation_string.substring(0, translation_string.length - 2);
+                        break;
+                    case 'latlng':
+                        document.getElementById('edit_latlng').value = data['latlng'][0] + ', ' + data['latlng'][1];
+                        break;
+                    case 'borders':
+                        let borders_string = '';
+                        for (let i = 0; i < data['borders'].length; i++) {
+                            borders_string = borders_string.concat(data['borders'][i] + ', ');
+                        }
+                        document.getElementById('edit_borders').value = borders_string.substring(0, borders_string.length - 2);
+                        break;
+                    case 'landlocked':
+                        document.getElementById('edit_landlocked').value = data['landlocked'] ? true:false;
+                        break;
+                    case 'callingcode':
+                        document.getElementById('edit_callingcode').value = data['callingCode'];
+                        break;
+                    case 'domain':
+                        document.getElementById('edit_domain').value = data['tld'][0];
+                        break;
+                    default:
+                        document.getElementById('edit_'+s_id).value = data[s_id]; 
+                        break;
+                }
+            }
+        })
     });
 
     edit_confirm.addEventListener('click', async function() {
