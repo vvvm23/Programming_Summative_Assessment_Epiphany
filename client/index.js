@@ -49,6 +49,25 @@ $(document).ready(function () {
         resize_map();
     };
 
+    toggle_all.addEventListener('click', async function(event) {
+        let id_list = ['region', 'subregion', 'capital', 'currency', 'languages', 'demonym', 'independance', 'translations',
+                       'flag', 'latlng', 'borders', 'landlocked', 'area', 'callingcode', 'domain'];
+
+        
+        for (let id = 0; id < id_list.length; id++) {
+            let s_id = id_list[id];
+            console.log(s_id);
+            if ($('#check_'+s_id+'_parent').checkbox('is checked')) {
+                console.log('uncheck');
+                $('#check_'+s_id+'_parent').checkbox('toggle');
+            } else {
+                console.log('check');
+                $('#check_'+s_id+'_parent').checkbox('toggle');
+            } 
+            console.log('');
+        }
+    })
+
     submit_map.addEventListener('click', async function(event) {
 
         let lat = document.getElementById('attribute_one').value;
