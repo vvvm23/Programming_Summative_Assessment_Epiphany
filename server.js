@@ -107,6 +107,45 @@ app.post('/add', ensureLoggedIn, (req, res) => {
     // Add Country secure endpoint
     let json_body = req.body;
     
+    json_countries.push({});
+
+    json_countries[index]['name']['common'] = json_body['name_common'];
+    json_countries[index]['name']['official'] = json_body['name_official'];
+    json_countries[index]['name']['native'] = {'unknown': {'common': json_body['name_native']}}; // add support for multiple native
+
+    json_countries[index]['region'] = json_body['region'];
+    json_countries[index]['subregion'] = json_body['subregion'];
+    json_countries[index]['capital'] = [json_body['capital']];
+    json_countries[index]['currency'] = json_body['currency'];
+
+    json_countries[index]['languages'] = {};
+    for (let i = 0; i < json_body['languages'].length; i++) {
+        json_countries[index]['languages'][i] = json_body['languages'][i];
+    }
+
+    json_countries[index]['demonym'] = json_body['demonym'];
+    json_countries[index]['independent'] = json_body['independent'];
+
+    json_countries[index]['translations'] = {};
+    for (let i = 0; i < json_body['translations'].length; i++) {
+        json_countries[index]['translations'][i] = {'common': json_body['translations'][i]};
+    }
+
+    json_countries[index]['flag'] = json_body['flag'];
+
+    json_countries[index]['latlng'] = [0, 0];
+    json_countries[index]['latlng'][0] = json_body['latlng'][0];
+    json_countries[index]['latlng'][1] = json_body['latlng'][1];
+
+    json_countries[index]['borders'] = json_body['borders'];
+    json_countries[index]['landlocked'] = json_body['landlocked'];
+    json_countries[index]['area'] = json_body['area'];
+    json_countries[index]['callingCode'] = [json_body['callingcode']];
+    json_countries[index]['tld'] = [json_body['domain']];
+
+    country_names = generate_country_list();
+    country_index = generate_country_index();
+    fuzz = generate_country_fuzzy(country_names);
 });
 
 app.post('/edit', ensureLoggedIn, (req, res) => {
@@ -147,8 +186,6 @@ app.post('/edit', ensureLoggedIn, (req, res) => {
     json_countries[index]['area'] = json_body['area'];
     json_countries[index]['callingCode'] = [json_body['callingcode']];
     json_countries[index]['tld'] = [json_body['domain']];
-
-    console.log(json_countries[index])
 
     country_names = generate_country_list();
     country_index = generate_country_index();
