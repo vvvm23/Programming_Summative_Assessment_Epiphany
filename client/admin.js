@@ -22,6 +22,64 @@ $(document).ready(function() {
     let delete_index = -1;
     let edit_index = -1;
 
+    add_confirm.addEventListener('click', async function(event) {
+        let update = {}
+        let id_list = ['name_common', 'name_official', 'name_native', 'region', 'subregion',
+                       'capital', 'currency', 'languages', 'demonym', 'independent', 'translations',
+                       'flag', 'latlng', 'borders', 'landlocked', 'area', 'callingcode', 'domain']
+
+        for (let id = 0; id < id_list.length; id++) {
+            let s_id = id_list[id];
+            switch(s_id) {
+                case 'index':
+                    update['index'] = edit_index;
+                    break;
+                case 'currency':                
+                    update['currency'] = document.getElementById('add_currency').value.replace(/\s/g, '').split(',');
+                    break;
+                case 'languages':
+                    update['languages'] = document.getElementById('add_languages').value.replace(/\s/g, '').split(',');
+                    break;
+                case 'independent':
+                    update['independent'] = $('#add_independent_dropdown').dropdown('get value');
+                    break;
+                case 'translations':
+                    update['translations'] = document.getElementById('add_translations').value.replace(/\s/g, '').split(',');
+                    break;
+                case 'latlng':
+                    update['latlng'] = document.getElementById('add_latlng').value.replace(/\s/g, '').split(',');
+                    break;
+                case 'borders':
+                    update['borders'] = document.getElementById('add_borders').value.replace(/\s/g, '').split(',');
+                    break;
+                case 'landlocked':
+                    update['landlocked'] = $('#add_landlocked_dropdown').dropdown('get value');
+                    break;
+                default:
+                    update[s_id] = document.getElementById('add_'+s_id).value
+                    break;
+            }
+        }
+
+        console.log(update);
+
+        fetch('http://'+IP+':'+PORT+'/add', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(update)
+        })
+        .then(function(res) {
+            if (res.ok) {
+                edit_index = -1;
+            } else {
+                modal_error(res);
+            }
+        })
+    })
+
     delete_search_button.addEventListener('click', async function(event) {
         let query_name = document.getElementById('delete_search').value;
         fetch('http://'+IP + ':' + PORT+'/search/delete?name='+query_name)

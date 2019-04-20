@@ -106,9 +106,11 @@ app.get('/admin', ensureLoggedIn, (req, res) => {
 app.post('/add', ensureLoggedIn, (req, res) => {
     // Add Country secure endpoint
     let json_body = req.body;
-    
+    let index = json_countries.length;
+
     json_countries.push({});
 
+    json_countries[index]['name'] = {'common': '', 'official': '', 'native': {}};
     json_countries[index]['name']['common'] = json_body['name_common'];
     json_countries[index]['name']['official'] = json_body['name_official'];
     json_countries[index]['name']['native'] = {'unknown': {'common': json_body['name_native']}}; // add support for multiple native
@@ -138,6 +140,11 @@ app.post('/add', ensureLoggedIn, (req, res) => {
     json_countries[index]['latlng'][1] = json_body['latlng'][1];
 
     json_countries[index]['borders'] = json_body['borders'];
+    if (json_countries[index]['borders'] == '') {
+        json_countries[index]['borders'] = [];
+    }
+
+
     json_countries[index]['landlocked'] = json_body['landlocked'];
     json_countries[index]['area'] = json_body['area'];
     json_countries[index]['callingCode'] = [json_body['callingcode']];
