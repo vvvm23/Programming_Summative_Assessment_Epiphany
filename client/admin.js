@@ -89,6 +89,7 @@ $(document).ready(function() {
             document.getElementById('add_confirm_label_inner').innerHTML = json['name'];
             $('#add_confirm_label').transition('zoom');
             $('#add_confirm_label').transition({animation:'zoom', interval: 2000});
+            clear_input('add');
         })
         .catch();
     })
@@ -273,6 +274,7 @@ $(document).ready(function() {
             document.getElementById('edit_confirm_label_inner').innerHTML = json['name'];
             $('#edit_confirm_label').transition('zoom');
             $('#edit_confirm_label').transition({animation:'zoom', interval: 2000});
+            clear_input('edit');
         })
         .catch();
 
@@ -334,4 +336,16 @@ $(document).ready(function() {
             a = 3
         }
     };
+
+    function clear_input(type) {
+        let id_list = ['name_common', 'name_official', 'name_native', 'region', 'subregion', 'capital',
+                           'currency', 'languages', 'demonym', 'independent', 'translations',
+                           'flag', 'latlng', 'borders', 'landlocked', 'area', 'callingcode', 'domain'];
+
+        for (let id = 0; id < id_list.length; id++) {
+            let s_id = id_list[id];
+            console.log(s_id);
+            document.getElementById(type+'_'+s_id).value = '';
+        }
+    }
 })
