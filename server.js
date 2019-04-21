@@ -124,6 +124,7 @@ app.post('/add', ensureLoggedIn, (req, res) => {
     let index = json_countries.length;
     json_countries.push({});
 
+    const restore = function() {json_countries.splice(index, 1);};
 
     for (let id = 0; id < id_list.length; id++) {
         let s_id = id_list[id];
@@ -132,9 +133,11 @@ app.post('/add', ensureLoggedIn, (req, res) => {
                 json_countries[index]['name'] = {'common': '', 'official': '', 'native': {}};
 
                 if (stripHTML(json_body['name_common']) === '') {
+                    restore();
                     res.statusMessage = '"name_common" field is invalid! (Required field name_common) Additional errors may have occured';
                     res.sendStatus(400);
                 } else if (stripHTML(json_body['name_common']) in country_names && stripHTML(json_body['name_common']) != '') {
+                    restore();
                     res.statusMessage = '"name_common" field is invalid! (Name already exists) Additional errors may have occured';
                     res.sendStatus(400);
                 } else {
@@ -142,6 +145,7 @@ app.post('/add', ensureLoggedIn, (req, res) => {
                 }
 
                 if (stripHTML(json_body['name_official']) in country_names && stripHTML(json_body['name_official']) != '') {
+                    restore();
                     res.statusMessage = '"name_official" field is invalid! (Name already exists) Additional errors may have occured';
                     res.sendStatus(400);
                 } else {
@@ -149,6 +153,7 @@ app.post('/add', ensureLoggedIn, (req, res) => {
                 }
 
                 if (stripHTML(json_body['name_native']) in country_names && stripHTML(json_body['name_native']) != '') {
+                    restore();
                     res.statusMessage = '"name_native" field is invalid! (Name already exists) Additional errors may have occured';
                     res.sendStatus(400);
                 } else {
@@ -165,6 +170,7 @@ app.post('/add', ensureLoggedIn, (req, res) => {
                         json_countries[index]['languages'][i] = stripHTML(json_body['languages'][i]);
                     }
                 } else {
+                    restore();
                     res.statusMessage = '"languages" field is invalid! (Not an array) Additional errors may have occured.';
                     res.sendStatus(400);
                 }
@@ -178,10 +184,12 @@ app.post('/add', ensureLoggedIn, (req, res) => {
                     } else if (json_body['latlng'] == '') {
                         json_countries[index]['latlng'] = [0,0];
                     } else {
+                        restore();
                         res.statusMessage = '"latlng" field is invalid! (Array is not length 2) Additional errors may have occured.';
                         res.sendStatus(400);
                     }
                 } else {
+                    restore();
                     res.statusMessage = '"latlng" field is invalid! (Not an array) Additional errors may have occured.';
                     res.sendStatus(400);
                 }
@@ -198,6 +206,7 @@ app.post('/add', ensureLoggedIn, (req, res) => {
                         json_countries[index]['borders'] = [];
                     }
                 } else {
+                    restore();
                     res.statusMessage = '"borders" field is invalid! (Not an array) Additional errors may have occured.';
                     res.sendStatus(400);
                 }
@@ -209,6 +218,7 @@ app.post('/add', ensureLoggedIn, (req, res) => {
                         json_countries[index]['translations'][i] = {'common': stripHTML(json_body['translations'][i])};
                     }
                 } else {
+                    restore();
                     res.statusMessage = '"translations" field is invalid! (Not an array) Additional errors may have occured.';
                     res.sendStatus(400);
                 }
@@ -218,12 +228,14 @@ app.post('/add', ensureLoggedIn, (req, res) => {
                     if (json_body['callingcode'] === '') {
                         json_countries[index]['callingCode'] = '';
                     } else if (isNaN(Math.floor(stripHTML(json_body['callingcode'])))) {
+                        restore();
                         res.statusMessage = '"callingcode" field is invalid! (Not a number) Additional errors may have occured.';
                         res.sendStatus(400);
                     } else {
                         json_countries[index]['callingCode'] = [Math.floor(stripHTML(json_body['callingcode']))];
                     }
                 } else {
+                    restore();
                     res.statusMessage = '"callingcode" field is invalid! (Not a number) Additional errors may have occured.';
                     res.sendStatus(400);
                 }
@@ -231,6 +243,7 @@ app.post('/add', ensureLoggedIn, (req, res) => {
                 if (type(json_body['domain']) === 'string') {
                     json_countries[index]['tld'] = [stripHTML(json_body['domain'])];
                 } else {
+                    restore();
                     res.statusMessage = '"domain" field is invalid! (Not a string) Additional errors may have occured.';
                     res.sendStatus(400);
                 }
@@ -296,6 +309,11 @@ app.get('/search/delete', ensureLoggedIn, (req, res) => {
     // Returns Common name (maybe index too?)
     let query_name = req.query.name;
     let i = find_country(query_name);
+
+    if (i instanceof Error) {
+        res.statusMessage = 'Country not found';
+        res.sendStatus(400);
+    }
     let actual_name = json_countries[i]['name']['common'];
     res.send({index: i, name: actual_name});
 })
