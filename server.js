@@ -396,9 +396,12 @@ function find_country(name) {
     // Match with altSpellings and name fields
     // Either regex match then select or first 
     
-    // If nothing matches the array will be empty, be sure to add handlers for this
     let fuzz_result = fuzz.get(name);
-    return country_index[country_names[fuzz_result[0][1]]];
+    try {
+        return country_index[country_names[fuzz_result[0][1]]];
+    } catch (error) {
+        return error;
+    }
 }
 
 function get_country_statistics(index, toggles) {
@@ -470,9 +473,14 @@ app.get('/query', function (req, resp) {
     };
     let query_name = req.query.name;
     let index = find_country(query_name);
-    let statistics = get_country_statistics(index, check);
-    
-    resp.send(statistics);
+
+    if (index instanceof Error) {
+        resp.statusMessage = 'Failed to find country!';
+        resp.sendStatus(401);
+    } else {
+        let statistics = get_country_statistics(index, check);
+        resp.send(statistics);
+    }
 });
 
 app.get('/wiki', function (req, resp) {

@@ -107,8 +107,171 @@ $(document).ready(function () {
             }
         }
 
+
+        // Let's do this instead
+        fetch('http://'+IP+':'+PORT+'/query?name='+query_name+'&check='+checkbox_binary_string)
+        .then(function(resp) {
+            if (resp.status === 404) {
+                modal_error("Error 404: Page not found!");
+                throw '';
+            } if (resp.ok) {
+                return resp
+            } else {
+                modal_error(resp.statusText)
+                throw '';
+            }
+        })
+        .then(resp => resp.json())
+        //.then(json => stats_ok(json))
+        .then(function (json) {
+            document.getElementById('selected_country').innerHTML = 'Selected Country: ' + json['name']['common'];
+            stats_ok(json);
+            wiki_get(json['name']['common']);
+            map_get(json['latlng']);
+        })
+        .catch();
+
+        function stats_ok(data) {
+            for (let id = 0; id < id_list.length; id++) {
+                let s_id = id_list[id];
+                if (s_id == 'name') {
+                    $('#stats_name').transition({animation: 'fly left'});
+                }
+                else if (s_id == id_list[id_list.length - 1]) {
+                    $('#stats_'+s_id).transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_'+s_id).checked){hide_stat('stats_'+s_id);} else {show_stat('stats_'+s_id)} transition_done(data);}});
+                }
+                else {
+                    $('#stats_'+s_id).transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_'+s_id).checked){hide_stat('stats_'+s_id);} else {show_stat('stats_'+s_id)}}});
+                }
+            }
+        }
+
+        function transition_done(data) {
+            for (let id = 0; id < id_list.length; id++) {
+                let s_id = id_list[id];
+                switch(s_id) {
+                    case 'name':
+                        document.getElementById('stats_name_inner_common').innerHTML = data['name']['common'] || 'Not defined';
+                        document.getElementById('stats_name_inner_alternate_one').innerHTML = data['name']['official'] || 'Not defined';
+                        
+                        let native = data['native_name'];
+                        let native_html = '';
+                        for (let key in native) {
+                            native_html = native_html.concat(native[key] + ' • ');
+                        }
+                        document.getElementById('stats_name_inner_alternate_two').innerHTML = native_html.substring(0, native_html.length - 3)
+                        break;
+                    case 'languages':
+                        if (document.getElementById('check_languages').checked) {
+                            let language_string = '';
+                            for (let key in data['languages']) {
+                                language_string = language_string.concat(data['languages'][key] + ', ');
+                            }
+                            if (language_string.substring(0, language_string.length - 2) === '') {
+                                document.getElementById('stats_languages_inner').innerHTML = 'Not defined'
+                            } else {
+                                document.getElementById('stats_languages_inner').innerHTML = language_string.substring(0, language_string.length - 2);
+                            }
+                        }
+                        break;
+                    case 'independance':
+                        if (document.getElementById('check_independance').checked) {
+                            document.getElementById('stats_independance_inner').innerHTML = data['independent'] ? 'Yes':
+                            (data['independent'] === '' ? 'Not defined':'No');
+                        }
+                        break;
+                    case 'translations':
+                        if (document.getElementById('check_translations').checked) {
+                            let translation_string = '';
+                            for (let key in data['translations']) {
+                                translation_string = translation_string.concat(data['translations'][key]['common'] + ', ');
+                            }
+                            if (translation_string.substring(0, translation_string.length - 2) === '') {
+                                document.getElementById('stats_translations_inner').innerHTML = 'Not defined';
+                            } else {
+                                document.getElementById('stats_translations_inner').innerHTML = translation_string.substring(0, translation_string.length - 2);
+                            }
+                        }
+                        break;
+                    case 'latlng':
+                        if (document.getElementById('check_latlng').checked) {document.getElementById('stats_latlng_inner').innerHTML = data['latlng'][0] + ', ' + data['latlng'][1];}
+                        break;
+                    case 'borders':
+                        if (document.getElementById('check_borders').checked) {
+                            let borders_string = '';
+                            for (let i = 0; i < data['borders'].length; i++) {
+                                borders_string = borders_string.concat(data['borders'][i] + ', ');
+                            }
+                            if (data['borders'].length == 0) {
+                                document.getElementById('stats_borders_inner').innerHTML = 'No countries bordering selected country.'
+                            }
+                            else {
+                                document.getElementById('stats_borders_inner').innerHTML = borders_string.substring(0, borders_string.length - 2);            
+                            }
+                        }
+                        break;
+                    case 'landlocked':
+                        if (document.getElementById('check_landlocked').checked) {
+                            document.getElementById('stats_landlocked_inner').innerHTML = data['landlocked'] ? 'Yes':
+                            (data['landlocked'] === '' ? 'Not defined':'No');
+                        }
+                        break;
+                    case 'area':
+                        if (document.getElementById('check_area').checked && data['area'] != '') {
+                            document.getElementById('stats_area_inner').innerHTML = data['area'] + ' km<sup>2</sup>';
+                        } else {
+                            document.getElementById('stats_area_inner').innerHTML = 'Not defined';
+                        }
+                        break;
+                    case 'callingcode':
+                        if (document.getElementById('check_callingcode').checked) {document.getElementById('stats_callingcode_inner').innerHTML = data['callingCode'] || 'Not defined';}
+                        break;
+                    case 'domain':
+                        if (document.getElementById('check_domain').checked) {document.getElementById('stats_domain_inner').innerHTML = data['tld'][0] || 'Not defined';}
+                        break;
+                    case 'capital':
+                        if (document.getElementById('check_capital').checked) {document.getElementById('stats_capital_inner').innerHTML = data['capital'][0] || 'Not defined';}
+                        break;
+                    default:
+                        if (document.getElementById('check_'+s_id).checked) { document.getElementById('stats_'+s_id+'_inner').innerHTML = data[s_id] || 'Not defined'; }  
+                        break;
+                }
+            }
+
+            for (let id = 0; id < id_list.length; id++) {
+                $('#stats_'+id_list[id]).transition({animation: 'fly left'});
+            }
+
+            /*fetch('http://'+IP+':'+PORT+'/wiki?name='+data['name']['common'])
+            .then(resp => resp.json())
+            .then(resp=> document.getElementById('wiki_inner').innerHTML = resp['wiki'])
+            .then(document.getElementById('wiki_name').innerHTML = data['name']['common']);*/
+
+            /*fetch('http://'+IP+':'+PORT+'/map?lat='+data['latlng'][0]+'&t=0&lon='+data['latlng'][1]+'&z=6&x='+MAP_RES_X+'&y='+MAP_RES_Y)
+            .then(resp=>resp.clone().json())
+            .then(x=>document.getElementById('map_image').src = x['map_url'])
+            .then(resize_map());*/
+        }
+
+        function wiki_get(name) {
+            fetch('http://'+IP+':'+PORT+'/wiki?name='+name)
+            .then(resp => resp.json())
+            .then(resp=> document.getElementById('wiki_inner').innerHTML = resp['wiki'])
+            .then(document.getElementById('wiki_name').innerHTML = name);
+
+        }
+
+        function map_get(latlng) {
+            fetch('http://'+IP+':'+PORT+'/map?lat='+latlng[0]+'&t=0&lon='+latlng[1]+'&z=6&x='+MAP_RES_X+'&y='+MAP_RES_Y)
+            .then(resp=>resp.clone().json()) // is clone needed?
+            .then(x=>document.getElementById('map_image').src = x['map_url'])
+            .then(resize_map());
+        }
+        //
+
+
         // Transition off, get results from server, hide and show nessecary, transition back on   
-        for (let id = 0; id < id_list.length; id++) {
+        /*for (let id = 0; id < id_list.length; id++) {
             let s_id = id_list[id];
             if (s_id == 'name') {
                 $('#stats_name').transition({animation: 'fly left'});
@@ -119,20 +282,19 @@ $(document).ready(function () {
             else {
                 $('#stats_'+s_id).transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_'+s_id).checked){hide_stat('stats_'+s_id);} else {show_stat('stats_'+s_id)}}});
             }
-        }
-        if (a==2 || a==3) {
-            transition_done();
-        }
+        }*/
 
-        function transition_done() {
+        /*function transition_done() {
             try {
                 fetch('http://'+IP+':'+PORT+'/query?name='+query_name+'&check='+checkbox_binary_string)
                 .then(function(resp) {
                     if (resp.status === 404) {
                         modal_error("Error 404: Page not found!");
-                        throw new Error("404 Error");
-                    } else {
+                    } if (resp.ok) {
                         return resp;
+                    } else {
+                        modal_error(resp.statusText)
+
                     }
                 })
                 .then(resp=> resp.json())
@@ -254,7 +416,7 @@ $(document).ready(function () {
                 console.log(err);
                 modal_error(err);
             }
-        }
+        }*/
     });
 
     document.getElementById('menu_one').onclick = function() {
