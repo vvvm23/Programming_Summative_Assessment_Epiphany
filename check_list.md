@@ -16,14 +16,14 @@
 
 Source code (all zipped)
 
-- HTML and CSS and any media
-- Client and server side JavaScript
-- package.json including test and pretest scripts
-- .eslintrc
-- jest test cases e.g. app.test.js
-- README.md explaining how to use the site and API
+- HTML and CSS and any media **✔️**
+- Client and server side JavaScript **✔️**
+- package.json including test and pretest scripts **?**
+- .eslintrc **?**
+- jest test cases e.g. app.test.js **?**
+- README.md explaining how to use the site and API **?**
 
-Should not include `node_modules` in submission **? (remove this)**
+Should not include `node_modules` in submission **✔️**
 
 
 ## Assessment Criteria
@@ -47,7 +47,7 @@ Equally weighted
 
 - App complexity
   - Complexity of data: number of entities; attributes; relationships **✔️**
-  - Complexity of interaction: list; add; edit; verify **? (todo, adding and editing entries)**
+  - Complexity of interaction: list; add; edit; verify **✔️**
 - 'Single page' style: asynchronous updates
   - Requests should be sent via fetch. Check XHR requests in devtools > Network **✔️**
 
@@ -80,7 +80,7 @@ Equally weighted
 - REST API provides each entity with appropriate GET/POST methods
   - consistent API structure **✔️**
   - GET only reads, POST only writes **✔️**
-  - POST has authentication **? (make POST requests to authenticated /add, /edit, etc)**
+  - POST has authentication **✔️**
   - GET to list/search, returns list of minimal details **✔️**
   - GET with ID (query encoded or in path) has more details, including relationships **✔️**
 
