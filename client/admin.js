@@ -75,7 +75,7 @@ $(document).ready(function() {
             if (res.ok) {
                 edit_index = -1;
             } else {
-                modal_error(res);
+                modal_error(res.statusText);
             }
         })
     })
