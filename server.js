@@ -6,7 +6,7 @@ const app = express();
 const session = require('express-session');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
-//dotenv.load();
+
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
@@ -241,12 +241,14 @@ app.post('/add', ensureLoggedIn, (req, res) => {
     country_names = generate_country_list();
     country_index = generate_country_index();
     fuzz = generate_country_fuzzy(country_names);
+    res.send({'name': json_body['name_common']});
 });
 
 app.post('/edit', ensureLoggedIn, (req, res) => {
     // Edit Country secure endpoint
     let json_body = req.body;
     let index = json_body['index']
+    let original_name = json_countries[index]['name']['common'];
 
     json_countries[index]['name']['common'] = json_body['name_common'];
     json_countries[index]['name']['official'] = json_body['name_official'];
@@ -285,6 +287,8 @@ app.post('/edit', ensureLoggedIn, (req, res) => {
     country_names = generate_country_list();
     country_index = generate_country_index();
     fuzz = generate_country_fuzzy(country_names);
+
+    res.send({'name': original_name});
 });
 
 app.get('/search/delete', ensureLoggedIn, (req, res) => {
@@ -475,7 +479,7 @@ app.get('/query', function (req, resp) {
     let index = find_country(query_name);
 
     if (index instanceof Error) {
-        resp.statusMessage = 'Failed to find country!';
+        resp.statusMessage = 'Country does not exist!';
         resp.sendStatus(401);
     } else {
         let statistics = get_country_statistics(index, check);

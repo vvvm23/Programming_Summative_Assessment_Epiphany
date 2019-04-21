@@ -9,7 +9,10 @@ $(document).ready(function() {
 
     $('.add').transition({animation: 'fly left', duration: 0});
     $('.delete').transition({animation: 'fly left', duration: 0});
-    $('#delete_confirm_label').transition('zoom');
+
+    $('#delete_confirm_label').transition({animation:'zoom', duration: 0});
+    $('#edit_confirm_label').transition({animation:'zoom', duration: 0});
+    $('#add_confirm_label').transition({animation:'zoom', duration: 0});
 
     $('#add_independent_dropdown').dropdown();
     $('#add_landlocked_dropdown').dropdown();
@@ -73,12 +76,21 @@ $(document).ready(function() {
             body: JSON.stringify(update)
         })
         .then(function(res) {
-            if (res.ok) {
+            if (res.ok) {      
                 edit_index = -1;
+                return res;
             } else {
                 modal_error(res.statusText);
+                throw '';
             }
         })
+        .then(res => res.json())
+        .then(function (json) {
+            document.getElementById('add_confirm_label_inner').innerHTML = json['name'];
+            $('#add_confirm_label').transition('zoom');
+            $('#add_confirm_label').transition({animation:'zoom', interval: 2000});
+        })
+        .catch();
     })
 
     delete_search_button.addEventListener('click', async function(event) {
@@ -249,10 +261,20 @@ $(document).ready(function() {
         .then(function(res) {
             if (res.ok) {
                 edit_index = -1;
+                document.getElementById('edit_search').value = ''; 
+                return res;
             } else {
                 modal_error(res);
+                throw '';
             }
         })
+        .then(res => res.json())
+        .then(function (json) {
+            document.getElementById('edit_confirm_label_inner').innerHTML = json['name'];
+            $('#edit_confirm_label').transition('zoom');
+            $('#edit_confirm_label').transition({animation:'zoom', interval: 2000});
+        })
+        .catch();
 
     })
 
