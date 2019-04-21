@@ -1,6 +1,14 @@
 const IP = '127.0.0.1';
 const PORT = 8090;
 
+const type = function(obj) {
+    return Object.prototype.toString.apply(obj).replace(/\[object (.+)\]/i, '$1').toLowerCase();
+};
+
+const stripHtml = function(untrusted) {
+    return $($.parseHTML(untrusted)).text();
+}
+
 const express = require('express');
 const app = express();
 const session = require('express-session');
@@ -106,50 +114,93 @@ app.get('/admin', ensureLoggedIn, (req, res) => {
 app.post('/add', ensureLoggedIn, (req, res) => {
     // Add Country secure endpoint
     let json_body = req.body;
-    let index = json_countries.length;
 
+    let id_list = ['name', 'region', 'subregion', 'capital', 'currency', 'languages', 'demonym', 'independent',
+                   'translations', 'flag', 'latlng', 'borders', 'landlocked', 'area', 'callingcode', 'domain'];
+
+
+    let index = json_countries.length;
     json_countries.push({});
 
-    json_countries[index]['name'] = {'common': '', 'official': '', 'native': {}};
-    json_countries[index]['name']['common'] = json_body['name_common'];
-    json_countries[index]['name']['official'] = json_body['name_official'];
-    json_countries[index]['name']['native'] = {'unknown': {'common': json_body['name_native']}}; // add support for multiple native
+    for (let id = 0; id < id_list.length; id++) {
+        let s_id = id_list[id];
 
-    json_countries[index]['region'] = json_body['region'];
-    json_countries[index]['subregion'] = json_body['subregion'];
-    json_countries[index]['capital'] = [json_body['capital']];
-    json_countries[index]['currency'] = json_body['currency'];
-
-    json_countries[index]['languages'] = {};
-    for (let i = 0; i < json_body['languages'].length; i++) {
-        json_countries[index]['languages'][i] = json_body['languages'][i];
+        switch(s_id) {
+            case 'name':
+                json_countries[index]['name'] = {'common': '', 'official': '', 'native': {}};
+                json_countries[index]['name']['common'] = json_body['name_common'];
+                json_countries[index]['name']['official'] = json_body['name_official'];
+                json_countries[index]['name']['native'] = {'unknown': {'common': json_body['name_native']}}; // add support for multiple native
+                break;
+            case 'capital':
+                json_countries[index]['capital'] = [json_body['capital']];
+                break;
+            case 'languages':
+                if (type(json_body['languages']) === 'array') {
+                    json_countries[index]['languages'] = {};
+                    for (let i = 0; i < json_body['languages'].length; i++) {
+                        json_countries[index]['languages'][i] = json_body['languages'][i];
+                    }
+                } else {
+                    res.statusMessage = '"languages" field is invalid! (Not an array)\n Additional errors may have occured.';
+                    res.sendStatus(400);
+                }
+                break;
+            case 'latlng':
+                if (type(json_body['latlng']) === 'array') {   
+                    if (json_body['latlng'].length === 2) {               
+                        json_countries[index]['latlng'] = [0, 0];
+                        json_countries[index]['latlng'][0] = json_body['latlng'][0];
+                        json_countries[index]['latlng'][1] = json_body['latlng'][1];
+                    } else {
+                        res.statusMessage = '"latlng" field is invalid! (Array is not length 2)\n Additional errors may have occured.';
+                        res.sendStatus(400);
+                    }
+                } else {
+                    res.statusMessage = '"latlng" field is invalid! (Not an array)\n Additional errors may have occured.';
+                    res.sendStatus(400);
+                }
+                break;
+            case 'borders':
+                if (type(json_body['borders']) === 'array') {
+                    json_countries[index]['borders'] = json_body['borders'];
+                    if (json_countries[index]['borders'] == '') {
+                        json_countries[index]['borders'] = [];
+                    }
+                } else {
+                    res.statusMessage = '"borders" field is invalid! (Not an array)\n Additional errors may have occured.';
+                    res.sendStatus(400);
+                }
+                break;
+            case 'translations':
+                if (type(json_body['translations']) === 'array') {
+                    json_countries[index]['translations'] = {};
+                    for (let i = 0; i < json_body['translations'].length; i++) {
+                        json_countries[index]['translations'][i] = {'common': json_body['translations'][i]};
+                    }
+                } else {
+                    res.statusMessage = '"translations" field is invalid! (Not an array)\n Additional errors may have occured.';
+                    res.sendStatus(400);
+                }
+                break;
+            case 'callingcode':
+                if (type(json_body['callingcode']) === 'number') {
+                    json_countries[index]['callingCode'] = [Math.floor(json_body['callingcode'])];
+                } else {
+                    res.statusMessage = '"callingcode" field is invalid! (Not a number)\n Additional errors may have occured.';
+                    res.sendStatus(400);
+                }
+            case 'domain':
+                if (type(json_body['domain']) === 'string') {
+                    json_countries[index]['tld'] = [json_body['domain']];
+                } else {
+                    res.statusMessage = '"domain" field is invalid! (Not a string)\n Additional errors may have occured.';
+                    res.sendStatus(400);
+                }
+            default:
+                json_countries[index][s_id] = json_body[s_id];
+        }
     }
-
-    json_countries[index]['demonym'] = json_body['demonym'];
-    json_countries[index]['independent'] = json_body['independent'];
-
-    json_countries[index]['translations'] = {};
-    for (let i = 0; i < json_body['translations'].length; i++) {
-        json_countries[index]['translations'][i] = {'common': json_body['translations'][i]};
-    }
-
-    json_countries[index]['flag'] = json_body['flag'];
-
-    json_countries[index]['latlng'] = [0, 0];
-    json_countries[index]['latlng'][0] = json_body['latlng'][0];
-    json_countries[index]['latlng'][1] = json_body['latlng'][1];
-
-    json_countries[index]['borders'] = json_body['borders'];
-    if (json_countries[index]['borders'] == '') {
-        json_countries[index]['borders'] = [];
-    }
-
-
-    json_countries[index]['landlocked'] = json_body['landlocked'];
-    json_countries[index]['area'] = json_body['area'];
-    json_countries[index]['callingCode'] = [json_body['callingcode']];
-    json_countries[index]['tld'] = [json_body['domain']];
-
     country_names = generate_country_list();
     country_index = generate_country_index();
     fuzz = generate_country_fuzzy(country_names);
