@@ -141,8 +141,8 @@ $(document).ready(function () {
                         let s_id = id_list[id];
                         switch(s_id) {
                             case 'name':
-                                document.getElementById('stats_name_inner_common').innerHTML = data['name']['common'];
-                                document.getElementById('stats_name_inner_alternate_one').innerHTML = data['name']['official'];
+                                document.getElementById('stats_name_inner_common').innerHTML = data['name']['common'] || 'Not defined';
+                                document.getElementById('stats_name_inner_alternate_one').innerHTML = data['name']['official'] || 'Not defined';
                                 
                                 let native = data['native_name'];
                                 let native_html = '';
@@ -156,12 +156,19 @@ $(document).ready(function () {
                                     let language_string = '';
                                     for (let key in data['languages']) {
                                         language_string = language_string.concat(data['languages'][key] + ', ');
-                                    } 
-                                    document.getElementById('stats_languages_inner').innerHTML = language_string.substring(0, language_string.length - 2);
+                                    }
+                                    if (language_string.substring(0, language_string.length - 2) === '') {
+                                        document.getElementById('stats_languages_inner').innerHTML = 'Not defined'
+                                    } else {
+                                        document.getElementById('stats_languages_inner').innerHTML = language_string.substring(0, language_string.length - 2);
+                                    }
                                 }
                                 break;
                             case 'independance':
-                                if (document.getElementById('check_independance').checked) {document.getElementById('stats_independance_inner').innerHTML = data['independent'] ? 'Yes':'No';}
+                                if (document.getElementById('check_independance').checked) {
+                                    document.getElementById('stats_independance_inner').innerHTML = data['independent'] ? 'Yes':
+                                    (data['independent'] === '' ? 'Not defined':'No');
+                                }
                                 break;
                             case 'translations':
                                 if (document.getElementById('check_translations').checked) {
@@ -169,7 +176,11 @@ $(document).ready(function () {
                                     for (let key in data['translations']) {
                                         translation_string = translation_string.concat(data['translations'][key]['common'] + ', ');
                                     }
-                                    document.getElementById('stats_translations_inner').innerHTML = translation_string.substring(0, translation_string.length - 2);
+                                    if (translation_string.substring(0, translation_string.length - 2) === '') {
+                                        document.getElementById('stats_translations_inner').innerHTML = 'Not defined';
+                                    } else {
+                                        document.getElementById('stats_translations_inner').innerHTML = translation_string.substring(0, translation_string.length - 2);
+                                    }
                                 }
                                 break;
                             case 'latlng':
@@ -190,19 +201,29 @@ $(document).ready(function () {
                                 }
                                 break;
                             case 'landlocked':
-                                if (document.getElementById('check_landlocked').checked) {document.getElementById('stats_landlocked_inner').innerHTML = data['landlocked'] ? 'Yes':'No';}
+                                if (document.getElementById('check_landlocked').checked) {
+                                    document.getElementById('stats_landlocked_inner').innerHTML = data['landlocked'] ? 'Yes':
+                                    (data['landlocked'] === '' ? 'Not defined':'No');
+                                }
                                 break;
                             case 'area':
-                                if (document.getElementById('check_area').checked) {document.getElementById('stats_area_inner').innerHTML = data['area'] + ' km<sup>2</sup>';}
+                                if (document.getElementById('check_area').checked && data['area'] != '') {
+                                    document.getElementById('stats_area_inner').innerHTML = data['area'] + ' km<sup>2</sup>';
+                                } else {
+                                    document.getElementById('stats_area_inner').innerHTML = 'Not defined';
+                                }
                                 break;
                             case 'callingcode':
-                                if (document.getElementById('check_callingcode').checked) {document.getElementById('stats_callingcode_inner').innerHTML = '+' + data['callingCode'];}
+                                if (document.getElementById('check_callingcode').checked) {document.getElementById('stats_callingcode_inner').innerHTML = data['callingCode'] || 'Not defined';}
                                 break;
                             case 'domain':
-                                if (document.getElementById('check_domain').checked) {document.getElementById('stats_domain_inner').innerHTML = data['tld'][0];}
+                                if (document.getElementById('check_domain').checked) {document.getElementById('stats_domain_inner').innerHTML = data['tld'][0] || 'Not defined';}
+                                break;
+                            case 'capital':
+                                if (document.getElementById('check_capital').checked) {document.getElementById('stats_capital_inner').innerHTML = data['capital'][0] || 'Not defined';}
                                 break;
                             default:
-                                if (document.getElementById('check_'+s_id).checked) { document.getElementById('stats_'+s_id+'_inner').innerHTML = data[s_id]; }  
+                                if (document.getElementById('check_'+s_id).checked) { document.getElementById('stats_'+s_id+'_inner').innerHTML = data[s_id] || 'Not defined'; }  
                                 break;
                         }
                     }

@@ -124,15 +124,38 @@ app.post('/add', ensureLoggedIn, (req, res) => {
     let index = json_countries.length;
     json_countries.push({});
 
+    console.log(json_body);
+
     for (let id = 0; id < id_list.length; id++) {
         let s_id = id_list[id];
 
         switch(s_id) {
             case 'name': 
                 json_countries[index]['name'] = {'common': '', 'official': '', 'native': {}};
-                json_countries[index]['name']['common'] = stripHTML(json_body['name_common']);
-                json_countries[index]['name']['official'] = stripHTML(json_body['name_official']);
-                json_countries[index]['name']['native'] = {'unknown': {'common': stripHTML(json_body['name_native'])}}; // add support for multiple native
+
+                if (stripHTML(json_body['name_common']) === '') {
+                    res.statusMessage = '"name_common" field is invalid! (Required field name_common) Additional errors may have occured';
+                    res.sendStatus(400);
+                } else if (stripHTML(json_body['name_common']) in country_names) {
+                    res.statusMessage = '"name_common" field is invalid! (Name already exists) Additional errors may have occured';
+                    res.sendStatus(400);
+                } else {
+                    json_countries[index]['name']['common'] = stripHTML(json_body['name_common']);
+                }
+
+                if (stripHTML(json_body['name_official']) in country_names) {
+                    res.statusMessage = '"name_official" field is invalid! (Name already exists) Additional errors may have occured';
+                    res.sendStatus(400);
+                } else {
+                    json_countries[index]['name']['official'] = stripHTML(json_body['name_official']);
+                }
+
+                if (stripHTML(json_body['name_native']) in country_names) {
+                    res.statusMessage = '"name_native" field is invalid! (Name already exists) Additional errors may have occured';
+                    res.sendStatus(400);
+                } else {
+                    json_countries[index]['name']['native'] = {'unknown': {'common': stripHTML(json_body['name_native'])}}; // add support for multiple native
+                }
                 break;
             case 'capital':
                 json_countries[index]['capital'] = [stripHTML(json_body['capital'])];
@@ -154,6 +177,8 @@ app.post('/add', ensureLoggedIn, (req, res) => {
                         json_countries[index]['latlng'] = [0, 0];
                         json_countries[index]['latlng'][0] = stripHTML(json_body['latlng'][0]);
                         json_countries[index]['latlng'][1] = stripHTML(json_body['latlng'][1]);
+                    } else if (json_body['latlng'] == '') {
+                        json_countries[index]['latlng'] = [0,0];
                     } else {
                         res.statusMessage = '"latlng" field is invalid! (Array is not length 2) Additional errors may have occured.';
                         res.sendStatus(400);
@@ -191,7 +216,14 @@ app.post('/add', ensureLoggedIn, (req, res) => {
                 break;
             case 'callingcode':
                 if (type(json_body['callingcode']) === 'string') {
-                    json_countries[index]['callingCode'] = [Math.floor(stripHTML(json_body['callingcode']))];
+                    if (json_body['callingcode'] === '') {
+                        json_countries[index]['callingCode'] = '';
+                    } else if (isNaN(Math.floor(stripHTML(json_body['callingcode'])))) {
+                        res.statusMessage = '"callingcode" field is invalid! (Not a number) Additional errors may have occured.';
+                        res.sendStatus(400);
+                    } else {
+                        json_countries[index]['callingCode'] = [Math.floor(stripHTML(json_body['callingcode']))];
+                    }
                 } else {
                     res.statusMessage = '"callingcode" field is invalid! (Not a number) Additional errors may have occured.';
                     res.sendStatus(400);

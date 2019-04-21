@@ -148,7 +148,9 @@ $(document).ready(function() {
                     case 'independance':
                         //document.getElementById('edit_independent').index = data['independent'] ? true:false;
                         data['independent'] ? $('#edit_independent_dropdown').dropdown('set selected', 'true'):
-                                              $('#edit_independent_dropdown').dropdown('set selected', 'false')
+                                              (data['independent'] === '' ? 
+                                                $('#edit_independent_dropdown').dropdown('set selected', 'unknown'):
+                                                $('#edit_independent_dropdown').dropdown('set selected', 'false'));
                         break;
                     case 'translations':
                         let translation_string = '';
@@ -170,7 +172,8 @@ $(document).ready(function() {
                     case 'landlocked':
                         //document.getElementById('edit_landlocked').value = data['landlocked'] ? true:false;
                         data['landlocked'] ? $('#edit_landlocked_dropdown').dropdown('set selected', 'true'):
-                                              $('#edit_landlocked_dropdown').dropdown('set selected', 'false')
+                                              (data['landlocked'] === '' ? $('#edit_landlocked_dropdown').dropdown('set selected', 'unknown'):
+                                              $('#edit_landlocked_dropdown').dropdown('set selected', 'false'));
                         break;
                     case 'callingcode':
                         document.getElementById('edit_callingcode').value = data['callingCode'];
@@ -207,6 +210,9 @@ $(document).ready(function() {
                     break;
                 case 'independent':
                     update['independent'] = $('#edit_independent_dropdown').dropdown('get value');
+                    if (update['independent'] === 'unknown') {
+                        update['independent'] = '';
+                    }
                     break;
                 case 'translations':
                     update['translations'] = document.getElementById('edit_translations').value.replace(/\s/g, '').split(',');
@@ -219,6 +225,9 @@ $(document).ready(function() {
                     break;
                 case 'landlocked':
                     update['landlocked'] = $('#edit_landlocked_dropdown').dropdown('get value');
+                    if (update['landlocked'] === 'unknown') {
+                        update['landlocked'] = '';
+                    }
                     break;
                 default:
                     update[s_id] = document.getElementById('edit_'+s_id).value
