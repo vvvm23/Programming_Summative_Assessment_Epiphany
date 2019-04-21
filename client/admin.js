@@ -51,6 +51,7 @@ $(document).ready(function() {
                     break;
                 case 'borders':
                     update['borders'] = document.getElementById('add_borders').value.replace(/\s/g, '').split(',');
+                    console.log(update['borders']);
                     break;
                 case 'landlocked':
                     update['landlocked'] = $('#add_landlocked_dropdown').dropdown('get value');
