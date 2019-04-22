@@ -265,7 +265,7 @@ $(document).ready(function() {
                 document.getElementById('edit_search').value = ''; 
                 return res;
             } else {
-                modal_error(res);
+                modal_error(res.statusText);
                 throw '';
             }
         })
