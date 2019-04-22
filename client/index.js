@@ -122,10 +122,12 @@ $(document).ready(function () {
         })
         .then(resp => resp.json())
         .then(function (json) {
-            document.getElementById('selected_country').innerHTML = 'Selected Country: ' + json['name']['common'];
-            stats_ok(json);
-            wiki_get(json['name']['common']);
-            map_get(json['latlng']);
+            if (a != 0) {
+                document.getElementById('selected_country').innerHTML = 'Selected Country: ' + json['name']['common'];
+                stats_ok(json);
+                wiki_get(json['name']['common']);
+                map_get(json['latlng']);
+            }
         })
         .catch();
 
