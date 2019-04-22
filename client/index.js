@@ -53,18 +53,13 @@ $(document).ready(function () {
         let id_list = ['region', 'subregion', 'capital', 'currency', 'languages', 'demonym', 'independance', 'translations',
                        'flag', 'latlng', 'borders', 'landlocked', 'area', 'callingcode', 'domain'];
 
-        
         for (let id = 0; id < id_list.length; id++) {
             let s_id = id_list[id];
-            console.log(s_id);
             if ($('#check_'+s_id+'_parent').checkbox('is checked')) {
-                console.log('uncheck');
                 $('#check_'+s_id+'_parent').checkbox('uncheck');
             } else {
-                console.log('check');
                 $('#check_'+s_id+'_parent').checkbox('check');
             } 
-            console.log('');
         }
     })
 
@@ -82,15 +77,18 @@ $(document).ready(function () {
         .then(function(resp) {
             if (resp.status === 404) {
                 modal_error("Error 404: Page not found!");
-                throw new Error("404 Error");
-            } else {
+                throw '';
+            } else if (resp.ok) {
                 return resp;
+            } else {
+                modal_error(resp.statusText);
+                throw '';
             }
         })
         .then(resp=>resp.clone().json())
         .then(x=>document.getElementById('map_image').src = x['map_url'])
         .then(resize_map())
-        .catch(err=>console.log(err));
+        .catch(err=>modal_error(err));
     })
 
     submit_country.addEventListener('click', async function(event) {
@@ -106,7 +104,6 @@ $(document).ready(function () {
                 checkbox_binary_string = checkbox_binary_string.concat(document.getElementById('check_'+s_id).checked ? '1':'0');
             }
         }
-
 
         fetch('http://'+IP+':'+PORT+'/query?name='+query_name+'&check='+checkbox_binary_string)
         .then(function(resp) {
@@ -129,7 +126,7 @@ $(document).ready(function () {
                 map_get(json['latlng']);
             }
         })
-        .catch();
+        .catch(err => modal_error(err));
 
         function stats_ok(data) {
             for (let id = 0; id < id_list.length; id++) {
