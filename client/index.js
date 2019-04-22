@@ -59,10 +59,10 @@ $(document).ready(function () {
             console.log(s_id);
             if ($('#check_'+s_id+'_parent').checkbox('is checked')) {
                 console.log('uncheck');
-                $('#check_'+s_id+'_parent').checkbox('toggle');
+                $('#check_'+s_id+'_parent').checkbox('uncheck');
             } else {
                 console.log('check');
-                $('#check_'+s_id+'_parent').checkbox('toggle');
+                $('#check_'+s_id+'_parent').checkbox('check');
             } 
             console.log('');
         }
