@@ -1,6 +1,5 @@
-//const IP = '127.0.0.1';
-const IP = 'https://prog-summative.herokuapp.com/'
-const PORT = 8090;
+const IP = '127.0.0.1';
+const PORT = 8090 || process.env.PORT;
 
 const express = require('express');
 const app = express();

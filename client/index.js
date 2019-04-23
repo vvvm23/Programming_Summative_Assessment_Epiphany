@@ -26,8 +26,8 @@ function show_stat(stat_id) {
 }
 
 $(document).ready(function () {
-    const IP = 'https://prog-summative.herokuapp.com/'
-    const PORT = '8090'
+    const IP = '127.0.0.1';
+    const PORT = 8090 || process.env.PORT;
 
     let a = 0; //maybe rename these
     let b = 0;
