@@ -65,7 +65,6 @@ $(document).ready(function() {
             }
         }
 
-        console.log(update);
 
         fetch('http://'+IP+':'+PORT+'/add', {
             method: 'POST',
@@ -80,8 +79,9 @@ $(document).ready(function() {
                 edit_index = -1;
                 return res;
             } else {
-                modal_error(res.statusText);
-                throw '';
+                //modal_error(res.statusText);
+                //throw '';
+                throw res.statusText;
             }
         })
         .then(res => res.json())
@@ -91,12 +91,19 @@ $(document).ready(function() {
             $('#add_confirm_label').transition({animation:'zoom', interval: 2000});
             clear_input('add');
         })
-        .catch();
+        .catch(err => modal_error(err));
     })
 
     delete_search_button.addEventListener('click', async function(event) {
         let query_name = document.getElementById('delete_search').value;
         fetch('http://'+IP + ':' + PORT+'/search/delete?name='+query_name)
+        .then(function(res) {
+            if (res.ok) {
+                return res;
+            } else {
+                throw res.statusText;
+            }
+        })
         .then(res => res.json())
         .then(function(json) {
             delete_index = json['index'];
@@ -121,11 +128,14 @@ $(document).ready(function() {
                 document.getElementById('delete_selected').innerHTML = 'None';
                 document.getElementById('delete_search').value = '';
                 $('#delete_confirm_label').transition('zoom');
-                $('#delete_confirm_label').transition({animation:'zoom', interval: 2000});
+                $('#delete_confirm_label').transition({animation:'zoom', interval: 2000, onHide: function() {
+                    document.getElementById('delete_confirm_label_inner').innerHTML = '';
+                }});
             } else {
-                modal_error(res);
+                throw res.statusText;
             }
         })
+        .catch(err => modal_error(err));
     });
 
     edit_search_button.addEventListener('click', async function(event) {
@@ -133,6 +143,13 @@ $(document).ready(function() {
         // format response in input boxes
         let query_name = document.getElementById('edit_search').value;
         fetch('http://'+IP+':'+PORT+'/search/edit?name='+query_name)
+        .then(function(res) {
+            if (res.ok) {
+                return res;
+            } else {
+                throw res.statusText;
+            }
+        })
         .then(res => res.json())
         .then(function(data) {
             edit_index = data['index'];
@@ -201,6 +218,7 @@ $(document).ready(function() {
                 }
             }
         })
+        .catch(err => modal_error(err));
     });
 
     edit_confirm.addEventListener('click', async function() {
@@ -249,7 +267,6 @@ $(document).ready(function() {
             }
         }
 
-        console.log(update);
 
         fetch('http://'+IP+':'+PORT+'/edit', {
             method: 'POST',
@@ -265,8 +282,9 @@ $(document).ready(function() {
                 document.getElementById('edit_search').value = ''; 
                 return res;
             } else {
-                modal_error(res.statusText);
-                throw '';
+                //modal_error(res.statusText);
+                //throw '';
+                throw res.statusText;
             }
         })
         .then(res => res.json())
@@ -276,7 +294,7 @@ $(document).ready(function() {
             $('#edit_confirm_label').transition({animation:'zoom', interval: 2000});
             clear_input('edit');
         })
-        .catch();
+        .catch(err => modal_error(err));
 
     })
 
@@ -344,7 +362,6 @@ $(document).ready(function() {
 
         for (let id = 0; id < id_list.length; id++) {
             let s_id = id_list[id];
-            console.log(s_id);
             document.getElementById(type+'_'+s_id).value = '';
         }
     }

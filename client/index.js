@@ -76,19 +76,21 @@ $(document).ready(function () {
         fetch('http://'+IP+':'+PORT+'/map?lat='+lat+'&t='+t+'&lon='+lon+'&z='+zoom+'&x='+MAP_RES_X+'&y='+MAP_RES_Y)
         .then(function(resp) {
             if (resp.status === 404) {
-                modal_error("Error 404: Page not found!");
-                throw '';
+                //modal_error("Error 404: Page not found!");
+                //throw '';
+                throw 'Error 404: Page not found!';
             } else if (resp.ok) {
                 return resp;
             } else {
-                modal_error(resp.statusText);
-                throw '';
+                //modal_error(resp.statusText);
+                //throw '';
+                throw resp.statusText;
             }
         })
         .then(resp=>resp.clone().json())
         .then(x=>document.getElementById('map_image').src = x['map_url'])
         .then(resize_map())
-        .catch(err=>modal_error(err));
+        .catch(err => modal_error(err));
     })
 
     submit_country.addEventListener('click', async function(event) {
@@ -108,13 +110,11 @@ $(document).ready(function () {
         fetch('http://'+IP+':'+PORT+'/query?name='+query_name+'&check='+checkbox_binary_string)
         .then(function(resp) {
             if (resp.status === 404) {
-                modal_error("Error 404: Page not found!");
-                throw '';
+                throw 'Error 404: Page not found!';
             } if (resp.ok) {
                 return resp
             } else {
-                modal_error(resp.statusText)
-                throw '';
+                throw resp.statusText
             }
         })
         .then(resp => resp.json())
