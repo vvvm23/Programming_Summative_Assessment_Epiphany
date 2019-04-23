@@ -4,7 +4,7 @@ function modal_error(message) {
 }
 
 $(document).ready(function() {
-    const IP = '127.0.0.1';
+    const IP = 'https://prog-summative.herokuapp.com/';
     const PORT = '8090'
 
     $('.add').transition({animation: 'fly left', duration: 0});
