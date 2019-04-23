@@ -26,8 +26,9 @@ function show_stat(stat_id) {
 }
 
 $(document).ready(function () {
-    const IP = '127.0.0.1';
-    const PORT = 8090; //process.env.PORT || 8090;
+    //const IP = '127.0.0.1';
+    //const PORT = 8090; //process.env.PORT || 8090;
+    const HOST = 'prog-summative.herokuapp.com' === window.location.host ? 'https://prog-summative.herokuapp.com':'http://127.0.0.1:8090';
 
     let a = 0; //maybe rename these
     let b = 0;
@@ -83,7 +84,7 @@ $(document).ready(function () {
         }
 
         //fetch('http://'+IP+':'+PORT+'/map?lat='+lat+'&t='+t+'&lon='+lon+'&z='+zoom+'&x='+MAP_RES_X+'&y='+MAP_RES_Y)
-        fetch('http://'+window.location.host+'/map?lat='+lat+'&t='+t+'&lon='+lon+'&z='+zoom+'&x='+MAP_RES_X+'&y='+MAP_RES_Y)
+        fetch(HOST+'/map?lat='+lat+'&t='+t+'&lon='+lon+'&z='+zoom+'&x='+MAP_RES_X+'&y='+MAP_RES_Y)
         .then(function(resp) {
             if (resp.status === 404) {
                 throw 'Error 404: Page not found!';
@@ -114,7 +115,7 @@ $(document).ready(function () {
         }
 
         //fetch('http://'+IP+':'+PORT+'/query?name='+query_name+'&check='+checkbox_binary_string)
-        fetch('http://'+window.location.host+'/query?name='+query_name+'&check='+checkbox_binary_string)
+        fetch(HOST+'/query?name='+query_name+'&check='+checkbox_binary_string)
         .then(function(resp) {
             if (resp.status === 404) {
                 throw 'Error 404: Page not found!';
@@ -257,7 +258,7 @@ $(document).ready(function () {
 
         function wiki_get(name) {
             //fetch('http://'+IP+':'+PORT+'/wiki?name='+name)
-            fetch('http://'+window.location.host+'/wiki?name='+name)
+            fetch(HOST+'/wiki?name='+name)
             .then(function(resp) {
                 if (resp.ok) {
                     return resp;
@@ -273,7 +274,7 @@ $(document).ready(function () {
 
         function map_get(latlng) {
             //fetch('http://'+IP+':'+PORT+'/map?lat='+latlng[0]+'&t=0&lon='+latlng[1]+'&z=6&x='+MAP_RES_X+'&y='+MAP_RES_Y)
-            fetch('http://'+window.location.host+'/map?lat='+latlng[0]+'&t=0&lon='+latlng[1]+'&z=6&x='+MAP_RES_X+'&y='+MAP_RES_Y)
+            fetch(HOST+'/map?lat='+latlng[0]+'&t=0&lon='+latlng[1]+'&z=6&x='+MAP_RES_X+'&y='+MAP_RES_Y)
             .then(function(resp) {
                 if (resp.ok) {
                     return resp;

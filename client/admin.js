@@ -4,8 +4,9 @@ function modal_error(message) {
 }
 
 $(document).ready(function() {
-    const IP =  '127.0.0.1';
-    const PORT = 8090; //process.env.PORT || 8090;
+    //const IP =  '127.0.0.1';
+    //const PORT = 8090; //process.env.PORT || 8090;
+    const HOST = 'prog-summative.herokuapp.com' === window.location.host ? 'https://prog-summative.herokuapp.com':'http://127.0.0.1:8090';
 
     $('.add').transition({animation: 'fly left', duration: 0});
     $('.delete').transition({animation: 'fly left', duration: 0});
@@ -67,7 +68,7 @@ $(document).ready(function() {
 
 
         //fetch('http://'+IP+':'+PORT+'/add', {
-        fetch('http://'+window.location.host+'/add', {
+        fetch(HOST+'/add', {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -98,7 +99,7 @@ $(document).ready(function() {
     delete_search_button.addEventListener('click', async function(event) {
         let query_name = document.getElementById('delete_search').value;
         //fetch('http://'+IP + ':' + PORT+'/search/delete?name='+query_name)
-        fetch('http://'+window.location.host+'/search/delete?name='+query_name)
+        fetch(HOST+'/search/delete?name='+query_name)
         .then(function(res) {
             if (res.ok) {
                 return res;
@@ -117,7 +118,7 @@ $(document).ready(function() {
 
     delete_confirm.addEventListener('click', async function(event) {
         //fetch('http://'+IP+':'+PORT+'/delete', {
-        fetch('http://'+window.location.host+'/delete', {
+        fetch(HOST+'/delete', {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -146,7 +147,7 @@ $(document).ready(function() {
         // format response in input boxes
         let query_name = document.getElementById('edit_search').value;
         //fetch('http://'+IP+':'+PORT+'/search/edit?name='+query_name)
-        fetch('http://'+window.location.host+'/search/edit?name='+query_name)
+        fetch(HOST+'/search/edit?name='+query_name)
         .then(function(res) {
             if (res.ok) {
                 return res;
@@ -273,7 +274,7 @@ $(document).ready(function() {
 
 
         //fetch('http://'+IP+':'+PORT+'/edit', {
-        fetch('http://'+window.location.host+'/edit', {
+        fetch(HOST+'/edit', {
             method: 'POST',
             mode: 'cors',
             headers: {
