@@ -5,7 +5,7 @@ function modal_error(message) {
 
 $(document).ready(function() {
     const IP = '127.0.0.1';
-    const PORT = 8090 || process.env.PORT;
+    const PORT = process.env.PORT || 8090;
 
     $('.add').transition({animation: 'fly left', duration: 0});
     $('.delete').transition({animation: 'fly left', duration: 0});
