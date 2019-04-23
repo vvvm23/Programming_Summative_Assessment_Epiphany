@@ -59,7 +59,7 @@ Equally weighted
 - Responsive to different viewport sizes
   - Collapsing navbar (turns into hamburger) **? (more vigorous testing needed) **
   - Grid layout **? (needs reviewing) **
-  - Check with [mobile device simulation](https://developers.google.com/web/tools/chrome-devtools/device-mode/)
+  - Check with [mobile device simulation](https://developers.google.com/web/tools/chrome-devtools/device-mode/) **? YIKES **
 
 
 - Gracefully handles server disconnection **? (need more error handling)**
@@ -104,7 +104,7 @@ Equally weighted
 
 ## Extensions criteria
 
-- Successful cloud deployment **? (stretch goal)**
+- Successful cloud deployment **✔️**
   - Works on remote server with same functionality
   - Client and REST API work
 - Successful integration with remote web service **✔️**
