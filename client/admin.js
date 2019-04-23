@@ -70,7 +70,7 @@ $(document).ready(function() {
         //fetch('http://'+IP+':'+PORT+'/add', {
         fetch(HOST+'/add', {
             method: 'POST',
-            mode: 'cors',
+            mode: 'no-cors',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -99,7 +99,8 @@ $(document).ready(function() {
     delete_search_button.addEventListener('click', async function(event) {
         let query_name = document.getElementById('delete_search').value;
         //fetch('http://'+IP + ':' + PORT+'/search/delete?name='+query_name)
-        fetch(HOST+'/search/delete?name='+query_name)
+        fetch(HOST+'/search/delete?name='+query_name,
+        {mode: 'no-cors'})
         .then(function(res) {
             if (res.ok) {
                 return res;
@@ -120,7 +121,7 @@ $(document).ready(function() {
         //fetch('http://'+IP+':'+PORT+'/delete', {
         fetch(HOST+'/delete', {
             method: 'POST',
-            mode: 'cors',
+            mode: 'no-cors',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -147,7 +148,8 @@ $(document).ready(function() {
         // format response in input boxes
         let query_name = document.getElementById('edit_search').value;
         //fetch('http://'+IP+':'+PORT+'/search/edit?name='+query_name)
-        fetch(HOST+'/search/edit?name='+query_name)
+        fetch(HOST+'/search/edit?name='+query_name,
+        {mode: 'no-cors'})
         .then(function(res) {
             if (res.ok) {
                 return res;
@@ -276,7 +278,7 @@ $(document).ready(function() {
         //fetch('http://'+IP+':'+PORT+'/edit', {
         fetch(HOST+'/edit', {
             method: 'POST',
-            mode: 'cors',
+            mode: 'no-cors',
             headers: {
                 'Content-Type': 'application/json'
             },
