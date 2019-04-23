@@ -4,7 +4,7 @@ function modal_error(message) {
 }
 
 $(document).ready(function() {
-    const IP = '127.0.0.1';
+    const IP =  '127.0.0.1';
     const PORT = 8090; //process.env.PORT || 8090;
 
     $('.add').transition({animation: 'fly left', duration: 0});
@@ -66,7 +66,8 @@ $(document).ready(function() {
         }
 
 
-        fetch('http://'+IP+':'+PORT+'/add', {
+        //fetch('http://'+IP+':'+PORT+'/add', {
+        fetch('http://'+window.location.host+'/add', {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -96,7 +97,8 @@ $(document).ready(function() {
 
     delete_search_button.addEventListener('click', async function(event) {
         let query_name = document.getElementById('delete_search').value;
-        fetch('http://'+IP + ':' + PORT+'/search/delete?name='+query_name)
+        //fetch('http://'+IP + ':' + PORT+'/search/delete?name='+query_name)
+        fetch('http://'+window.location.host+'/search/delete?name='+query_name)
         .then(function(res) {
             if (res.ok) {
                 return res;
@@ -114,7 +116,8 @@ $(document).ready(function() {
     });
 
     delete_confirm.addEventListener('click', async function(event) {
-        fetch('http://'+IP+':'+PORT+'/delete', {
+        //fetch('http://'+IP+':'+PORT+'/delete', {
+        fetch('http://'+window.location.host+'/delete', {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -142,7 +145,8 @@ $(document).ready(function() {
         // Fetch from search/edit
         // format response in input boxes
         let query_name = document.getElementById('edit_search').value;
-        fetch('http://'+IP+':'+PORT+'/search/edit?name='+query_name)
+        //fetch('http://'+IP+':'+PORT+'/search/edit?name='+query_name)
+        fetch('http://'+window.location.host+'/search/edit?name='+query_name)
         .then(function(res) {
             if (res.ok) {
                 return res;
@@ -268,7 +272,8 @@ $(document).ready(function() {
         }
 
 
-        fetch('http://'+IP+':'+PORT+'/edit', {
+        //fetch('http://'+IP+':'+PORT+'/edit', {
+        fetch('http://'+window.location.host+'/edit', {
             method: 'POST',
             mode: 'cors',
             headers: {

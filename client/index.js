@@ -82,7 +82,8 @@ $(document).ready(function () {
             t = 1;
         }
 
-        fetch('http://'+IP+':'+PORT+'/map?lat='+lat+'&t='+t+'&lon='+lon+'&z='+zoom+'&x='+MAP_RES_X+'&y='+MAP_RES_Y)
+        //fetch('http://'+IP+':'+PORT+'/map?lat='+lat+'&t='+t+'&lon='+lon+'&z='+zoom+'&x='+MAP_RES_X+'&y='+MAP_RES_Y)
+        fetch('http://'+window.location.host+'/map?lat='+lat+'&t='+t+'&lon='+lon+'&z='+zoom+'&x='+MAP_RES_X+'&y='+MAP_RES_Y)
         .then(function(resp) {
             if (resp.status === 404) {
                 throw 'Error 404: Page not found!';
@@ -112,7 +113,8 @@ $(document).ready(function () {
             }
         }
 
-        fetch('http://'+IP+':'+PORT+'/query?name='+query_name+'&check='+checkbox_binary_string)
+        //fetch('http://'+IP+':'+PORT+'/query?name='+query_name+'&check='+checkbox_binary_string)
+        fetch('http://'+window.location.host+'/query?name='+query_name+'&check='+checkbox_binary_string)
         .then(function(resp) {
             if (resp.status === 404) {
                 throw 'Error 404: Page not found!';
@@ -244,9 +246,6 @@ $(document).ready(function () {
                 }
             }
             if (a===1) {stats_done();}
-            /*for (let id = 0; id < id_list.length; id++) {
-                $('#stats_'+id_list[id]).transition({animation: 'fly left'});
-            }*/
         }
 
 
@@ -257,7 +256,8 @@ $(document).ready(function () {
         }
 
         function wiki_get(name) {
-            fetch('http://'+IP+':'+PORT+'/wiki?name='+name)
+            //fetch('http://'+IP+':'+PORT+'/wiki?name='+name)
+            fetch('http://'+window.location.host+'/wiki?name='+name)
             .then(function(resp) {
                 if (resp.ok) {
                     return resp;
@@ -272,7 +272,8 @@ $(document).ready(function () {
         }
 
         function map_get(latlng) {
-            fetch('http://'+IP+':'+PORT+'/map?lat='+latlng[0]+'&t=0&lon='+latlng[1]+'&z=6&x='+MAP_RES_X+'&y='+MAP_RES_Y)
+            //fetch('http://'+IP+':'+PORT+'/map?lat='+latlng[0]+'&t=0&lon='+latlng[1]+'&z=6&x='+MAP_RES_X+'&y='+MAP_RES_Y)
+            fetch('http://'+window.location.host+'/map?lat='+latlng[0]+'&t=0&lon='+latlng[1]+'&z=6&x='+MAP_RES_X+'&y='+MAP_RES_Y)
             .then(function(resp) {
                 if (resp.ok) {
                     return resp;
