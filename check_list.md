@@ -42,7 +42,7 @@ Equally weighted
 - User Experience (UX)
   - Professional appearance **? (Some minor appearance issues)**
   - Appropriate, consistent styling **✔️**
-  - Minimal interaction required (clicks, keypresses) **? (Could be improved, maybe a select all check button?)**
+  - Minimal interaction required (clicks, keypresses) **✔️**
 
 
 - App complexity
@@ -99,7 +99,7 @@ Equally weighted
   - Black box coverage: ranges of inputs
   - Valid and invalid (e.g. missing parameters)
   - Code coverage i.e. all branches executes
-- Testing includes content-type and HTTP code **? (labels responses with codes)**
+- Testing includes content-type and HTTP code **✔️**
 
 
 ## Extensions criteria
