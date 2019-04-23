@@ -275,14 +275,9 @@ app.post('/edit', ensureLoggedIn, (req, res) => {
                         json_countries[index]['name']['official'] = stripHTML(json_body['name_official']);
                     }
 
-                    /*if (stripHTML(json_body['name_native']) in country_names 
-                        && stripHTML(json_body['name_native']) != '') {
-                        restore();
-                        res.statusMessage = '"name_native" field is invalid! (Name already exists) Additional errors may have occured';
-                        res.sendStatus(400);
-                    } else {*/
+                    // hmm
                     json_countries[index]['name']['native'] = {'unknown': {'common': stripHTML(json_body['name_native'])}}; // add support for multiple native
-                    //}
+                    
                     break;
                 case 'capital':
                     json_countries[index]['capital'] = [stripHTML(json_body['capital'])];

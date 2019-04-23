@@ -49,7 +49,7 @@ $(document).ready(function () {
         resize_map();
     };
 
-    toggle_all.addEventListener('click', async function(event) {
+    function toggle_all_check() {
         let id_list = ['region', 'subregion', 'capital', 'currency', 'languages', 'demonym', 'independance', 'translations',
                        'flag', 'latlng', 'borders', 'landlocked', 'area', 'callingcode', 'domain'];
 
@@ -61,6 +61,12 @@ $(document).ready(function () {
                 $('#check_'+s_id+'_parent').checkbox('check');
             } 
         }
+    }
+
+    toggle_all_check();
+
+    toggle_all.addEventListener('click', async function(event) {
+        toggle_all_check();
     })
 
     submit_map.addEventListener('click', async function(event) {
@@ -121,7 +127,11 @@ $(document).ready(function () {
         .then(function (json) {
             if (a != 0) {
                 document.getElementById('selected_country').innerHTML = 'Selected Country: ' + json['name']['common'];
-                stats_ok(json);
+                if (a === 1) {
+                    stats_ok(json);
+                } else {
+                    transition_done(json);
+                }
                 wiki_get(json['name']['common']);
                 map_get(json['latlng']);
             }
@@ -234,7 +244,14 @@ $(document).ready(function () {
                         break;
                 }
             }
+            if (a===1) {stats_done();}
+            /*for (let id = 0; id < id_list.length; id++) {
+                $('#stats_'+id_list[id]).transition({animation: 'fly left'});
+            }*/
+        }
 
+
+        function stats_done() {
             for (let id = 0; id < id_list.length; id++) {
                 $('#stats_'+id_list[id]).transition({animation: 'fly left'});
             }
