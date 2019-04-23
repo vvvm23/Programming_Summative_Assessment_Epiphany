@@ -56,11 +56,7 @@ $(document).ready(function () {
 
         for (let id = 0; id < id_list.length; id++) {
             let s_id = id_list[id];
-            if ($('#check_'+s_id+'_parent').checkbox('is checked')) {
-                $('#check_'+s_id+'_parent').checkbox('uncheck');
-            } else {
-                $('#check_'+s_id+'_parent').checkbox('check');
-            } 
+            $('#check_'+s_id+'_parent').checkbox('toggle');
         }
     }
 
