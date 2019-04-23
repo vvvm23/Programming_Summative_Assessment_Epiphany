@@ -6,7 +6,7 @@ function modal_error(message) {
 $(document).ready(function() {
     //const IP =  '127.0.0.1';
     //const PORT = 8090; //process.env.PORT || 8090;
-    const HOST = 'prog-summative.herokuapp.com' === window.location.host ? 'https://prog-summative.herokuapp.com':'http://127.0.0.1:8090';
+    const HOST = '.'; //'prog-summative.herokuapp.com' === window.location.host ? 'https://prog-summative.herokuapp.com':'http://127.0.0.1:8090';
 
     $('.add').transition({animation: 'fly left', duration: 0});
     $('.delete').transition({animation: 'fly left', duration: 0});
