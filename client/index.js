@@ -64,10 +64,13 @@ $(document).ready(function () {
     }
 
     toggle_all_check();
-
     toggle_all.addEventListener('click', async function(event) {
         toggle_all_check();
     })
+
+    window.addEventListener('error', function(err) {
+        modal_error('Failed to fetch Map from external API!');
+    }, true);
 
     submit_map.addEventListener('click', async function(event) {
 
@@ -82,14 +85,10 @@ $(document).ready(function () {
         fetch('http://'+IP+':'+PORT+'/map?lat='+lat+'&t='+t+'&lon='+lon+'&z='+zoom+'&x='+MAP_RES_X+'&y='+MAP_RES_Y)
         .then(function(resp) {
             if (resp.status === 404) {
-                //modal_error("Error 404: Page not found!");
-                //throw '';
                 throw 'Error 404: Page not found!';
             } else if (resp.ok) {
                 return resp;
             } else {
-                //modal_error(resp.statusText);
-                //throw '';
                 throw resp.statusText;
             }
         })
@@ -259,6 +258,13 @@ $(document).ready(function () {
 
         function wiki_get(name) {
             fetch('http://'+IP+':'+PORT+'/wiki?name='+name)
+            .then(function(resp) {
+                if (resp.ok) {
+                    return resp;
+                } else {
+                    throw resp.statusText;
+                }
+            })
             .then(resp => resp.json())
             .then(resp=> document.getElementById('wiki_inner').innerHTML = resp['wiki'])
             .then(document.getElementById('wiki_name').innerHTML = name)
@@ -267,8 +273,22 @@ $(document).ready(function () {
 
         function map_get(latlng) {
             fetch('http://'+IP+':'+PORT+'/map?lat='+latlng[0]+'&t=0&lon='+latlng[1]+'&z=6&x='+MAP_RES_X+'&y='+MAP_RES_Y)
-            .then(resp=>resp.clone().json()) // is clone needed?
-            .then(x=>document.getElementById('map_image').src = x['map_url'])
+            .then(function(resp) {
+                if (resp.ok) {
+                    return resp;
+                } else {
+                    throw resp.statusText;
+                }
+            })
+            .then(resp=>resp.json()) // is clone needed?
+            //.then(x=>document.getElementById('map_image').src = x['map_url'])
+            .then(function(json) {
+                try {
+                    document.getElementById('map_image').src = json['map_url'];
+                } catch (error) {
+                    throw 'Failed to fetch map image!';
+                }
+            })
             .then(resize_map())
             .catch(err => modal_error(err));
         }

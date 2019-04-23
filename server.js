@@ -652,7 +652,7 @@ app.get('/map', function (req, resp) {
         resp.statusMessage = '"dim_y" field is invalid! (Not a number)';
         return resp.sendStatus(400);
     } else if (dim_y <= 0) {
-        resp.statusMessage = '"dim_y" field is invalid! (Less than 0)';
+        resp.statusMessage = '"dim_y" field is invalid! (Less than 1)';
         return resp.sendStatus(400);
     }
 
@@ -661,7 +661,7 @@ app.get('/map', function (req, resp) {
         resp.statusMessage = '"dim_x" field is invalid! (Not a number)';
         return resp.sendStatus(400);
     } else if (dim_x <= 0) {
-        resp.statusMessage = '"dim_x" field is invalid! (Less than 0)';
+        resp.statusMessage = '"dim_x" field is invalid! (Less than 1)';
         return resp.sendStatus(400);
     }
 
@@ -670,7 +670,7 @@ app.get('/map', function (req, resp) {
         resp.statusMessage = '"z" field is invalid! (Not a number)';
         return resp.sendStatus(400);
     } else if (z <= 0) {
-        resp.statusMessage = '"z" field is invalid! (Less than 0)';
+        resp.statusMessage = '"z" field is invalid! (Less than 1)';
         return resp.sendStatus(400);
     }
 
@@ -696,6 +696,6 @@ app.get('/map', function (req, resp) {
 app.listen(PORT);
 
 app.use(function (req, resp, next) {
-    resp.status(404).send();
+    resp.sendStatus(404);
 });
 console.log('Listening on ' + IP + ':' + PORT);
