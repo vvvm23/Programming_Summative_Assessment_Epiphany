@@ -19,8 +19,8 @@ Source code (all zipped)
 - HTML and CSS and any media **✔️**
 - Client and server side JavaScript **✔️**
 - package.json including test and pretest scripts **?**
-- .eslintrc **?**
-- jest test cases e.g. app.test.js **?**
+- .eslintrc **✔️**
+- jest test cases e.g. app.test.js **✔️**
 - README.md explaining how to use the site and API **?**
 
 Should not include `node_modules` in submission **✔️**
@@ -40,7 +40,7 @@ Equally weighted
 ## Client-side functionality criteria
 
 - User Experience (UX)
-  - Professional appearance **? (Some minor appearance issues)**
+  - Professional appearance **✔️**
   - Appropriate, consistent styling **✔️**
   - Minimal interaction required (clicks, keypresses) **✔️**
 
@@ -57,12 +57,12 @@ Equally weighted
 - Standards compliant (HTML5)
   - Check with <https://validator.w3.org/> **? (wait until end)**
 - Responsive to different viewport sizes
-  - Collapsing navbar (turns into hamburger) **? (more vigorous testing needed) **
-  - Grid layout **? (needs reviewing) **
-  - Check with [mobile device simulation](https://developers.google.com/web/tools/chrome-devtools/device-mode/) **? YIKES **
+  - Collapsing navbar (turns into hamburger)**✔️**
+  - Grid layout **✔️**
+  - Check with [mobile device simulation](https://developers.google.com/web/tools/chrome-devtools/device-mode/) **✔️**
 
 
-- Gracefully handles server disconnection **? (need more error handling)**
+- Gracefully handles server disconnection **✔️**
   - Stop server after loading page
   - Check for sensible messages
   - What happens when it starts again?
@@ -73,7 +73,7 @@ Equally weighted
 
 - More than one entity type **✔️**
   - Entities correspond with client-side
-- Installs with `npm install` **? (need to check this works on fresh install)**
+- Installs with `npm install` **✔️**
 - Starts with `npm start`
 
 
@@ -87,14 +87,14 @@ Equally weighted
 
 ## Server-side quality criteria
 
-- Successful eslint (run with `npm pretest`) **? (save until end)**
+- Successful eslint (run with `npm pretest`) **✔️**
   - Lint rules at least those used in first assigment
   - No problems reported
 - API documentation (README.md) **? (save until end)**
   - Compare with e.g. [twitter API docs](https://developer.twitter.com/en/docs/api-reference-index)
 
 
-- Successful jest tests with good coverage (run with `npm test`) **? (save until end)**
+- Successful jest tests with good coverage (run with `npm test`) **✔️**
   - All tests passed
   - Black box coverage: ranges of inputs
   - Valid and invalid (e.g. missing parameters)

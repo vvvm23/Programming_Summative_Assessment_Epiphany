@@ -188,7 +188,6 @@ app_mock.post('/edit', (req, res) => {
 
         for (let id = 0; id < id_list.length; id++) {
             let s_id = id_list[id];
-            console.log(s_id)
             switch(s_id) {
             case 'name': 
                 console.log('1')
@@ -313,13 +312,8 @@ app_mock.post('/edit', (req, res) => {
             }
         }
 
-        console.log('Generating list');
         country_names = generate_country_list();
-
-        console.log('Generating index list')
         country_index = generate_country_index();
-
-        console.log('Generating fuzz')
         fuzz = generate_country_fuzzy(country_names);
 
         res.send({'name': original_name});
@@ -396,7 +390,13 @@ app_mock.post('/delete', (req, res) => {
     // delete at index
     try {
         let index = req.body.index;
-        if (index < 0 || index > json_countries.length - 1) {
+        if (index == null) {
+            res.statusMessage = 'Failed to delete entry! (Index was null)';
+            return res.sendStatus(400);
+        } else if (isNaN(index)) {
+            res.statusMessage = 'Failed to delete entry! (Index was NaN)';
+            return res.sendStatus(400);
+        } else if (index < 0 || index > json_countries.length - 1) {
             res.statusMessage = 'Failed to delete entry! (Index out of range)';
             return res.sendStatus(400);
         }

@@ -387,7 +387,7 @@ app.get('/search/delete', ensureLoggedIn, (req, res) => {
         res.statusMessage = 'Name missing!';
         return res.sendStatus(400);   
     }
-    
+
     let i = find_country(query_name);
 
     if (i instanceof Error) {
@@ -446,7 +446,13 @@ app.post('/delete', ensureLoggedIn, (req, res) => {
     // delete at index
     try {
         let index = req.body.index;
-        if (index < 0 || index > json_countries.length - 1) {
+        if (index == null) {
+            res.statusMessage = 'Failed to delete entry! (Index was null)';
+            return res.sendStatus(400);
+        } else if (isNaN(index)) {
+            res.statusMessage = 'Failed to delete entry! (Index was NaN)';
+            return res.sendStatus(400);
+        } else if (index < 0 || index > json_countries.length - 1) {
             res.statusMessage = 'Failed to delete entry! (Index out of range)';
             return res.sendStatus(400);
         }

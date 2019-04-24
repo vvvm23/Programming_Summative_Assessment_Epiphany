@@ -598,15 +598,330 @@ describe('Test POST services success', () => {
 
 describe('Test POST services malformed', () => {
     describe('For /add', () => {
-        
+        test('POST /add (No parameters)', async() => {
+            const update = {
+
+            }
+
+            return request(mock)
+                .post('/add')
+                .send(update)
+                .expect(400)
+        });
+
+        test('POST /add (Conflicting name)', async() => {
+            const update = {
+                'name_common': 'test_add_common',
+                'name_official': 'test_add_official',
+                'name_native': 'test_add_native',
+                'region': 'test_region',
+                'subregion': 'test_subregion',
+                'capital': 'test_capital',
+                'currency': ['test_currency'],
+                'languages': ['test_language'],
+                'demonyn': 'test_demonym',
+                'independent': true,
+                'translations': ['test_translation'],
+                'flag': 'test_flag',
+                'latlng': [123, 123],
+                'borders': ['test_border'],
+                'landlocked': true,
+                'area': '123456',
+                'callingcode': '123',
+                'domain': 'test_domain'
+            }
+
+            return request(mock)
+                .post('/add')
+                .send(update)
+                .expect(400)
+        });
+
+        test('POST /add (Missing Parameters - 1)', async() => {
+            const update = {
+                'name_official': 'test_add_official_2',
+                'name_native': 'test_add_native_3',
+                'region': 'test_region',
+                'subregion': 'test_subregion',
+                'currency': ['test_currency'],
+                'languages': ['test_language'],
+                'demonyn': 'test_demonym',
+                'translations': ['test_translation'],
+                'flag': 'test_flag',
+                'latlng': [123, 123],
+                'landlocked': true,
+                'area': '123456',
+                'callingcode': '123',
+                'domain': 'test_domain'
+            }
+
+            return request(mock)
+                .post('/add')
+                .send(update)
+                .expect(400)
+        });
+
+        test('POST /add (Missing Parameters - 2)', async() => {
+            const update = {
+                'name_common': 'test_add_common_3',
+                'name_official': 'test_add_official_3',
+                'name_native': 'test_add_native_3',
+                'region': 'test_region',
+                'subregion': 'test_subregion',
+                'capital': 'test_capital',
+                'borders': ['test_border'],
+                'landlocked': true,
+                'area': '123456',
+                'callingcode': '123',
+                'domain': 'test_domain'
+            }
+
+            return request(mock)
+                .post('/add')
+                .send(update)
+                .expect(400)
+        });
+
+        test('POST /add (Invalid Parameters - 1)', async() => {
+            const update = {
+                'name_common': 'test_add_common_4',
+                'name_official': 'test_add_official_4',
+                'name_native': 'test_add_native_4',
+                'region': 'test_region',
+                'subregion': 'test_subregion',
+                'capital': 'test_capital',
+                'currency': 'test_currency',
+                'languages': 'test_language',
+                'demonyn': 'test_demonym',
+                'independent': true,
+                'translations': 'test_translation',
+                'flag': 'test_flag',
+                'latlng': 123,
+                'borders': 'test_border',
+                'landlocked': true,
+                'area': '123456',
+                'callingcode': '123',
+                'domain': 'test_domain'
+            }
+
+            return request(mock)
+                .post('/add')
+                .send(update)
+                .expect(400)
+        });
+
+        test('POST /add (Invalid Parameters - 2)', async() => {
+            const update = {
+                'name_common': 'test_add_common_5',
+                'name_official': 'test_add_official_5',
+                'name_native': 'test_add_native_5',
+                'region': 'test_region',
+                'subregion': 'test_subregion',
+                'capital': 'test_capital',
+                'currency': ['test_currency'],
+                'languages': ['test_language'],
+                'demonyn': 'test_demonym',
+                'independent': 'true',
+                'translations': ['test_translation'],
+                'flag': 'test_flag',
+                'latlng': [123],
+                'borders': ['test_border'],
+                'landlocked': 'true',
+                'area': '123456',
+                'callingcode': '123',
+                'domain': 'test_domain'
+            }
+
+            return request(mock)
+                .post('/add')
+                .send(update)
+                .expect(400)
+        });
     });
 
     describe('For /edit', () => {
+        test('POST /edit (No parameters)', async() => {
+            const update = {
 
+            }
+
+            return request(mock)
+                .post('/add')
+                .send(update)
+                .expect(400)
+        });
+
+        test('POST /edit (Missing index)', async() => {
+            const update = {
+                'name_common': 'test_edit_common',
+                'name_official': 'test_edit_official',
+                'name_native': 'test_edit_native',
+                'region': 'test_region',
+                'subregion': 'test_subregion',
+                'capital': 'test_capital',
+                'currency': ['test_currency'],
+                'languages': ['test_language'],
+                'demonyn': 'test_demonym',
+                'independent': true,
+                'translations': ['test_translation'],
+                'flag': 'test_flag',
+                'latlng': [123, 123],
+                'borders': ['test_border'],
+                'landlocked': true,
+                'area': '123456',
+                'callingcode': '123',
+                'domain': 'test_domain'
+            };
+            return request(mock)
+                .post('/edit')
+                .send(update)
+                .expect(400);
+        });
+
+        test('POST /edit (Missing Parameters - 1)', async() => {
+            const update = {
+                'index': 1,
+                'name_official': 'test_edit_official',
+                'name_native': 'test_edit_native',
+                'region': 'test_region',
+                'subregion': 'test_subregion',
+                'capital': 'test_capital',
+                'currency': ['test_currency'],
+                'demonyn': 'test_demonym',
+                'independent': true,
+                'translations': ['test_translation'],
+                'flag': 'test_flag',
+                'borders': ['test_border'],
+                'landlocked': true,
+                'area': '123456',
+                'callingcode': '123',
+                'domain': 'test_domain'
+            }
+
+            return request(mock)
+                .post('/add')
+                .send(update)
+                .expect(400)
+        });
+
+        test('POST /edit (Missing Parameters - 2)', async() => {
+            const update = {
+                'index': 1,
+                'name_common': 'test_edit_common',
+                'name_official': 'test_edit_official',
+                'name_native': 'test_edit_native',
+                'region': 'test_region',
+                'subregion': 'test_subregion',
+                'capital': 'test_capital',
+                'currency': ['test_currency'],
+                'languages': ['test_language'],
+                'demonyn': 'test_demonym',
+                'independent': true,
+                'translations': ['test_translation'],
+                'flag': 'test_flag',
+                'latlng': [123, 123],
+                'borders': ['test_border'],
+                'domain': 'test_domain'
+            }
+
+            return request(mock)
+                .post('/add')
+                .send(update)
+                .expect(400)
+        });
+
+        test('POST /edit (Invalid Parameters - 1)', async() => {
+            const update = {
+                'index': 1,
+                'name_common': 'test_edit_common',
+                'name_official': 'test_edit_official',
+                'name_native': 'test_edit_native',
+                'region': 'test_region',
+                'subregion': 'test_subregion',
+                'capital': 'test_capital',
+                'currency': 'test_currency',
+                'languages': 'test_language',
+                'demonyn': 'test_demonym',
+                'independent': true,
+                'translations': 'test_translation',
+                'flag': 'test_flag',
+                'latlng': [123, 123],
+                'borders': 'test_border',
+                'landlocked': true,
+                'area': '123456',
+                'callingcode': '123',
+                'domain': 'test_domain'
+            }
+
+            return request(mock)
+                .post('/add')
+                .send(update)
+                .expect(400)
+        });
+
+        test('POST /edit (Invalid Parameters - 2)', async() => {
+            const update = {
+                'index': 1,
+                'name_common': 'France',
+                'name_official': 'test_edit_official',
+                'name_native': 'test_edit_native',
+                'region': 'test_region',
+                'subregion': 'test_subregion',
+                'capital': 'test_capital',
+                'currency': ['test_currency'],
+                'languages': ['test_language'],
+                'demonyn': 'test_demonym',
+                'independent': true,
+                'translations': ['test_translation'],
+                'flag': 'test_flag',
+                'latlng': [123],
+                'borders': ['test_border'],
+                'landlocked': true,
+                'area': '123456',
+                'callingcode': '123',
+                'domain': 'test_domain'
+            }
+
+            return request(mock)
+                .post('/add')
+                .send(update)
+                .expect(400)
+        });
     });
 
     describe('For /delete', () => {
+        test('POST /delete (No parameters)', async() => {
+            const update = {
 
+            }
+
+            return request(mock)
+                .post('/delete')
+                .send(update)
+                .expect(400)
+        });
+
+        test('POST /delete (Index out of range)', async() => {
+            const update = {
+                'index': -123
+            };
+
+            return request(mock)
+                .post('/delete')
+                .send(update)
+                .expect(400)
+        });
+
+        test('POST /delete (NaN index)', async() => {
+            const update = {
+                'index': 'yo delete that thing'
+            }
+
+            return request(mock)
+                .post('/delete')
+                .send(update)
+                .expect(400)
+        });
     })
 })
 
