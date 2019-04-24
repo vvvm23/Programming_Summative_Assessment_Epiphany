@@ -35,9 +35,6 @@ $(document).ready(function() {
 		for (let id = 0; id < id_list.length; id++) {
 			let s_id = id_list[id];
 			switch(s_id) {
-			case 'index':
-				update['index'] = edit_index;
-				break;
 			case 'currency':                
 				update['currency'] = document.getElementById('add_currency').value.replace(/\s/g, '').split(',');
 				break;

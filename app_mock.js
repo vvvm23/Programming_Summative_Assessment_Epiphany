@@ -13,7 +13,7 @@ app_mock.use(cookieParser());
 let json_countries = require('./json/countries.json');
 
 const type = function(obj) {
-    return Object.prototype.toString.app_mockly(obj).replace(/\[object (.+)\]/i, '$1').toLowerCase();
+    return Object.prototype.toString.apply(obj).replace(/\[object (.+)\]/i, '$1').toLowerCase();
 };
 
 const stripHTML = function(untrusted) { return sanitizeHtml(untrusted); };
@@ -38,6 +38,7 @@ app_mock.post('/add', (req, res) => {
         const restore = function() {json_countries.splice(index, 1);};
         for (let id = 0; id < id_list.length; id++) {
             let s_id = id_list[id];
+            console.log(s_id);
             switch(s_id) {
             case 'name': 
                 json_countries[index]['name'] = {'common': '', 'official': '', 'native': {}};
@@ -327,7 +328,6 @@ app_mock.get('/search/delete', (req, res) => {
     // Search Country for delete secure endpoint
     // Returns Common name (maybe index too?)
     let query_name = req.query.name;
-
     if (query_name == null) {
         res.statusMessage = 'Name missing!';
         return res.sendStatus(400);   
