@@ -103,15 +103,185 @@ function test_country_china(res) {
     if (json['tld'][0] !== '.cn') {
         throw new Error('Incorrect tld');
     }
-
 }
 
 function test_country_uk(res) {
+    const json = res.body;
+    if (typeof json !== 'object') {
+        throw new Error('Not an object!');
+    }
 
+    if (json['name']['common'] !== 'United Kingdom') {
+        throw new Error('Incorrect common name');
+    }
+
+    if (json['name']['official'] !== 'United Kingdom of Great Britain and Northern Ireland') {
+        throw new Error('Incorrect official name');
+    }
+
+    if (json['native_name']['common'] !== 'United Kingdom') {
+        throw new Error('Incorrect native common');
+    }
+
+    if (json['native_name']['official'] !== 'United Kingdom of Great Britain and Northern Ireland') {
+        throw new Error('Incorrect native official');
+    }
+
+    if (json['region'] !== 'Europe') {
+        throw new Error('Incorrect region');
+    }
+
+    if (json['subregion'] !== 'Northern Europe') {
+        throw new Error('Incorrect subregion');
+    }
+
+    if (json['capital'] != 'London') {
+        throw new Error('Incorrect capital');
+    }
+
+    if (json['currency'] != 'GBP') {
+        throw new Error('Incorrect currency');
+    }
+
+    if (json['languages']['eng'] !== 'English') {
+        throw new Error('Incorrect languages');
+    }
+
+    if (json['demonym'] !== 'British') {
+        throw new Error('Incorrect demonym');
+    }
+
+    if (json['independent'] !== true) {
+        throw new Error('Incorrect independent');
+    }
+
+    if (json['translations']['fra']['official'] !== "Royaume-Uni de Grande-Bretagne et d'Irlande du Nord") {
+        throw new Error('Incorrect translations official');
+    }
+
+    if (json['translations']['fra']['common'] !== "Royaume-Uni") {
+        throw new Error('Incorrect translations common');
+    }
+
+    if (json['flag'] !== '\ud83c\uddec\ud83c\udde7') {
+        throw new Error('Incorrect flag');
+    }
+
+    if (json['latlng'][0] !== 54 || json['latlng'][1] !== -2) {
+        throw new Error('Incorrect latlng');
+    }
+
+    if (JSON.stringify(json['borders']) !== JSON.stringify([
+        "IRL"
+      ])) {
+        throw new Error('Incorrect borders');
+    }
+
+    if (json['landlocked'] !== false) {
+        throw new Error('Incorrect landlocked');
+    }
+
+    if (json['area'] !== 242900) {
+        throw new Error('Incorrect area');
+    }
+
+    if (json['callingCode'][0] !== '44') {
+        throw new Error('Incorrect callingCode');
+    }
+
+    if (json['tld'][0] !== '.uk') {
+        throw new Error('Incorrect tld');
+    }
 }
 
 function test_country_us(res) {
+    const json = res.body;
+    if (typeof json !== 'object') {
+        throw new Error('Not an object!');
+    }
 
+    if (json['name']['common'] !== 'United States') {
+        throw new Error('Incorrect common name');
+    }
+
+    if (json['name']['official'] !== 'United States of America') {
+        throw new Error('Incorrect official name');
+    }
+
+    if (json['native_name']['common'] !== 'United States') {
+        throw new Error('Incorrect native common');
+    }
+
+    if (json['native_name']['official'] !== 'United States of America') {
+        throw new Error('Incorrect native official');
+    }
+
+    if (json['region'] !== 'Americas') {
+        throw new Error('Incorrect region');
+    }
+
+    if (json['subregion'] !== 'North America') {
+        throw new Error('Incorrect subregion');
+    }
+
+    if (json['capital'] != 'Washington D.C.') {
+        throw new Error('Incorrect capital');
+    }
+
+    if (json['currency'] != 'USD') {
+        throw new Error('Incorrect currency');
+    }
+
+    if (json['languages']['eng'] !== 'English') {
+        throw new Error('Incorrect languages');
+    }
+
+    if (json['demonym'] !== 'American') {
+        throw new Error('Incorrect demonym');
+    }
+
+    if (json['independent'] !== true) {
+        throw new Error('Incorrect independent');
+    }
+
+    if (json['translations']['jpn']['official'] !== "\u30a2\u30e1\u30ea\u30ab\u5408\u8846\u56fd") {
+        throw new Error('Incorrect translations official');
+    }
+
+    if (json['translations']['jpn']['common'] !== "\u30a2\u30e1\u30ea\u30ab\u5408\u8846\u56fd") {
+        throw new Error('Incorrect translations common');
+    }
+
+    if (json['flag'] !== '\ud83c\uddfa\ud83c\uddf8') {
+        throw new Error('Incorrect flag');
+    }
+
+    if (json['latlng'][0] !== 38 || json['latlng'][1] !== -97) {
+        throw new Error('Incorrect latlng');
+    }
+
+    if (JSON.stringify(json['borders']) !== JSON.stringify([
+        "CAN",
+        "MEX"
+      ])) {
+        throw new Error('Incorrect borders');
+    }
+
+    if (json['landlocked'] !== false) {
+        throw new Error('Incorrect landlocked');
+    }
+
+    if (json['area'] !== 9372610) {
+        throw new Error('Incorrect area');
+    }
+
+    if (json['callingCode'][0] !== '1') {
+        throw new Error('Incorrect callingCode');
+    }
+
+    if (json['tld'][0] !== '.us') {
+        throw new Error('Incorrect tld');
+    }
 }
 
 describe('Testing GET services success', () => {
@@ -139,10 +309,22 @@ describe('Testing GET services success', () => {
             .expect(200);
     });
 
-    test('GET /query succeeds (Check contents)', () => {
+    test('GET /query succeeds (Check contents CHINA)', () => {
         return request(app)
             .get('/query?name=China&check=111111111111111')
             .expect(test_country_china);
+    });
+
+    test('GET /query succeeds (Check contents UK)', () => {
+        return request(app)
+            .get('/query?name=United%20Kingdom&check=111111111111111')
+            .expect(test_country_uk);
+    });
+
+    test('GET /query succeeds (Check contents US)', () => {
+        return request(app)
+            .get('/query?name=United%20States&check=111111111111111')
+            .expect(test_country_us);
     });
 
     test('GET /map succeeds', () => {
