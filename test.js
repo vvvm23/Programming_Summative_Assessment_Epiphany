@@ -532,14 +532,14 @@ describe('Testing GET malformed requests', () => {
 describe('Test POST services success', () => {
     test('POST /add success', async() => {
         const update = {
-            'name_common': 'test_common',
-            'name_official': 'test_official',
-            'name_native': 'test_native',
+            'name_common': 'test_add_common',
+            'name_official': 'test_add_official',
+            'name_native': 'test_add_native',
             'region': 'test_region',
             'subregion': 'test_subregion',
             'capital': 'test_capital',
             'currency': ['test_currency'],
-            'languages': ['test_language', 'test'],
+            'languages': ['test_language'],
             'demonyn': 'test_demonym',
             'independent': true,
             'translations': ['test_translation'],
@@ -557,15 +557,33 @@ describe('Test POST services success', () => {
             .expect(200);
     });
  
-    /*test('POST /edit success', async() => {
+    test('POST /edit success', async() => {
         const update = {
-
+            'index': 1,
+            'name_common': 'test_edit_common',
+            'name_official': 'test_edit_official',
+            'name_native': 'test_edit_native',
+            'region': 'test_region',
+            'subregion': 'test_subregion',
+            'capital': 'test_capital',
+            'currency': ['test_currency'],
+            'languages': ['test_language'],
+            'demonyn': 'test_demonym',
+            'independent': true,
+            'translations': ['test_translation'],
+            'flag': 'test_flag',
+            'latlng': [123, 123],
+            'borders': ['test_border'],
+            'landlocked': true,
+            'area': '123456',
+            'callingcode': '123',
+            'domain': 'test_domain'
         };
         return request(mock)
             .post('/edit')
             .send(update)
             .expect(200);
-    });*/
+    });
 
     test('POST /delete success', async() => {
         const update = {

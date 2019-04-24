@@ -38,7 +38,6 @@ app_mock.post('/add', (req, res) => {
         const restore = function() {json_countries.splice(index, 1);};
         for (let id = 0; id < id_list.length; id++) {
             let s_id = id_list[id];
-            console.log(s_id);
             switch(s_id) {
             case 'name': 
                 json_countries[index]['name'] = {'common': '', 'official': '', 'native': {}};
@@ -189,9 +188,10 @@ app_mock.post('/edit', (req, res) => {
 
         for (let id = 0; id < id_list.length; id++) {
             let s_id = id_list[id];
-
+            console.log(s_id)
             switch(s_id) {
             case 'name': 
+                console.log('1')
                 if (stripHTML(json_body['name_common']) === '') {
                     restore();
                     res.statusMessage = '"name_common" field is invalid! (Required field name_common) Additional errors may have occured';
@@ -205,7 +205,7 @@ app_mock.post('/edit', (req, res) => {
                 } else {
                     json_countries[index]['name']['common'] = stripHTML(json_body['name_common']);
                 }
-
+                console.log('2')
                 if (stripHTML(json_body['name_official']) in country_names 
                         && stripHTML(json_body['name_official']) != ''
                         && stripHTML(json_body['name_official']) != json_countries[index]['name']['official']) {
@@ -215,7 +215,7 @@ app_mock.post('/edit', (req, res) => {
                 } else {
                     json_countries[index]['name']['official'] = stripHTML(json_body['name_official']);
                 }
-
+                console.log('3')
                 // hmm
                 json_countries[index]['name']['native'] = {'unknown': {'common': stripHTML(json_body['name_native'])}}; // add support for multiple native
                     
@@ -313,8 +313,13 @@ app_mock.post('/edit', (req, res) => {
             }
         }
 
+        console.log('Generating list');
         country_names = generate_country_list();
+
+        console.log('Generating index list')
         country_index = generate_country_index();
+
+        console.log('Generating fuzz')
         fuzz = generate_country_fuzzy(country_names);
 
         res.send({'name': original_name});
