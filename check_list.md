@@ -21,7 +21,7 @@ Source code (all zipped)
 - package.json including test and pretest scripts **?**
 - .eslintrc **✔️**
 - jest test cases e.g. app.test.js **✔️**
-- README.md explaining how to use the site and API **?**
+- README.md explaining how to use the site and API **✔️**
 
 Should not include `node_modules` in submission **✔️**
 
@@ -66,7 +66,7 @@ Equally weighted
   - Stop server after loading page
   - Check for sensible messages
   - What happens when it starts again?
-- Web site documentation (README.md) **? (save until end)**
+- Web site documentation (README.md) **✔️**
   - Does not have to be extensive: user instructions
 
 ## Server-side functionality criteria
@@ -90,7 +90,7 @@ Equally weighted
 - Successful eslint (run with `npm pretest`) **✔️**
   - Lint rules at least those used in first assigment
   - No problems reported
-- API documentation (README.md) **? (save until end)**
+- API documentation (README.md) **✔️**
   - Compare with e.g. [twitter API docs](https://developer.twitter.com/en/docs/api-reference-index)
 
 

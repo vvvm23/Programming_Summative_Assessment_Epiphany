@@ -12,6 +12,8 @@ The web application is hosted [here.](https://prog-summative.herokuapp.com/)
 Credentials are:
 * Email: vvvm23.progsummative.epiphany@gmail.com
 * PASS: ceOMTI0Vqj97
+
+(Login by clicking Sign in with Google. Use incognito if it logs into your own account!)
 ___
 ### How to Use
 

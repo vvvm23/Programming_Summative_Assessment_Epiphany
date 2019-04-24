@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>Programming Summative</title>
 
@@ -11,6 +11,7 @@
         <link rel="stylesheet" type="text/css" href="semantic.css">
         <script src="semantic.js"></script>
         <script src="index.js"></script>
+        <meta charset="UTF-8">
     </head>
 
     <body>
@@ -37,7 +38,7 @@
                     <div class="ui row">
                         <form class="ui inverted form" id="country_form">
                             <div class="field">
-                                <label>Name<p style="float: right" id="selected_country">Selected Country: None</p></label>
+                                <label>Name<span style="float: right" id="selected_country">Selected Country: None</span></label>
                                 <input id="country_name" placeholder="Country">
                             </div>
                             <div class="inline stackable fields">
@@ -429,7 +430,7 @@
 
                         <div id="map_column" class="ui sixteen wide column" style="position: absolute; min-height: 70%"><div class="ui map">
                             <div id="map" class="ui fluid segment" style="position: absolute">
-                                <img id = "map_image" src = "">
+                                <img id="map_image" src="/" alt="Map Image">
                             </div>
                         </div></div>
                     <div class="ui sixteen wide column" style="position: absolute"><div class="ui wiki"><div id="wiki" class="ui segment" style="position: absolute">
@@ -443,7 +444,7 @@
         </div>
             <div class="ui basic modal">
                 <div class="content">
-                    <img src="/img/404.png">
+                    <img src="/img/404.png" alt="404 Image">
                     <h1>An Error Occured!</h1>
                     <p id="modal_text">Error 404: Page not found!</p>
                 </div>
