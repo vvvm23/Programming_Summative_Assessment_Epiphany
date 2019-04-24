@@ -51,11 +51,11 @@ function test_country_china(res) {
         throw new Error('Incorrect independent');
     }
 
-    if (json['translations']['fra']['official'] !== "R\u00e9publique populaire de Chine") {
+    if (json['translations']['fra']['official'] !== 'R\u00e9publique populaire de Chine') {
         throw new Error('Incorrect translations official');
     }
 
-    if (json['translations']['fra']['common'] !== "Chine") {
+    if (json['translations']['fra']['common'] !== 'Chine') {
         throw new Error('Incorrect translations common');
     }
 
@@ -68,23 +68,23 @@ function test_country_china(res) {
     }
 
     if (JSON.stringify(json['borders']) !== JSON.stringify([
-        "AFG",
-        "BTN",
-        "MMR",
-        "HKG",
-        "IND",
-        "KAZ",
-        "NPL",
-        "PRK",
-        "KGZ",
-        "LAO",
-        "MAC",
-        "MNG",
-        "PAK",
-        "RUS",
-        "TJK",
-        "VNM"
-      ])) {
+        'AFG',
+        'BTN',
+        'MMR',
+        'HKG',
+        'IND',
+        'KAZ',
+        'NPL',
+        'PRK',
+        'KGZ',
+        'LAO',
+        'MAC',
+        'MNG',
+        'PAK',
+        'RUS',
+        'TJK',
+        'VNM'
+    ])) {
         throw new Error('Incorrect borders');
     }
 
@@ -155,11 +155,11 @@ function test_country_uk(res) {
         throw new Error('Incorrect independent');
     }
 
-    if (json['translations']['fra']['official'] !== "Royaume-Uni de Grande-Bretagne et d'Irlande du Nord") {
+    if (json['translations']['fra']['official'] !== 'Royaume-Uni de Grande-Bretagne et d\'Irlande du Nord') {
         throw new Error('Incorrect translations official');
     }
 
-    if (json['translations']['fra']['common'] !== "Royaume-Uni") {
+    if (json['translations']['fra']['common'] !== 'Royaume-Uni') {
         throw new Error('Incorrect translations common');
     }
 
@@ -172,8 +172,8 @@ function test_country_uk(res) {
     }
 
     if (JSON.stringify(json['borders']) !== JSON.stringify([
-        "IRL"
-      ])) {
+        'IRL'
+    ])) {
         throw new Error('Incorrect borders');
     }
 
@@ -244,11 +244,11 @@ function test_country_us(res) {
         throw new Error('Incorrect independent');
     }
 
-    if (json['translations']['jpn']['official'] !== "\u30a2\u30e1\u30ea\u30ab\u5408\u8846\u56fd") {
+    if (json['translations']['jpn']['official'] !== '\u30a2\u30e1\u30ea\u30ab\u5408\u8846\u56fd') {
         throw new Error('Incorrect translations official');
     }
 
-    if (json['translations']['jpn']['common'] !== "\u30a2\u30e1\u30ea\u30ab\u5408\u8846\u56fd") {
+    if (json['translations']['jpn']['common'] !== '\u30a2\u30e1\u30ea\u30ab\u5408\u8846\u56fd') {
         throw new Error('Incorrect translations common');
     }
 
@@ -261,9 +261,9 @@ function test_country_us(res) {
     }
 
     if (JSON.stringify(json['borders']) !== JSON.stringify([
-        "CAN",
-        "MEX"
-      ])) {
+        'CAN',
+        'MEX'
+    ])) {
         throw new Error('Incorrect borders');
     }
 
@@ -518,7 +518,7 @@ describe('Testing GET malformed requests', () => {
 
 describe('Test POST services success', () => {
     
-})
+});
 
 describe('Test secure GET services success', () => {
     test('GET /search/edit succeeds', () => {
@@ -526,4 +526,4 @@ describe('Test secure GET services success', () => {
             .get('/search/edit?name=France')
             .expect(200);
     });
-})
+});
