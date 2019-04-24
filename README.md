@@ -60,12 +60,12 @@ ___
 #### /query
 ```
 - Request Parameters -
-    name: User specified search string.
+    name: User specified search string
     check: 15 long binary string. Represents requested Statistics
 
 - Response Attributes -
     name: Object containing common, official and native names
-    native_name: Unfolded object of native contained in name.
+    native_name: Unfolded object of native contained in name
     region: String containing the region the country is in
     subregion: String containing the subregion the country is in
     capital: Array containing capital of the country
@@ -92,7 +92,7 @@ ___
     z: Integer value for zoom level
     dim_y: Integer value for height of map image in pixels
     dim_x: Integer value for width of map image in pixels
-- Response Parameters -
+- Response Attributes -
     map_url: String locating map image on external API
 ```
 
@@ -101,37 +101,109 @@ ___
 - Request Parameters -
     name: Name of selected country's common name by Server
 
-- Response Parameters -
+- Response Attributes -
     wiki: Contents of summary section of requested wikipedia page
 ```
 
 #### /search/delete [Authenticated]
 ```
-
+- Request Parameters -
+    name: User specified search string
+- Response Attributes -
+    index: Index of entry to delete
+    name: Actual name of the entry to delete
 ```
 
 #### /search/edit [Authenticated]
 ```
-
+- Request Parameters -
+    name: User specified search string
+- Response Attributes -
+    index: Index of entry to edit
+    name: Object containing common, official and native names
+    native_name: Unfolded object of native contained in name
+    region: String containing the region the country is in
+    subregion: String containing the subregion the country is in
+    capital: Array containing capital of the country
+    currency: Array containing currencies in the Country
+    languages: Object containing languages spoken in the country
+    demonym: String containing demonym for citizens in the country
+    independent: Boolean value for the independence of the country
+    translations: Object containing translations for the country's name
+    flag: Unicode for flag emoji
+    latlng: Two long array containing longitude and latitude of the country
+    borders: Array containing codes for bordering countries
+    landlocked: Boolean for the landlocked status of the country
+    area: Integer value for surface area of the country
+    callingCode: Integer value for calling code in the country
+    tld: domain name ending for the country
 ```
 
 #### /add [Authenticated]
 ```
-
+- Request Parameters -
+    name_common: String containing common name for the country
+    name_official: String containing official name for the country
+    name_native: String containing native name for the country
+    region: String containing the region the country is in
+    subregion: String containing the subregion the country is in
+    capital: String containing capital of the country
+    currency: Array containing currencies in the Country
+    languages: Array containing languages spoken in the country
+    demonym: String containing demonym for citizens in the country
+    independent: Boolean value for the independence of the country
+    translations: Array containing translations for the country's name
+    flag: Unicode for flag emoji
+    latlng: Two long array containing longitude and latitude of the country
+    borders: Array containing codes for bordering countries
+    landlocked: Boolean for the landlocked status of the country
+    area: Integer value for surface area of the country
+    callingcode: Integer value for calling code in the country
+    domain: domain name ending for the country
+- Response Attributes -
+    name: String containing name of country before edit
 ```
 
 #### /edit [Authenticated]
 ```
-
+- Request Parameters -
+    index: Index of entry to edit
+    name_common: String containing common name for the country
+    name_official: String containing official name for the country
+    name_native: String containing native name for the country
+    region: String containing the region the country is in
+    subregion: String containing the subregion the country is in
+    capital: String containing capital of the country
+    currency: Array containing currencies in the Country
+    languages: Array containing languages spoken in the country
+    demonym: String containing demonym for citizens in the country
+    independent: Boolean value for the independence of the country
+    translations: Array containing translations for the country's name
+    flag: Unicode for flag emoji
+    latlng: Two long array containing longitude and latitude of the country
+    borders: Array containing codes for bordering countries
+    landlocked: Boolean for the landlocked status of the country
+    area: Integer value for surface area of the country
+    callingcode: Integer value for calling code in the country
+    domain: domain name ending for the country
+- Response Attributes -
+    name: String containing name of country before edit
 ```
 
 #### /delete [Authenticated]
 ```
-
+- Request Parameters -
+    index: Index of entry to delete
+- Response Attributes -
+    No response body
 ```
 ___
 ### External APIs
 
+Here are the external APIs I used:
+* HERE maps API for generating map images based on longitude and latitude
+* Wikipedia for generating summary on each country
+* Auth0 for authenticating admin page
 ___
 ### License
 

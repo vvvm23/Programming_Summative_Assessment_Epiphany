@@ -400,11 +400,12 @@ app_mock.post('/delete', (req, res) => {
             res.statusMessage = 'Failed to delete entry! (Index out of range)';
             return res.sendStatus(400);
         }
+        let original_name = json_countries[index]['name']['common'];
         json_countries.splice(index, 1);
         country_names = generate_country_list();
         country_index = generate_country_index();
         fuzz = generate_country_fuzzy(country_names);
-        res.sendStatus(200);
+        res.send({name: original_name});
     } catch (error) {
         res.statusMessage = 'Failed to delete entry! (Unknown)';
         res.sendStatus(400);

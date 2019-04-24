@@ -107,7 +107,7 @@ $(document).ready(function() {
 			.then(function(json) {
 				delete_index = json['index'];
 				document.getElementById('delete_selected').innerHTML = json['name'];
-				document.getElementById('delete_confirm_label_inner').innerHTML = json['name'];
+				//document.getElementById('delete_confirm_label_inner').innerHTML = json['name'];
 			})
 			.catch(err => modal_error(err));
 	});
@@ -123,16 +123,21 @@ $(document).ready(function() {
 		})
 			.then(function(res) {
 				if (res.ok) {
-					delete_index = -1;
-					document.getElementById('delete_selected').innerHTML = 'None';
-					document.getElementById('delete_search').value = '';
-					$('#delete_confirm_label').transition('zoom');
-					$('#delete_confirm_label').transition({animation:'zoom', interval: 2000, onHide: function() {
-						document.getElementById('delete_confirm_label_inner').innerHTML = '';
-					}});
+					return res;
 				} else {
 					throw res.statusText;
 				}
+			})
+			.then(res => res.json())
+			.then(function(json) {
+				delete_index = -1;
+				document.getElementById('delete_selected').innerHTML = 'None';
+				document.getElementById('delete_search').value = '';
+				document.getElementById('delete_confirm_label_inner').innerHTML = json['name'];
+				$('#delete_confirm_label').transition('zoom');
+				$('#delete_confirm_label').transition({animation:'zoom', interval: 2000, onHide: function() {
+					document.getElementById('delete_confirm_label_inner').innerHTML = '';
+				}});
 			})
 			.catch(err => modal_error(err));
 	});
