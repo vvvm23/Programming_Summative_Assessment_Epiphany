@@ -9,7 +9,9 @@ users are also allowed to edit, delete or add countries to the array
 of country objects stored in memory.
 
 The web application is hosted [here.](https://prog-summative.herokuapp.com/)
-Credentials are $USER:$PASS
+Credentials are:
+* Email: vvvm23.progsummative.epiphany@gmail.com
+* PASS: ceOMTI0Vqj97
 ___
 ### How to Use
 
