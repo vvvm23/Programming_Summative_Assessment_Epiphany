@@ -1,6 +1,119 @@
 const request = require('supertest');
 const app = require('./app');
 
+function test_country_china(res) {
+    const json = res.body;
+    if (typeof json !== 'object') {
+        throw new Error('Not an object!');
+    }
+
+    if (json['name']['common'] !== 'China') {
+        throw new Error('Incorrect common name');
+    }
+
+    if (json['name']['official'] !== 'People\'s Republic of China') {
+        throw new Error('Incorrect official name');
+    }
+
+    if (json['native_name']['common'] !== '中国') {
+        throw new Error('Incorrect native common');
+    }
+
+    if (json['native_name']['official'] !== '中华人民共和国') {
+        throw new Error('Incorrect native official');
+    }
+
+    if (json['region'] !== 'Asia') {
+        throw new Error('Incorrect region');
+    }
+
+    if (json['subregion'] !== 'Eastern Asia') {
+        throw new Error('Incorrect subregion');
+    }
+
+    if (json['capital'] != 'Beijing') {
+        throw new Error('Incorrect capital');
+    }
+
+    if (json['currency'] != 'CNY') {
+        throw new Error('Incorrect currency');
+    }
+
+    if (json['languages']['zho'] !== 'Chinese') {
+        throw new Error('Incorrect languages');
+    }
+
+    if (json['demonym'] !== 'Chinese') {
+        throw new Error('Incorrect demonym');
+    }
+
+    if (json['independent'] !== true) {
+        throw new Error('Incorrect independent');
+    }
+
+    if (json['translations']['fra']['official'] !== "R\u00e9publique populaire de Chine") {
+        throw new Error('Incorrect translations official');
+    }
+
+    if (json['translations']['fra']['common'] !== "Chine") {
+        throw new Error('Incorrect translations common');
+    }
+
+    if (json['flag'] !== '\ud83c\udde8\ud83c\uddf3') {
+        throw new Error('Incorrect flag');
+    }
+
+    if (json['latlng'][0] !== 35 || json['latlng'][1] !== 105) {
+        throw new Error('Incorrect latlng');
+    }
+
+    if (JSON.stringify(json['borders']) !== JSON.stringify([
+        "AFG",
+        "BTN",
+        "MMR",
+        "HKG",
+        "IND",
+        "KAZ",
+        "NPL",
+        "PRK",
+        "KGZ",
+        "LAO",
+        "MAC",
+        "MNG",
+        "PAK",
+        "RUS",
+        "TJK",
+        "VNM"
+      ])) {
+        throw new Error('Incorrect borders');
+    }
+
+    if (json['landlocked'] !== false) {
+        throw new Error('Incorrect landlocked');
+    }
+
+    if (json['area'] !== 9706961) {
+        throw new Error('Incorrect area');
+    }
+
+    if (json['callingCode'][0] !== '86') {
+        throw new Error('Incorrect callingCode');
+    }
+
+    if (json['tld'][0] !== '.cn') {
+        throw new Error('Incorrect tld');
+    }
+
+}
+
+function test_country_uk(res) {
+
+}
+
+function test_country_us(res) {
+
+}
+
 describe('Testing GET services success', () => {
     test('GET / succeeds', () => {
         return request(app)
@@ -8,10 +121,28 @@ describe('Testing GET services success', () => {
             .expect(200);
     });
 
-    test('GET /query succeeds', () => {
+    test('GET /query succeeds (Common Name)', () => {
         return request(app)
             .get('/query?name=China&check=111111111111111')
             .expect(200);
+    });
+
+    test('GET /query succeeds (Official Name)', () => {
+        return request(app)
+            .get('/query?name=People%27s%20Republic%20of%20China&check=111111111111111')
+            .expect(200);
+    });
+
+    test('GET /query succeeds (Native Name)', () => {
+        return request(app)
+            .get('/query?name=%E4%B8%AD%E5%9B%BD&check=111111111111111')
+            .expect(200);
+    });
+
+    test('GET /query succeeds (Check contents)', () => {
+        return request(app)
+            .get('/query?name=China&check=111111111111111')
+            .expect(test_country_china);
     });
 
     test('GET /map succeeds', () => {
@@ -24,6 +155,24 @@ describe('Testing GET services success', () => {
         return request(app)
             .get('/wiki?name=China')
             .expect(200);
+    });
+
+    test('GET /query Content-type', () => {
+        return request(app)
+            .get('/query?name=China&check=111111111111111')
+            .expect('Content-type', /json/);
+    });
+
+    test('GET /map Content-type', () => {
+        return request(app)
+            .get('/map?lat=0&t=0&lon=0&z=1&x=100&y=100')
+            .expect('Content-type', /json/);
+    });
+
+    test('GET /wiki Content-type', () => {
+        return request(app)
+            .get('/wiki?name=China')
+            .expect('Content-type', /json/);
     });
 });
 
