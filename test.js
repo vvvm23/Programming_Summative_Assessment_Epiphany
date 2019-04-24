@@ -1,5 +1,6 @@
 const request = require('supertest');
 const app = require('./app');
+const mock = require('./app_mock')
 
 function test_country_china(res) {
     const json = res.body;
@@ -284,6 +285,18 @@ function test_country_us(res) {
     }
 }
 
+function test_search_delete_france(res) {
+    const json = res.body;
+
+    if (typeof json !== 'object') {
+        throw new Error('Not an object!');
+    }
+
+    if (!(json['index'] === 76 && json['name'] === 'France')) {
+        throw new Error('Response incorrect!')
+    }
+}
+
 describe('Testing GET services success', () => {
     test('GET / succeeds', () => {
         return request(app)
@@ -522,8 +535,48 @@ describe('Test POST services success', () => {
 
 describe('Test secure GET services success', () => {
     test('GET /search/edit succeeds', () => {
-        return request(app)
+        return request(mock)
             .get('/search/edit?name=France')
             .expect(200);
     });
+
+    test('GET /search/delete succeeds', () => {
+        return request(mock)
+            .get('/search/delete?name=France')
+            .expect(200);
+    });
+
+    test('GET /search/edit Content-type', () => {
+        return request(mock)
+            .get('/search/edit?name=France')
+            .expect('Content-type', /json/);
+    });
+
+    test('GET /search/delete Content-type', () => {
+        return request(mock)
+            .get('/search/delete?name=France')
+            .expect('Content-type', /json/);
+    });
+
+    test('GET /search/edit (Check contents CHINA)', () => {
+        return request(mock)
+            .get('/search/edit?name=China')
+            .expect(test_country_china);
+    });
+
+    test('GET /search/delete (Check contents FRANCE)', () => {
+        return request(mock)
+            .get('/search/delete?name=France')
+            .expect(test_search_delete_france);
+    });
 });
+
+describe('Test secure GET services malformed', () =>) {
+    describe('For /search/edit', () => {
+
+    });
+
+    describe('For /search/delete', () => {
+
+    });
+};
