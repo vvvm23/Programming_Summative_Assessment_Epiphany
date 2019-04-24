@@ -698,4 +698,5 @@ app.listen(PORT);
 app.use(function (req, resp, next) {
     resp.sendStatus(404);
 });
+module.exports = server;
 console.log('Listening on ' + IP + ':' + PORT);
