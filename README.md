@@ -195,7 +195,7 @@ ___
 - Request Parameters -
     index: Index of entry to delete
 - Response Attributes -
-    No response body
+    name: Returns original name of deleted item
 ```
 ___
 ### External APIs
