@@ -571,12 +571,32 @@ describe('Test secure GET services success', () => {
     });
 });
 
-describe('Test secure GET services malformed', () =>) {
+describe('Test secure GET services malformed', () => {
     describe('For /search/edit', () => {
+        test('GET /search/edit malformed (Missing name)', () => {
+            return request(mock)
+                .get('/search/edit')
+                .expect(400);
+        });
 
+        test('GET /search/edit malformed (Country does not exist)', () => {
+            return request(mock)
+                .get('/search/edit?name=ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+                .expect(400);
+        });
     });
 
     describe('For /search/delete', () => {
+        test('GET /search/delete malformed (Missing Name)', () => {
+            return request(mock)
+                .get('/search/delete')
+                .expect(400);
+        });
 
+        test('GET /search/delete malformed (Country does not exist)', () => {
+            return request(mock)
+                .get('/search/delete?name=ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+                .expect(400);
+        });
     });
-};
+});

@@ -383,6 +383,11 @@ app.get('/search/delete', ensureLoggedIn, (req, res) => {
     // Search Country for delete secure endpoint
     // Returns Common name (maybe index too?)
     let query_name = req.query.name;
+    if (query_name == null) {
+        res.statusMessage = 'Name missing!';
+        return res.sendStatus(400);   
+    }
+    
     let i = find_country(query_name);
 
     if (i instanceof Error) {
