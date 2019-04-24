@@ -519,3 +519,11 @@ describe('Testing GET malformed requests', () => {
 describe('Test POST services success', () => {
     
 })
+
+describe('Test secure GET services success', () => {
+    test('GET /search/edit succeeds', () => {
+        return request(app)
+            .get('/search/edit?name=France')
+            .expect(200);
+    });
+})
