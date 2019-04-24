@@ -113,7 +113,6 @@ $(document).ready(function() {
 	});
 
 	delete_confirm.addEventListener('click', async function() {
-		//fetch('http://'+IP+':'+PORT+'/delete', {
 		fetch(HOST+'/delete', {
 			method: 'POST',
 			mode: 'cors',
