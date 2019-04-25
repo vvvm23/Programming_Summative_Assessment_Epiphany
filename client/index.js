@@ -57,6 +57,7 @@ $(document).ready(function () {
 		}
 	}
 
+	resize_map();
 	toggle_all_check();
 	toggle_all.addEventListener('click', async function() {
 		toggle_all_check();
