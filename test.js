@@ -2,6 +2,7 @@ const request = require('supertest');
 const app = require('./app');
 const mock = require('./app_mock')
 
+// Code for testing country China
 function test_country_china(res) {
     const json = res.body;
     if (typeof json !== 'object') {
@@ -106,6 +107,7 @@ function test_country_china(res) {
     }
 }
 
+// Code for testing country United Kingdom
 function test_country_uk(res) {
     const json = res.body;
     if (typeof json !== 'object') {
@@ -195,6 +197,7 @@ function test_country_uk(res) {
     }
 }
 
+// Code for testing country United States
 function test_country_us(res) {
     const json = res.body;
     if (typeof json !== 'object') {

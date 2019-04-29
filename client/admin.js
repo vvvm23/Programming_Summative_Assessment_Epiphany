@@ -1,37 +1,43 @@
+// Function that displays error message in modal screen //
 function modal_error(message) {
 	document.getElementById('modal_text').innerHTML = message;
 	$('.ui.modal').modal('show');
 }
 
 $(document).ready(function() {
-	//const IP =  '127.0.0.1';
-	//const PORT = 8090; //process.env.PORT || 8090;
-	const HOST = '.'; //'prog-summative.herokuapp.com' === window.location.host ? 'https://prog-summative.herokuapp.com':'http://127.0.0.1:8090';
+	const HOST = '.'; // Host header prepended to urls
 
+	// transition off add and delete segments
 	$('.add').transition({animation: 'fly left', duration: 0});
 	$('.delete').transition({animation: 'fly left', duration: 0});
 
+	// Hide confirmation labels
 	$('#delete_confirm_label').transition({animation:'zoom', duration: 0});
 	$('#edit_confirm_label').transition({animation:'zoom', duration: 0});
 	$('#add_confirm_label').transition({animation:'zoom', duration: 0});
 
+	// Run startup code for semantic dropdowns
 	$('#add_independent_dropdown').dropdown();
 	$('#add_landlocked_dropdown').dropdown();
 	$('#edit_independent_dropdown').dropdown();
 	$('#edit_landlocked_dropdown').dropdown();
-    
+	
+	// Set current transition segment and target segment
 	let a = 2;
 	let b = 2;
 
+	// Set starting index to -1 (no target)
 	let delete_index = -1;
 	let edit_index = -1;
 
+	// Confirm add entry listener
 	add_confirm.addEventListener('click', async function() {
 		let update = {};
 		let id_list = ['name_common', 'name_official', 'name_native', 'region', 'subregion',
 			'capital', 'currency', 'languages', 'demonym', 'independent', 'translations',
 			'flag', 'latlng', 'borders', 'landlocked', 'area', 'callingcode', 'domain'];
 
+		// Iterate through id list and create update json, selecting special operations for special cases
 		for (let id = 0; id < id_list.length; id++) {
 			let s_id = id_list[id];
 			switch(s_id) {
@@ -62,8 +68,7 @@ $(document).ready(function() {
 			}
 		}
 
-
-		//fetch('http://'+IP+':'+PORT+'/add', {
+		// Send json to /add endpoint
 		fetch(HOST+'/add', {
 			method: 'POST',
 			mode: 'cors',
@@ -73,29 +78,27 @@ $(document).ready(function() {
 			body: JSON.stringify(update)
 		})
 			.then(function(res) {
-				if (res.ok) {      
-					edit_index = -1;
+				if (res.ok) { // is response okay, continue
 					return res;
 				} else {
-					//modal_error(res.statusText);
-					//throw '';
 					throw res.statusText;
 				}
 			})
 			.then(res => res.json())
 			.then(function (json) {
+				// Update labels, transition and clear input boxes
 				document.getElementById('add_confirm_label_inner').innerHTML = json['name'];
 				$('#add_confirm_label').transition('zoom');
 				$('#add_confirm_label').transition({animation:'zoom', interval: 2000});
 				clear_input('add');
 			})
-			.catch(err => modal_error(err));
+			.catch(err => modal_error(err)); // error catcher, simply calls modal_error
 	});
 
+	// Search for country to delete listener
 	delete_search_button.addEventListener('click', async function() {
 		let query_name = document.getElementById('delete_search').value;
-		//fetch('http://'+IP + ':' + PORT+'/search/delete?name='+query_name)
-		fetch(HOST+'/search/delete?name='+query_name)
+		fetch(HOST+'/search/delete?name='+query_name) // Make GET request to /search/delete with query name
 			.then(function(res) {
 				if (res.ok) {
 					return res;
@@ -105,14 +108,15 @@ $(document).ready(function() {
 			})
 			.then(res => res.json())
 			.then(function(json) {
-				delete_index = json['index'];
-				document.getElementById('delete_selected').innerHTML = json['name'];
-				//document.getElementById('delete_confirm_label_inner').innerHTML = json['name'];
+				delete_index = json['index']; // Set delete index
+				document.getElementById('delete_selected').innerHTML = json['name']; // Update label
 			})
 			.catch(err => modal_error(err));
 	});
 
+	// Delete confirmation listener
 	delete_confirm.addEventListener('click', async function() {
+		// Send post request where body is index to delete
 		fetch(HOST+'/delete', {
 			method: 'POST',
 			mode: 'cors',
@@ -130,7 +134,8 @@ $(document).ready(function() {
 			})
 			.then(res => res.json())
 			.then(function(json) {
-				delete_index = -1;
+				delete_index = -1; // Reset delete index
+				// Update labels, transition
 				document.getElementById('delete_selected').innerHTML = 'None';
 				document.getElementById('delete_search').value = '';
 				document.getElementById('delete_confirm_label_inner').innerHTML = json['name'];
@@ -142,11 +147,10 @@ $(document).ready(function() {
 			.catch(err => modal_error(err));
 	});
 
+	// Search for country to edit listener
 	edit_search_button.addEventListener('click', async function() {
-		// Fetch from search/edit
-		// format response in input boxes
 		let query_name = document.getElementById('edit_search').value;
-		//fetch('http://'+IP+':'+PORT+'/search/edit?name='+query_name)
+		// Send GET to /search/edit with query name
 		fetch(HOST+'/search/edit?name='+query_name)
 			.then(function(res) {
 				if (res.ok) {
@@ -156,6 +160,7 @@ $(document).ready(function() {
 				}
 			})
 			.then(res => res.json())
+			// Format response and place in input boxes
 			.then(function(data) {
 				let native, native_html, language_string, translation_string, borders_string;
 				edit_index = data['index'];
@@ -227,6 +232,7 @@ $(document).ready(function() {
 			.catch(err => modal_error(err));
 	});
 
+	// Edit confirm listener
 	edit_confirm.addEventListener('click', async function() {
 		// Make POST with all statistics, delimit some by comma into arrays
 		let update = {};
@@ -234,6 +240,7 @@ $(document).ready(function() {
 			'capital', 'currency', 'languages', 'demonym', 'independent', 'translations',
 			'flag', 'latlng', 'borders', 'landlocked', 'area', 'callingcode', 'domain'];
 
+		// Iterate through ID list, build update json and handle special cases
 		for (let id = 0; id < id_list.length; id++) {
 			let s_id = id_list[id];
 			switch(s_id) {
@@ -274,7 +281,7 @@ $(document).ready(function() {
 		}
 
 
-		//fetch('http://'+IP+':'+PORT+'/edit', {
+		// Send POSt request to /edit with update body
 		fetch(HOST+'/edit', {
 			method: 'POST',
 			mode: 'cors',
@@ -285,17 +292,17 @@ $(document).ready(function() {
 		})
 			.then(function(res) {
 				if (res.ok) {
+					// reset edit index
 					edit_index = -1;
 					document.getElementById('edit_search').value = ''; 
 					return res;
 				} else {
-					//modal_error(res.statusText);
-					//throw '';
 					throw res.statusText;
 				}
 			})
 			.then(res => res.json())
 			.then(function (json) {
+				// Update labels, transition and clear inputs
 				document.getElementById('edit_confirm_label_inner').innerHTML = json['name'];
 				$('#edit_confirm_label').transition('zoom');
 				$('#edit_confirm_label').transition({animation:'zoom', interval: 2000});
@@ -305,6 +312,7 @@ $(document).ready(function() {
 
 	});
 
+	// Code for segment transitions
 	document.getElementById('menu_one').onclick = function() {
 		b = 1;
 		if (a != b) {
@@ -362,6 +370,7 @@ $(document).ready(function() {
 		}
 	};
 
+	// Function to clear all input boxes from a given type
 	function clear_input(type) {
 		let id_list = ['name_common', 'name_official', 'name_native', 'region', 'subregion', 'capital',
 			'currency', 'languages', 'demonym', 'independent', 'translations',

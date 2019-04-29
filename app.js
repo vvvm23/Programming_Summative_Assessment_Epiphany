@@ -1,3 +1,4 @@
+// Import needed packages
 const express = require('express');
 const app = express();
 const session = require('express-session');
@@ -17,14 +18,17 @@ app.use(cookieParser());
 // Load json dataset into memory //
 let json_countries = require('./json/countries.json');
 
+// Function to determine type of object
 const type = function(obj) {
     return Object.prototype.toString.apply(obj).replace(/\[object (.+)\]/i, '$1').toLowerCase();
 };
 
+// Wrapper function to strip HTML from a string
 const stripHTML = function(untrusted) { return sanitizeHtml(untrusted); };
 
 // -----------------------------AUTH 0----------------------------- //
 
+// Define auth0 strategy
 var strategy = new Auth0Strategy({
     domain:       'dev-0ut5oehg.eu.auth0.com',
     clientID:     'kMgp-MeVVa7tU6K4BefEuRmB_-ZnJbv6',
@@ -45,7 +49,7 @@ passport.deserializeUser(function(user, done) {
 passport.use(strategy);
 
 app.use(session({
-    secret: 'shhhhhhhhh', // change this lmao
+    secret: 'zWMZ7OLaf2fM', //'shhhhhhhhh
     resave: true,
     saveUninitialized: true
 }));
@@ -76,6 +80,7 @@ app.get('/callback', passport.authenticate('auth0',
     res.redirect(req.session.returnTo || '/');
 });
 
+// When requesting admin page, send html for it
 app.get('/admin', ensureLoggedIn, (req, res) => {
     res.sendFile(__dirname + '/admin.html');
 });
@@ -89,9 +94,11 @@ app.post('/add', ensureLoggedIn, (req, res) => {
 
 
         let index = json_countries.length;
-        json_countries.push({});
+        json_countries.push({}); // Add empty object to end of json_countries
 
-        const restore = function() {json_countries.splice(index, 1);};
+        const restore = function() {json_countries.splice(index, 1);}; // Restore function in case of error
+
+        // Iterate through ids and handle special cases to add new entry to json_countries
         for (let id = 0; id < id_list.length; id++) {
             let s_id = id_list[id];
             switch(s_id) {
@@ -218,10 +225,12 @@ app.post('/add', ensureLoggedIn, (req, res) => {
                 json_countries[index][s_id] = stripHTML(json_body[s_id]);
             }
         }
+
+        // Update name list, index mapping and fuzzySet
         country_names = generate_country_list();
         country_index = generate_country_index();
         fuzz = generate_country_fuzzy(country_names);
-        res.send({'name': json_body['name_common']});
+        res.send({'name': json_body['name_common']}); // Return original name for label on client to display
     } catch (err) {
         res.statusMessage = 'Failed to add entry! (Unknown)';
         return res.sendStatus(400);
@@ -234,14 +243,16 @@ app.post('/edit', ensureLoggedIn, (req, res) => {
         let json_body = req.body;
         let index = json_body['index'];
 
-        let restore_state = JSON.parse(JSON.stringify(json_countries[index]));
-        const restore = function() {json_countries[index] = restore_state;};
+        let restore_state = JSON.parse(JSON.stringify(json_countries[index])); // Save restore state
+        const restore = function() {json_countries[index] = restore_state;}; // Restore function in case of error
 
         let original_name = json_countries[index]['name']['common'];
 
         let id_list = ['name', 'region', 'subregion', 'capital', 'currency', 'languages', 'demonym', 'independent',
             'translations', 'flag', 'latlng', 'borders', 'landlocked', 'area', 'callingcode', 'domain'];
 
+
+        // Iterate through ids and handle special cases to add new entry to json_countries
         for (let id = 0; id < id_list.length; id++) {
             let s_id = id_list[id];
 
@@ -368,11 +379,12 @@ app.post('/edit', ensureLoggedIn, (req, res) => {
             }
         }
 
+        // Update name list, index mapping and fuzzySet
         country_names = generate_country_list();
         country_index = generate_country_index();
         fuzz = generate_country_fuzzy(country_names);
 
-        res.send({'name': original_name});
+        res.send({'name': original_name}); // Return original name for displaying on client side
     } catch(err) {
         res.statusMessage = 'Failed to edit entry! (Unknown)';
         return res.sendStatus(400);
@@ -381,21 +393,20 @@ app.post('/edit', ensureLoggedIn, (req, res) => {
 
 app.get('/search/delete', ensureLoggedIn, (req, res) => {
     // Search Country for delete secure endpoint
-    // Returns Common name (maybe index too?)
     let query_name = req.query.name;
     if (query_name == null) {
         res.statusMessage = 'Name missing!';
         return res.sendStatus(400);   
     }
 
-    let i = find_country(query_name);
+    let i = find_country(query_name); // Find closest match
 
     if (i instanceof Error) {
         res.statusMessage = 'Country not found';
         return res.sendStatus(400);
     }
     let actual_name = json_countries[i]['name']['common'];
-    res.send({index: i, name: actual_name});
+    res.send({index: i, name: actual_name}); // Returns index and actual name of country found
 });
 
 app.get('/search/edit', ensureLoggedIn, (req, res) => {
@@ -409,7 +420,7 @@ app.get('/search/edit', ensureLoggedIn, (req, res) => {
         return res.sendStatus(400);
     }
 
-    let index = find_country(query_name);
+    let index = find_country(query_name); // Find closest country to query_name
 
     if (index instanceof Error) {
         res.statusMessage = 'Country not found';
@@ -434,16 +445,14 @@ app.get('/search/edit', ensureLoggedIn, (req, res) => {
         tld : true
     };
 
-    let statistics = get_country_statistics(index, all);
-    statistics['index'] = index;
-    res.send(statistics);
+    let statistics = get_country_statistics(index, all); // Get all data on found country
+    statistics['index'] = index; // Add index
+    res.send(statistics); // Send all data and index back to client
 
 });
 
 app.post('/delete', ensureLoggedIn, (req, res) => {
     // Delete country secure endpoint
-    // receives json in form, {index: x}
-    // delete at index
     try {
         let index = req.body.index;
         if (index == null) {
@@ -457,11 +466,12 @@ app.post('/delete', ensureLoggedIn, (req, res) => {
             return res.sendStatus(400);
         }
         let original_name = json_countries[index]['name']['common'];
-        json_countries.splice(index, 1);
+        json_countries.splice(index, 1); // Remove entry at index
+        // Update name list, index mapping, fuzzySet
         country_names = generate_country_list();
         country_index = generate_country_index();
         fuzz = generate_country_fuzzy(country_names);
-        res.send({name: original_name});
+        res.send({name: original_name}); // Send original name back for displaying on client side
     } catch (error) {
         res.statusMessage = 'Failed to delete entry! (Unknown)';
         res.sendStatus(400);
@@ -471,6 +481,7 @@ app.post('/delete', ensureLoggedIn, (req, res) => {
 
 // ----------------------------- COUNTRY ----------------------------- //
 
+// Generate list of mapping from country names to official name
 function generate_country_list() {
     let output_dict = {};
     for (let i = 0; i < json_countries.length; i++) {
@@ -494,6 +505,7 @@ function generate_country_list() {
     return output_dict;
 }
 
+// Generate list of mappings from name to index in json_countries
 function generate_country_index() {
     let output_dict = {};
     for (let i = 0; i < json_countries.length; i++) {
@@ -503,6 +515,7 @@ function generate_country_index() {
     return output_dict;
 }
 
+// Generate fuzzySet from namelist
 function generate_country_fuzzy(country_list) {
     let output_array = [];
     for (let key in country_list) {
@@ -511,6 +524,7 @@ function generate_country_fuzzy(country_list) {
     return FuzzySet(output_array);
 }
 
+// Generate name list, index mapping and fuzzySet on server start
 let country_names = generate_country_list();
 let country_index = generate_country_index();
 let fuzz = generate_country_fuzzy(country_names);
@@ -530,33 +544,30 @@ function find_country(name) {
 }
 
 function get_country_statistics(index, toggles) {
-    // Toggles: List of T/F values corresponding to each field
-    // maybe perform additional processing here
-    // ..or process on client side
-
-    // Return based on query url parameters
-
+    // Get statistics about a country (by index) only returning data defined by toggles
     let full_country_data = json_countries[index];
     let reduced_country_data = {};
-    // pick data here
 
+    // Add english names
     reduced_country_data['name'] = full_country_data['name'];
+
+    // Add native name
     let native = full_country_data['name']['native'];
     reduced_country_data['native_name'] = {};
     for (let key in native) {
-        /*reduced_country_data['native_name'] = {'common': full_country_data['name']['native'][key]['common'],
-                                                'official': full_country_data['name']['native'][key]['official']}*/
         for (let type in native[key]) {
             reduced_country_data['native_name'][type] = full_country_data['name']['native'][key][type];
         }
     }
 
+    // Add toggle data
     for (let key in toggles) {
         if (toggles[key]) { reduced_country_data[key] = full_country_data[key];}
     }
     return reduced_country_data;
 }
 
+// Constructs url for map API
 function get_map(settings) {
     const APP_ID = 'RUw2eiQLvRoOmpWww3e7';
     const APP_CODE = 'Jd2W3CtG6MJl0OL-LBoLAg';
@@ -573,11 +584,8 @@ function get_map(settings) {
 
 app.use(express.static('client'));
 
-/*app.get('/', function (req, resp) { 
-	// Homepage, should automatically get index.html
-});*/
-
-app.get('/query', function (req, resp) {     
+app.get('/query', function (req, resp) { 
+    // Query end point, returns all data about a country based on toggles    
     let check_string = req.query.check;
     if (check_string == null) {
         resp.statusMessage = 'Check string was empty!';
@@ -589,6 +597,7 @@ app.get('/query', function (req, resp) {
         return resp.sendStatus(400);
     }
 
+    // Parse boolean values from binary check string
     let check = {
         region : check_string.charAt(0) == '1' ? true:false,
         subregion : check_string.charAt(1) == '1' ? true:false,
@@ -599,7 +608,7 @@ app.get('/query', function (req, resp) {
         independent : check_string.charAt(6) == '1' ? true:false,
         translations : check_string.charAt(7) == '1' ? true:false,
         flag : check_string.charAt(8) == '1' ? true:false,
-        latlng : true,
+        latlng : true, // Always return latlng, even if not displayed, for mapping
         borders : check_string.charAt(10) == '1' ? true:false,
         landlocked : check_string.charAt(11) == '1' ? true:false,
         area : check_string.charAt(12) == '1' ? true:false,
@@ -611,14 +620,14 @@ app.get('/query', function (req, resp) {
         resp.statusMessage = 'Query name was empty!';
         return resp.sendStatus(400);
     }
-    let index = find_country(query_name);
+    let index = find_country(query_name); // Find closest match to query string
 
     if (index instanceof Error) {
         resp.statusMessage = 'Country does not exist!';
         resp.sendStatus(400);
     } else {
-        let statistics = get_country_statistics(index, check);
-        resp.send(statistics);
+        let statistics = get_country_statistics(index, check); // Get statistics for country
+        resp.send(statistics); // Send object back to client
     }
 });
 
@@ -630,6 +639,7 @@ app.get('/wiki', function (req, resp) {
         resp.statusMessage = 'Name was missing!';
         return resp.sendStatus(400);
     }
+    // Fetch from wikipedia API
     fetch('https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=' + name)
         .then(function(resp) {
             if (resp.ok) {
@@ -646,7 +656,7 @@ app.get('/wiki', function (req, resp) {
                 output = page_json[key]['extract'];
             }
 
-            resp.send({'wiki': output});
+            resp.send({'wiki': output}); // Return only relevant data for client
         })
         .catch(() => {
             resp.statusMessage = 'Failed to fetch from wikipedia';
@@ -656,7 +666,6 @@ app.get('/wiki', function (req, resp) {
 
 app.get('/map', function (req, resp) {
     // Query here maps API
-    // maybe simply send selected country index rather than lat lon
     let lat = req.query.lat;
     if (lat == null) {
         resp.statusMessage = '"lat" field is invalid! (Null field)';
@@ -723,6 +732,7 @@ app.get('/map', function (req, resp) {
         return resp.sendStatus(400);
     }
 
+    // Return url built from submitted parameters
     resp.send({map_url: get_map({
         'lat' : req.query.lat,
         'lon' : req.query.lon,
@@ -732,9 +742,5 @@ app.get('/map', function (req, resp) {
         'image_type' : req.query.t
     })});
 });
-
-/*app.use(function (req, resp, next) {
-	resp.sendStatus(404);
-});*/
 
 module.exports = app;

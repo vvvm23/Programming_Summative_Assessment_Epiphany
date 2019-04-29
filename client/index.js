@@ -1,11 +1,15 @@
+// Set maximum resolution for returned map
+// Maybe make this adaptable for screen size..
 const MAP_RES_X = 1920;
 const MAP_RES_Y = 1080;
 
+// Error handling function that displays a modal
 function modal_error(message) {
 	document.getElementById('modal_text').innerHTML = message;
 	$('.ui.modal').modal('show');
 }
 
+// Function to resize map if window changes
 function resize_map() {
 	let map_width = window.innerWidth -  parseInt($('#menu_col').css('width'), 10);
 	let map_height = window.innerHeight - parseInt($('#intro_row').css('height'), 10) - parseInt($('#title_row').css('height'), 10);
@@ -13,12 +17,14 @@ function resize_map() {
 	document.getElementById('map_image').height = map_height;
 }
 
+// Hide a given element
 function hide_stat(stat_id) {
 	let element = document.getElementById(stat_id);
 	element.style.position = 'absolute';
 	element.style.left = '-9999px';
 }
 
+// Show a given element
 function show_stat(stat_id) {
 	let element = document.getElementById(stat_id);
 	element.style.position = 'relative';
@@ -26,16 +32,15 @@ function show_stat(stat_id) {
 }
 
 $(document).ready(function () {
-	//const IP = '127.0.0.1';
-	//const PORT = 8090; //process.env.PORT || 8090;
-	const HOST = '.'; //'prog-summative.herokuapp.com' === window.location.host ? 'https://prog-summative.herokuapp.com':'http://127.0.0.1:8090';
+	const HOST = '.'; // Set host to prepend to all urls
 
-	let a = 0; //maybe rename these
+	// Set start segment to 0
+	let a = 0;
 	let b = 0;
 
-	$('.accordion').accordion(); // is this still needed?
 	$('.ui.checkbox').checkbox();
-	// maybe replace with # rather than class .
+
+	// Transition other segments off screen
 	$('.stats').transition({animation: 'fly left',
 		duration: 0});
 	$('.map').transition({animation: 'fly left',
@@ -43,11 +48,13 @@ $(document).ready(function () {
 	$('.wiki').transition({animation: 'fly left',
 		duration: 0});
 
+	// Add event listener that calls resize of map function
 	window.onresize = function() {
 		resize_map();
 	};
 
 	function toggle_all_check() {
+		// Function to toggle all checkboxes
 		let id_list = ['region', 'subregion', 'capital', 'currency', 'languages', 'demonym', 'independance', 'translations',
 			'flag', 'latlng', 'borders', 'landlocked', 'area', 'callingcode', 'domain'];
 
@@ -58,15 +65,16 @@ $(document).ready(function () {
 	}
 
 	resize_map();
-	toggle_all_check();
+	toggle_all_check(); // toggle all on by default
 	toggle_all.addEventListener('click', async function() {
 		toggle_all_check();
 	});
 
-	window.addEventListener('error', function() {
+	window.addEventListener('error', function() { // Throws if failed to fetch map
 		modal_error('Failed to fetch Map from external API!');
 	}, true);
 
+	// Submit map event listener
 	submit_map.addEventListener('click', async function() {
 
 		let lat = document.getElementById('attribute_one').value;
@@ -77,7 +85,7 @@ $(document).ready(function () {
 			t = 1;
 		}
 
-		//fetch('http://'+IP+':'+PORT+'/map?lat='+lat+'&t='+t+'&lon='+lon+'&z='+zoom+'&x='+MAP_RES_X+'&y='+MAP_RES_Y)
+		// Set GET request to /map with parameters
 		fetch(HOST+'/map?lat='+lat+'&t='+t+'&lon='+lon+'&z='+zoom+'&x='+MAP_RES_X+'&y='+MAP_RES_Y,
 			{mode: 'no-cors'})
 			.then(function(resp) {
@@ -90,18 +98,20 @@ $(document).ready(function () {
 				}
 			})
 			.then(resp=>resp.clone().json())
-			.then(x=>document.getElementById('map_image').src = x['map_url'])
+			.then(x=>document.getElementById('map_image').src = x['map_url']) // Set src of img to returned url in order to get map from external API
 			.then(resize_map())
 			.catch(err => modal_error(err));
 	});
 
 	submit_country.addEventListener('click', async function() {
+		// Submit country query event listener
 		let query_name = document.getElementById('country_name').value;
 		let checkbox_binary_string = '';
 
 		let id_list = ['name', 'region', 'subregion', 'capital', 'currency', 'languages', 'demonym', 'independance', 'translations',
 			'flag', 'latlng', 'borders', 'landlocked', 'area', 'callingcode', 'domain'];
 
+		// Iterate through id list and check checked status. use this to build binary string
 		for (let id = 0; id < id_list.length; id++) {
 			let s_id = id_list[id];
 			if (!(s_id == 'name')) {
@@ -109,7 +119,7 @@ $(document).ready(function () {
 			}
 		}
 
-		//fetch('http://'+IP+':'+PORT+'/query?name='+query_name+'&check='+checkbox_binary_string)
+		// Make GET request to /query
 		fetch(HOST+'/query?name='+query_name+'&check='+checkbox_binary_string,
 			{mode: 'no-cors'})
 			.then(function(resp) {
@@ -126,23 +136,25 @@ $(document).ready(function () {
 				if (a != 0) {
 					document.getElementById('selected_country').innerHTML = 'Selected Country: ' + json['name']['common'];
 					if (a === 1) {
-						stats_ok(json);
+						stats_ok(json); // if currently on stats segment, jump to stats_ok
 					} else {
-						transition_done(json);
+						transition_done(json); // if not, no need to transition
 					}
-					wiki_get(json['name']['common']);
-					map_get(json['latlng']);
+					wiki_get(json['name']['common']); // Get wiki data
+					map_get(json['latlng']); // Get map data
 				}
 			})
 			.catch(err => modal_error(err));
 
+		// Runs if stats retrieved successfully and transition required
 		function stats_ok(data) {
+			// Transition all stats
 			for (let id = 0; id < id_list.length; id++) {
 				let s_id = id_list[id];
 				if (s_id == 'name') {
 					$('#stats_name').transition({animation: 'fly left'});
 				}
-				else if (s_id == id_list[id_list.length - 1]) {
+				else if (s_id == id_list[id_list.length - 1]) { // if last to transition, call transition_done when complete
 					$('#stats_'+s_id).transition({animation: 'fly left', onHide: function() {if (!document.getElementById('check_'+s_id).checked){hide_stat('stats_'+s_id);} else {show_stat('stats_'+s_id);} transition_done(data);}});
 				}
 				else {
@@ -151,8 +163,10 @@ $(document).ready(function () {
 			}
 		}
 
+		// Calls when transition is done (or not required)
 		function transition_done(data) {
 			let native, native_html;
+			// Iterate through ids and update innerHTML of stats
 			for (let id = 0; id < id_list.length; id++) {
 				let s_id = id_list[id];
 				switch(s_id) {
@@ -243,18 +257,20 @@ $(document).ready(function () {
 					break;
 				}
 			}
-			if (a===1) {stats_done();}
+			if (a===1) {stats_done();} // if on stats segment, call stats_done
 		}
 
 
 		function stats_done() {
+			// Iterate through all stats and transition back in
 			for (let id = 0; id < id_list.length; id++) {
 				$('#stats_'+id_list[id]).transition({animation: 'fly left'});
 			}
 		}
 
+		// Function to get wiki data from server
 		function wiki_get(name) {
-			//fetch('http://'+IP+':'+PORT+'/wiki?name='+name)
+			// Make GET request to /wiki with parameters
 			fetch(HOST+'/wiki?name='+name,
 				{mode: 'no-cors'})
 				.then(function(resp) {
@@ -265,13 +281,14 @@ $(document).ready(function () {
 					}
 				})
 				.then(resp => resp.json())
-				.then(resp=> document.getElementById('wiki_inner').innerHTML = resp['wiki'])
-				.then(document.getElementById('wiki_name').innerHTML = name)
+				.then(resp=> document.getElementById('wiki_inner').innerHTML = resp['wiki']) // Set inner html to response body
+				.then(document.getElementById('wiki_name').innerHTML = name) // Update name
 				.catch(err => modal_error(err));
 		}
 
+		// Function to get map url server
 		function map_get(latlng) {
-			//fetch('http://'+IP+':'+PORT+'/map?lat='+latlng[0]+'&t=0&lon='+latlng[1]+'&z=6&x='+MAP_RES_X+'&y='+MAP_RES_Y)
+			// Make GET request to /map with parameters
 			fetch(HOST+'/map?lat='+latlng[0]+'&t=0&lon='+latlng[1]+'&z=6&x='+MAP_RES_X+'&y='+MAP_RES_Y,
 				{mode: 'no-cors'})
 				.then(function(resp) {
@@ -281,21 +298,21 @@ $(document).ready(function () {
 						throw resp.statusText;
 					}
 				})
-				.then(resp=>resp.json()) // is clone needed?
-			//.then(x=>document.getElementById('map_image').src = x['map_url'])
+				.then(resp=>resp.json())
 				.then(function(json) {
 					try {
-						document.getElementById('map_image').src = json['map_url'];
+						document.getElementById('map_image').src = json['map_url']; // Set src of image to returned url
 					} catch (error) {
 						throw 'Failed to fetch map image!';
 					}
 				})
-				.then(resize_map())
+				.then(resize_map()) // Resize map to fit
 				.catch(err => modal_error(err));
 		}
          
 	});
 
+	// Code to transition between segments
 	document.getElementById('menu_one').onclick = function() {
 		b = 1;
 		if (a != b) {
