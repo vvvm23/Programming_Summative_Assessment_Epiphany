@@ -31,7 +31,8 @@ $(document).ready(function() {
 	let edit_index = -1;
 
 	// Confirm add entry listener
-	add_confirm.addEventListener('click', async function() {
+	add_confirm.addEventListener('click', async function(e) {
+		e.preventDefault();
 		let update = {};
 		let id_list = ['name_common', 'name_official', 'name_native', 'region', 'subregion',
 			'capital', 'currency', 'languages', 'demonym', 'independent', 'translations',
@@ -96,7 +97,8 @@ $(document).ready(function() {
 	});
 
 	// Search for country to delete listener
-	delete_search_button.addEventListener('click', async function() {
+	delete_search_button.addEventListener('click', async function(e) {
+		e.preventDefault();
 		let query_name = document.getElementById('delete_search').value;
 		fetch(HOST+'/search/delete?name='+query_name) // Make GET request to /search/delete with query name
 			.then(function(res) {
@@ -115,7 +117,8 @@ $(document).ready(function() {
 	});
 
 	// Delete confirmation listener
-	delete_confirm.addEventListener('click', async function() {
+	delete_confirm.addEventListener('click', async function(e) {
+		e.preventDefault();
 		// Send post request where body is index to delete
 		fetch(HOST+'/delete', {
 			method: 'POST',
@@ -148,7 +151,8 @@ $(document).ready(function() {
 	});
 
 	// Search for country to edit listener
-	edit_search_button.addEventListener('click', async function() {
+	edit_search_button.addEventListener('click', async function(e) {
+		e.preventDefault();
 		let query_name = document.getElementById('edit_search').value;
 		// Send GET to /search/edit with query name
 		fetch(HOST+'/search/edit?name='+query_name)
@@ -233,7 +237,8 @@ $(document).ready(function() {
 	});
 
 	// Edit confirm listener
-	edit_confirm.addEventListener('click', async function() {
+	edit_confirm.addEventListener('click', async function(e) {
+		e.preventDefault();
 		// Make POST with all statistics, delimit some by comma into arrays
 		let update = {};
 		let id_list = ['index', 'name_common', 'name_official', 'name_native', 'region', 'subregion',

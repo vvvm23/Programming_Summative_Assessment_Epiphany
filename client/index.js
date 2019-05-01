@@ -75,7 +75,8 @@ $(document).ready(function () {
 	}, true);
 
 	// Submit map event listener
-	submit_map.addEventListener('click', async function() {
+	submit_map.addEventListener('click', async function(e) {
+		e.preventDefault();
 
 		let lat = document.getElementById('attribute_one').value;
 		let lon = document.getElementById('attribute_two').value;
@@ -103,7 +104,8 @@ $(document).ready(function () {
 			.catch(err => modal_error(err));
 	});
 
-	submit_country.addEventListener('click', async function() {
+	submit_country.addEventListener('click', async function(e) {
+		e.preventDefault();
 		// Submit country query event listener
 		let query_name = document.getElementById('country_name').value;
 		let checkbox_binary_string = '';
