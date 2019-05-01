@@ -1,7 +1,7 @@
 // Set maximum resolution for returned map
 // Maybe make this adaptable for screen size..
-const MAP_RES_X = window.screen.width;
-const MAP_RES_Y = window.screen.height;
+const MAP_RES_X = window.screen.width * window.devicePixelRatio;
+const MAP_RES_Y = window.screen.height * window.devicePixelRatio;
 
 // Error handling function that displays a modal
 function modal_error(message) {
