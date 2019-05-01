@@ -296,7 +296,7 @@ function test_search_delete_france(res) {
     }
 
     if (!(json['index'] === 76 && json['name'] === 'France')) {
-        throw new Error('Response incorrect!')
+        throw new Error('Response incorrect!');
     }
 }
 
@@ -604,12 +604,12 @@ describe('Test POST services malformed', () => {
         test('POST /add (No parameters)', async() => {
             const update = {
 
-            }
+            };
 
             return request(mock)
                 .post('/add')
                 .send(update)
-                .expect(400)
+                .expect(400);
         });
 
         test('POST /add (Conflicting name)', async() => {
@@ -632,12 +632,12 @@ describe('Test POST services malformed', () => {
                 'area': '123456',
                 'callingcode': '123',
                 'domain': 'test_domain'
-            }
+            };
 
             return request(mock)
                 .post('/add')
                 .send(update)
-                .expect(400)
+                .expect(400);
         });
 
         test('POST /add (Missing Parameters - 1)', async() => {
@@ -656,12 +656,12 @@ describe('Test POST services malformed', () => {
                 'area': '123456',
                 'callingcode': '123',
                 'domain': 'test_domain'
-            }
+            };
 
             return request(mock)
                 .post('/add')
                 .send(update)
-                .expect(400)
+                .expect(400);
         });
 
         test('POST /add (Missing Parameters - 2)', async() => {
@@ -677,12 +677,12 @@ describe('Test POST services malformed', () => {
                 'area': '123456',
                 'callingcode': '123',
                 'domain': 'test_domain'
-            }
+            };
 
             return request(mock)
                 .post('/add')
                 .send(update)
-                .expect(400)
+                .expect(400);
         });
 
         test('POST /add (Invalid Parameters - 1)', async() => {
@@ -705,12 +705,12 @@ describe('Test POST services malformed', () => {
                 'area': '123456',
                 'callingcode': '123',
                 'domain': 'test_domain'
-            }
+            };
 
             return request(mock)
                 .post('/add')
                 .send(update)
-                .expect(400)
+                .expect(400);
         });
 
         test('POST /add (Invalid Parameters - 2)', async() => {
@@ -733,12 +733,12 @@ describe('Test POST services malformed', () => {
                 'area': '123456',
                 'callingcode': '123',
                 'domain': 'test_domain'
-            }
+            };
 
             return request(mock)
                 .post('/add')
                 .send(update)
-                .expect(400)
+                .expect(400);
         });
     });
 
@@ -746,12 +746,12 @@ describe('Test POST services malformed', () => {
         test('POST /edit (No parameters)', async() => {
             const update = {
 
-            }
+            };
 
             return request(mock)
                 .post('/add')
                 .send(update)
-                .expect(400)
+                .expect(400);
         });
 
         test('POST /edit (Missing index)', async() => {
@@ -799,12 +799,12 @@ describe('Test POST services malformed', () => {
                 'area': '123456',
                 'callingcode': '123',
                 'domain': 'test_domain'
-            }
+            };
 
             return request(mock)
                 .post('/add')
                 .send(update)
-                .expect(400)
+                .expect(400);
         });
 
         test('POST /edit (Missing Parameters - 2)', async() => {
@@ -825,12 +825,12 @@ describe('Test POST services malformed', () => {
                 'latlng': [123, 123],
                 'borders': ['test_border'],
                 'domain': 'test_domain'
-            }
+            };
 
             return request(mock)
                 .post('/add')
                 .send(update)
-                .expect(400)
+                .expect(400);
         });
 
         test('POST /edit (Invalid Parameters - 1)', async() => {
@@ -854,12 +854,12 @@ describe('Test POST services malformed', () => {
                 'area': '123456',
                 'callingcode': '123',
                 'domain': 'test_domain'
-            }
+            };
 
             return request(mock)
                 .post('/add')
                 .send(update)
-                .expect(400)
+                .expect(400);
         });
 
         test('POST /edit (Invalid Parameters - 2)', async() => {
@@ -883,12 +883,12 @@ describe('Test POST services malformed', () => {
                 'area': '123456',
                 'callingcode': '123',
                 'domain': 'test_domain'
-            }
+            };
 
             return request(mock)
                 .post('/add')
                 .send(update)
-                .expect(400)
+                .expect(400);
         });
     });
 
@@ -896,12 +896,12 @@ describe('Test POST services malformed', () => {
         test('POST /delete (No parameters)', async() => {
             const update = {
 
-            }
+            };
 
             return request(mock)
                 .post('/delete')
                 .send(update)
-                .expect(400)
+                .expect(400);
         });
 
         test('POST /delete (Index out of range)', async() => {
@@ -912,21 +912,21 @@ describe('Test POST services malformed', () => {
             return request(mock)
                 .post('/delete')
                 .send(update)
-                .expect(400)
+                .expect(400);
         });
 
         test('POST /delete (NaN index)', async() => {
             const update = {
                 'index': 'yo delete that thing'
-            }
+            };
 
             return request(mock)
                 .post('/delete')
                 .send(update)
-                .expect(400)
+                .expect(400);
         });
-    })
-})
+    });
+});
 
 describe('Test secure GET services success', () => {
     test('GET /search/edit succeeds', () => {
