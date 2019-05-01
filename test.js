@@ -1,7 +1,6 @@
 const request = require('supertest');
 const app = require('./app');
 const mock = require('./app_mock');
-const nock = require('nock');
 
 // Code for testing country China
 function test_country_china(res) {
