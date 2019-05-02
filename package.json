@@ -5,7 +5,7 @@
   "scripts": {
     "test": "jest --coverage",
     "start": "node server.js",
-    "pretest": "eslint server.js -c .eslintrc.json ; eslint app.js -c .eslintrc.json ; eslint test.js -c .eslintrc.json ; eslint client/index.js -c client/.eslintrc.json ; eslint client/admin.js -c client/.eslintrc.json"
+    "pretest": "eslint server.js -c .eslintrc.json && eslint app.js -c .eslintrc.json && eslint test.js -c .eslintrc.json && eslint client/index.js -c client/.eslintrc.json && eslint client/admin.js -c client/.eslintrc.json"
   },
   "repository": {
     "type": "git",

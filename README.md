@@ -56,6 +56,9 @@ To use the inbuilt test scripts navigate to project root and type
 tests to authenticated endpoints must use the mock object rather than
 app in order to circumnavigate auth0 authentication.
 
+To run eslint tests on all javascript code run ```npm run pretest```. Note, this is configured for windows and the commands for this are delimited with
+```&&```. If testing on linux or max you must instead use ```;``` .
+
 ___
 ### API Usage
 
